@@ -1,14 +1,12 @@
 import { useState } from "react";
 import {
-  Box, Button, Container, TextField, Typography, Alert, CircularProgress, Paper
+  Box, Button, Container, TextField, Typography, Alert, CircularProgress, Paper, FormControlLabel, Checkbox
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import type { LoginInput } from "../api/auth.api";
-import { loginApi } from "../api/auth.api";
+import { loginApi} from "../api/auth.api";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
-
-
+import type { LoginInput, TokenResponse } from "../api/auth.api";
 
 function extractErrorMessage(err: any): string {
   const data = err?.response?.data;
@@ -26,35 +24,26 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const [form, setForm] = useState<LoginInput>({ username: "", password: "" });
+  const [rememberMe, setRememberMe] = useState<boolean>(true); // default ON (optional)
   const [error, setError] = useState<string | null>(null);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation<TokenResponse, any, LoginInput>({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      login(data.access_token);
+      login(data.access_token, data.refresh_token, rememberMe);
       const next = (location.state as any)?.from ?? "/dashboard";
       navigate(next, { replace: true });
     },
-    onError: (e: any) => {
-      setError(extractErrorMessage(e));
-      const msg =
-        e?.response?.status === 401
-          ? "Invalid username or password."
-          : e?.response?.data?.detail ?? "Login failed. Please try again.";
-      setError(msg);
-    },
+    onError: (e) => setError(extractErrorMessage(e)),
   });
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
-    // minimal validation
     if (!form.username.trim() || !form.password.trim()) {
       setError("Username and password are required.");
       return;
     }
-
     mutate(form);
   };
 
@@ -65,11 +54,7 @@ export default function Login() {
           Sign in
         </Typography>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
         <Box component="form" onSubmit={onSubmit} noValidate>
           <TextField
@@ -91,20 +76,20 @@ export default function Login() {
             autoComplete="current-password"
           />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            disabled={isPending}
-            sx={{ mt: 2 }}
-          >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+            }
+            label="Remember me"
+          />
+
+          <Button type="submit" fullWidth variant="contained" disabled={isPending} sx={{ mt: 2 }}>
             {isPending ? <CircularProgress size={22} color="inherit" /> : "Sign In"}
           </Button>
         </Box>
-
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          Forgot password? (Coming soon)
-        </Typography>
       </Paper>
     </Container>
   );

@@ -1,7 +1,7 @@
 import api from "./axio";
 
 export type LoginInput = { username: string; password: string };
-export type TokenResponse = { access_token: string; token_type: string };
+export type TokenResponse = { access_token: string;refresh_token:string; token_type: "bearer" };
 
 export async function loginApi(payload: LoginInput): Promise<TokenResponse> {
   const form = new URLSearchParams();

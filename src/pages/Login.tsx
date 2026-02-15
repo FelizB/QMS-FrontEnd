@@ -9,6 +9,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import type { LoginInput, TokenResponse } from "../api/auth.api";
 
 function extractErrorMessage(err: any): string {
+
+  if (err?.code === "ECONNABORTED" || (!err?.response && err?.request)) {
+    return "Cannot reach the server. Please check your connection, ensure the API is running, and try again.";
+  }
+
   const data = err?.response?.data;
   if (!data) return err?.message ?? "Request failed.";
   if (typeof data.detail === "string") return data.detail;

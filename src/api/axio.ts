@@ -1,6 +1,6 @@
-// src/api/axios.ts
-import axios from "axios";
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError} from "axios";
+  
+import type {AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   currentAccessToken,
   currentRefreshToken,
@@ -11,8 +11,12 @@ import {
 const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api/v1";
 const REFRESH_URL = "/auth/refresh";
 
-const api = axios.create({ baseURL: BASE_URL });
+const api = axios.create({
+  baseURL: BASE_URL,
+  timeout: 8000, // <-- fail fast after 8s
+});
 
+// Attach Authorization
 api.interceptors.request.use((config) => {
   const token = currentAccessToken();
   if (token) {
@@ -22,7 +26,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Refresh queue
+// ---- Refresh Queue (as you already have) ----
 let isRefreshing = false;
 type Subscriber = (token: string) => void;
 const subscribers: Subscriber[] = [];
@@ -35,9 +39,20 @@ async function callRefresh(): Promise<{ access_token: string; refresh_token?: st
   const res = await axios.post<{ access_token: string; refresh_token?: string }>(
     BASE_URL + REFRESH_URL,
     { refresh_token: rt },
-    { headers: { "Content-Type": "application/json" } }
+    { headers: { "Content-Type": "application/json" }, timeout: 8000 }
   );
   return res.data;
+}
+
+/** Helper to detect network-level failures (server down, DNS, CORS block, timeout). */
+function isNetworkError(err: AxiosError) {
+  // Axios sets code for timeouts and general network failures
+  return !!(
+    err.code === "ECONNABORTED" ||                  // timeout
+    err.message?.includes("Network Error") ||       // generic network
+    err.message?.includes("Failed to fetch") ||     // fetch-like adapters
+    (!err.response && err.request)                  // no response received
+  );
 }
 
 api.interceptors.response.use(
@@ -48,6 +63,14 @@ api.interceptors.response.use(
     const url = original?.url ?? "";
     const isAuthCall = url.includes("/auth/token") || url.includes("/auth/refresh") || url.includes("/auth/logout");
 
+    // ---- Normalize network errors so UI can show a clear message
+    if (isNetworkError(error)) {
+      // Convert to a consistent shape (so your extractErrorMessage can render a string)
+      error.message = "Cannot reach the server. Check your connection or try again.";
+      return Promise.reject(error);
+    }
+
+    // ---- 401 handling with refresh (unchanged)
     if (status === 401 && !original._retry && !isAuthCall) {
       original._retry = true;
 
@@ -56,11 +79,10 @@ api.interceptors.response.use(
         try {
           const data = await callRefresh();
           const remember = getRemember();
-          // Rotate tokens and keep the chosen storage
           setTokens({ access: data.access_token, refresh: data.refresh_token ?? currentRefreshToken() }, remember);
           isRefreshing = false;
           onRefreshed(data.access_token);
-        } catch (e) {
+        } catch {
           isRefreshing = false;
           window.dispatchEvent(new Event("auth:logout"));
           return Promise.reject(error);

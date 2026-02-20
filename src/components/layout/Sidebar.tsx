@@ -1,60 +1,52 @@
 import React from 'react'
-import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown } from 'lucide-react'
-import Dashboard from '../../pages/Dashboard'
+import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown, PieChart, BarChart, User, ShoppingCart, Users as UsersIcon, Activity } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-
+// add explicit path for routing
 const menuItems = [
-  { id: 'dashboard', 
-    icon: LayoutDashboard, 
-    label:"Dashboard", 
-    active:true,
-    badge:"New" 
-  },
-  { id: 'analytics', 
-    icon: BarChart3, 
-    label: 'Analytics', 
+  { id: 'dashboard', icon: LayoutDashboard, label:"Dashboard", path:'dashboard', badge:"New" },
+  {
+    id: 'analytics',
+    icon: BarChart3,
+    label: 'Analytics',
+    path: 'analytics',
     submenu: [
-      { id:"overview", label:"Overview" },
-      { id:"reports", label:"Reports" },
-      { id:"insights", label:"Insights" }
+      { id:"overview", label:"Overview", path:'analytics/overview', icon: PieChart },
+      { id:"reports", label:"Reports", path:'analytics/reports', icon: BarChart },
+      { id:"insights", label:"Insights", path:'analytics/insights', icon: BarChart3 }
     ]
   },
-  { id: 'users', 
+  {
+    id: 'users',
     icon: Users,
     label: 'Users',
     count:"2.4k",
+    path: 'users',
     submenu: [
-      { id:"all-users", label:"All Users" },
-      { id:"roles", label:"Roles & Permissions" },
-      { id:"Activity", label:"Useer Activity" }
+      { id:"all-users", label:"All Users", path:'users/all-users', icon: UsersIcon },
+      { id:"roles", label:"Roles & Permissions", path:'users/roles', icon: Settings },
+      { id:"activity", label:"User Activity", path:'users/activity', icon: Activity }
     ]
   },
   {
     id: 'ecommerce',
     icon: ShoppingBag,
     label: 'E-commerce',
-      submenu: [
-        { id:"products", label:"Products" },
-        { id:"orders", label:"Orders" },
-        { id:"customers", label:"Customers" }
-      ]
-
+    path: 'ecommerce',
+    submenu: [
+      { id:"products", label:"Products", path:'ecommerce/products', icon: ShoppingCart },
+      { id:"orders", label:"Orders", path:'ecommerce/orders', icon: Package },
+      { id:"customers", label:"Customers", path:'ecommerce/customers', icon: User }
+    ]
   },
-  {
-    id: 'inventory',
-    icon: Package,
-    label: 'Inventory',
-    count:"847",
-  },
-  {id:"transactions", icon: MessageSquare, label:"Transactions", badge:"12"},
-  {id:"Calendar", icon: Calendar, label:"Calendar" },
-  {id:"reports", icon: FileText, label:"Reports" },
-  {id:"settings", icon: Settings, label:"Settings" }
-  
+  { id: 'inventory', icon: Package, label: 'Inventory', path:'inventory', count:"847" },
+  { id:"transactions", icon: MessageSquare, label:"Transactions", path:'transactions', badge:"12" },
+  { id:"calendar", icon: Calendar, label:"Calendar", path:'calendar' },
+  { id:"reports", icon: FileText, label:"Reports", path:'reports' },
+  { id:"settings", icon: Settings, label:"Settings", path:'settings' }
 ]
 
-
-export default function Sidebar({collapsed, ontoggle, currentPage, onPageChange}: {collapsed: boolean, ontoggle: () => void, currentPage: string, onPageChange: (page: string) => void}) {
+export default function Sidebar({collapsed}: {collapsed: boolean}) {
   const [expandedItems, setExpandedMenu] = React.useState(new Set(["analytics"]))
   const toggleExpanded = (itemid:any) => {
     const newExpanded = new Set(expandedItems)
@@ -66,6 +58,26 @@ export default function Sidebar({collapsed, ontoggle, currentPage, onPageChange}
     setExpandedMenu(newExpanded)
   }
 
+  const location = useLocation()
+  const navigate = useNavigate()
+  const currentPath = location.pathname.replace(/^\//, '')
+
+  // when the route changes, make sure the parent of a subpage is expanded
+  React.useEffect(() => {
+    const parts = currentPath.split('/')
+    if (parts.length > 1) {
+      setExpandedMenu(prev => {
+        const next = new Set(prev)
+        next.add(parts[0])
+        return next
+      })
+    }
+  }, [currentPath])
+
+  const handleNavigation = (path: string) => {
+    navigate(`/${path}`)
+  }
+
 
 
   return (
@@ -73,7 +85,7 @@ export default function Sidebar({collapsed, ontoggle, currentPage, onPageChange}
       {/* Logo */}
       <div className="p-6 border-b border-slatee-200/50 dark:border-slate-700/50">
         <div className="flex items-center space-x-3">
-            <div className='w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex item-center justify-center shadow-lg'>
+            <div className='w-10 h-10 bg-blue-600 rounded-xl flex item-center justify-center shadow-lg'>
                 <Zap className='w-6 h-6 text-white' />
             </div>
             {/* Conditional Rendering */}
@@ -97,13 +109,16 @@ export default function Sidebar({collapsed, ontoggle, currentPage, onPageChange}
           return(
             <div key={item.id}>
              <button className={`w-full flex items-center justify-between p-3 rounded-xl transition-all duration-200 
-              ${currentPage === item.id || item.active? ' bg-gradient-to-r from-blue-500 to -purple-600 text-white shadow-lg shadow-blue-500/25' : 
-              'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+              ${
+                currentPath === item.path ||
+                (item.submenu && item.submenu.some(si => si.path === currentPath))
+                  ? ' bg-blue-500 text-white shadow-lg shadow-blue-500/25' : 
+                    'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50'
               }`} onClick={()=>{
                 if(item.submenu){
                   toggleExpanded(item.id)
                 } else {
-                  onPageChange(item.id)
+                  handleNavigation(item.path)
                 }
               }}>
               <div className='flex items-center space-x-3'>
@@ -130,19 +145,38 @@ export default function Sidebar({collapsed, ontoggle, currentPage, onPageChange}
                 
                   </>
               </div>
-              {!collapsed && item.submenu && (
-                <ChevronDown className={'w-4 h-4 transition-transform'}/>
+              {item.submenu && (
+                <ChevronDown className={`w-4 h-4 transition-transform ${expandedItems.has(item.id) ? 'rotate-180' : ''}`}/>
 
               )}
              </button>
 
              {/*     Sub Menus  */}
-             {!collapsed && item.submenu && expandedItems.has(item.id) && (
-                <div className='ml-8 mt-2 space-y-1'>
+             {item.submenu && expandedItems.has(item.id) && (
+                <div className={`${collapsed ? 'ml-0 mt-2 space-y-1' : 'ml-8 mt-2 space-y-1'}` }>
                   {item.submenu.map((subitem)=>{
-                    return <button className='w-full text-left p-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 round-lg transition-all'>
-                      {subitem.label}
+                    const isActive = currentPath === subitem.path;
+                    return (
+                      <button
+                        key={subitem.id}
+                        title={collapsed ? subitem.label : undefined}
+                        className={`w-full ${collapsed ? 'flex justify-center' : 'text-left'} p-2 text-sm transition-all rounded-lg 
+                          ${isActive ?
+                            'bg-blue-500 text-white shadow-lg shadow-blue-500/25' :
+                            'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                          }`}
+                        onClick={() => {
+                          handleNavigation(subitem.path);
+                          // optionally keep parent expanded
+                          // toggleExpanded(item.id);
+                        }}
+                      >
+                        {subitem.icon && (
+                          <subitem.icon className="w-4 h-4" />
+                        )}
+                        {!collapsed && <span className="ml-2">{subitem.label}</span>}
                       </button>
+                    );
                   })}
                 </div>
               )}

@@ -1,10 +1,14 @@
 import { Bell, ChevronDown, Filter, Menu, Plus, Search, Settings, Sun } from "lucide-react";
+import React, { useRef, useState } from "react";
+import ProfilePopover from "./ProfilePopover";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
 }
 
 function Header({onToggleSidebar}: HeaderProps) {
+    const [open, setOpen] = useState(false);
+    const btnRef = useRef<HTMLButtonElement>(null);
   return (
     <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -60,24 +64,40 @@ function Header({onToggleSidebar}: HeaderProps) {
             </span>
           </button> 
 
-          {/* Settings */} 
-          <button className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-            <Settings className="w-5 h-5"/>
-          </button>
-
            {/* User Profile */}
-           <div className="flex items-center space-x-3 pl-3 border-l border-slate-200 dark:border-slate-700">
-            <img
-              src="https://i.pravatar.cc/300"
-              alt="User"
-              className="w-8 h-8 rounded-full ring-2 ring-blue-500"
-            />
-              <div className="hidden sm:block"> 
-                <p className="text-sm font-medium text-slate-800 dark:text-slate-400">Feliz B</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Administrator</p>
-              </div>
-              <ChevronDown className="w-4 h-4 text-slate-400"/>
-           </div>
+          <div className="relative">
+          {/* trigger */}
+            <button
+              id="profile-menu-button"
+              ref={btnRef}
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="flex items-center space-x-3 rounded-lg pl-3 pr-2 py-1 border-l border-slate-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+                <img
+                  src="https://i.pravatar.cc/300"
+                  alt="User avatar"
+                  className="w-8 h-8 rounded-full ring-2 ring-blue-500"
+                />
+                <div className="hidden sm:block text-left">
+                  <p className="text-sm font-medium text-slate-800 dark:text-slate-200">Feliz B</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Administrator</p>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+                />
+            </button>
+
+          {/* popover */}
+              
+             <ProfilePopover open={open} onClose={() => setOpen(false)} anchorRef={btnRef.current} />
+       
+          
+          </div>
+
+           
         </div>
       </div>
     </div>

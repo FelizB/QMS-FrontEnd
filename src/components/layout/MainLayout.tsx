@@ -12,12 +12,12 @@ export default function MainLayout() {
         collapsed={sidebarCollapsed}
       />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 z-50 flex flex-col overflow-hidden">
         <Header
           onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
 
-        <main className="flex-1 overflow-y-auto bg-transparent">
+        <main className="z-20 flex-1 overflow-y-auto bg-transparent">
           <div className="p-6 space--6">
             <Outlet />
           </div>

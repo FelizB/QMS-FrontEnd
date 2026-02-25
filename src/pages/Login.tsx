@@ -8,6 +8,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { LoginInput, TokenResponse } from "../api/auth.api";
 import { usePostLoginPreload } from "../components/common/usePostLoginPreload";
+import AuthCard from "../components/layout/AuthCard";
 
 
 function withTimeout<T>(p: Promise<T>, ms = 10000): Promise<T> {
@@ -81,73 +82,90 @@ export default function Login() {
   const blocking = isPending || preloading;
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 10 }}>
-      <Paper elevation={3} sx={{ p: 4, position: "relative" }}>
-        <Typography variant="h5" component="h1" gutterBottom>
-          Sign in
-        </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+            <AuthCard>
+                  <Typography variant="h5" component="h1" gutterBottom sx={{ textAlign: "center", color: "rgb(30 41 59)" }}>
+                    Login
+                  </Typography>
 
-        <Box component="form" onSubmit={onSubmit} noValidate>
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Username"
-            value={form.username}
-            onChange={(e) => setForm((s) => ({ ...s, username: e.target.value }))}
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Password"
-            type="password"
-            value={form.password}
-            onChange={(e) => setForm((s) => ({ ...s, password: e.target.value }))}
-            autoComplete="current-password"
-          />
+                  <Paper elevation={0} sx={{ p: 4, position: "relative", border: "none",boxShadow: "none",backgroundColor: "transparent"}}>
+                    {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-            }
-            label="Remember me"
-          />
+                    <Box component="form" onSubmit={onSubmit} noValidate>
+                      <TextField
+                        margin="normal" fullWidth label="Username"
+                        value={form.username}
+                        onChange={(e) => setForm((s: any) => ({ ...s, username: e.target.value }))}
+                        autoComplete="username" autoFocus
+                      />
+                      <TextField
+                        margin="normal" fullWidth label="Password" type="password"
+                        value={form.password}
+                        onChange={(e) => setForm((s: any) => ({ ...s, password: e.target.value }))}
+                        autoComplete="current-password"
+                      />
 
-          <Button type="submit" fullWidth variant="contained" disabled={blocking} sx={{ mt: 2 }}>
-            {blocking ? <CircularProgress size={22} color="inherit" /> : "Sign In"}
-          </Button>
-        </Box>
+                      <div className="mt-2 mb-2 flex w-full items-center justify-between">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={rememberMe}
+                              onChange={(e) => setRememberMe(e.target.checked)}
+                              size="small"
+                            />
+                          }
+                          label="Remember me"
+                        />
+                        <a href="#" className="text-indigo-500 hover:text-indigo-400">Forgot password?</a>
+                      </div>
 
-        {/* Full-screen (or card-level) veil while logging in & preloading */}
-        {blocking && (
-     <div className='bg-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-all duration-500'>
-          <Box
-           
-            sx={{
-              position: "fixed",
-              top: 0, left: 0, right: 0, bottom: 0,
-              display: "grid",
-              placeItems: "center",
-              zIndex: 2000,
-            }}
-          >
-            
-            <Paper sx={{ p: 3, display: "flex", alignItems: "center", gap: 2 }}>
-              <CircularProgress size={22} />
-              <Typography variant="body2">Hold on while we Prepare your workspace…</Typography>
-            </Paper>
+                      <Button type="submit" fullWidth variant="contained" disabled={blocking} sx={{ mt: 2 }}>
+                        {blocking ? <CircularProgress size={22} color="inherit" /> : "Login"}
+                      </Button>
+                    </Box>
 
-          </Box>
-          </div>
-     
-        )}
-      </Paper>
-    </Container>
+                    {blocking && (
+                      <Box
+                        sx={{
+                          position: "fixed", inset: 0, display: "grid", placeItems: "center",
+                          zIndex: 2000, backgroundColor: "rgba(2,6,23,0.5)", backdropFilter: "blur(1px)",
+                        }}
+                      >
+                        <Paper sx={{ p: 3, display: "flex", alignItems: "center", gap: 2 }}>
+                          <CircularProgress size={22} />
+                          <Typography variant="body2">Hold on while we prepare your workspace…</Typography>
+                        </Paper>
+                      </Box>
+                    )}
+                  </Paper>
+
+                  {/* Optional socials row 
+                  <div className="mt-6">
+                    <p className="text-center text-sm text-slate-500 dark:text-slate-400">or login with social platforms</p>
+                    <div className="mt-4 flex items-center justify-center gap-3">
+                      <SocialButton label="G" />
+                      <SocialButton label="F" />
+                      <SocialButton label="O" />
+                      <SocialButton label="in" />
+                    </div>
+                  </div>
+                 */}
+                </AuthCard>
+
   );
 }
+
+{/*. 
+function SocialButton({ label }: { label: string }) {
+  return (
+    <button
+      className="h-9 w-9 rounded-md border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-800"
+      aria-label={label}
+      type="button"
+    >
+      {label}
+    </button>
+ 
+  )}
+
+  */}

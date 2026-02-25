@@ -52,9 +52,11 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
 
   const displayName = user?.username ?? "—";
   const email = user?.email ?? "—";
-  const rolesText = Array.isArray(user?.role)
-    ? user?.role.join(", ")
-    : (user?.role ?? "—");
+  const roleText =
+    user?.superuser ? "Super Administrator"
+    : user?.admin     ? "Administrator"
+    : user            ? "Normal"
+    : "—";
   const avatar ="https://i.pravatar.cc/300";
 
   return (
@@ -79,7 +81,7 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
             {loading ? "—" : email}
           </p>
           <p className="pt-1 text-xs text-slate-500 dark:text-slate-400">
-            {loading ? "—" : rolesText}
+            {loading ? "—" : roleText}
           </p>
         </div>
       </div>

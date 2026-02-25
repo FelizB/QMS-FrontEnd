@@ -85,7 +85,7 @@ function TableSection() {
   return (
     <div className="space-y-6">
         {/* Recent Order */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+        <div className="bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
           <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
             <div className="flex items-center justify-between">
              <div>
@@ -167,8 +167,8 @@ function TableSection() {
           </div>
           </div>
           {/* Top Products */}
-          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
-           <div className="bg-white/-80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+          <div className="bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+           <div className="">
             <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
                 <div className="flex items-center justify-between">
                     <div className="text-lg font-bold text-slate-800 dark:text-white">
@@ -180,7 +180,7 @@ function TableSection() {
                         Best performing products
                     </p>
                 </div>
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                <button className="text-blue-800 hover:text-blue-700 text-sm font-medium">
                     View All
                 </button>
             </div>

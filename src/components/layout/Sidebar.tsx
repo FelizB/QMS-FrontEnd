@@ -79,7 +79,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
   }
 
   return (
-    <div className={`${collapsed ? "w-20" : "w-72"} transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col relative z-10`}>
+    <div className={`${collapsed ? "w-20" : "w-72"} transition-all duration-300 ease-in-out bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col relative z-10`}>
       {/* Logo */}
       <div className="p-6 border-b border-slatee-200/50 dark:border-slate-700/50">
         <div className="flex items-center space-x-3">
@@ -163,16 +163,21 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
                             'bg-blue-500 text-white shadow-lg shadow-blue-500/25' :
                             'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50'
                           }`}
-                        onClick={() => {
+                         onClick={() => {
                           handleNavigation(subitem.path);
                           // optionally keep parent expanded
                           // toggleExpanded(item.id);
-                        }}
-                      >
-                        {subitem.icon && (
-                          <subitem.icon className="w-4 h-4" />
-                        )}
-                        {!collapsed && <span className="ml-2">{subitem.label}</span>}
+                         }}
+                        >
+                          <div className='flex items-center space-x-3'>
+
+                          {subitem.icon && (
+                            <subitem.icon className="w-4 h-4" />
+                          )}
+                          {!collapsed && <span className="ml-2">{subitem.label}</span>}
+
+                          </div>
+
                       </button>
                     );
                   })}

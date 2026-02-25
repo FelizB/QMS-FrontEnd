@@ -8,6 +8,7 @@ import {
   setRemember,
   getRemember,
 } from "./tokenStore";
+import { CurrentUser } from "./CurrentUser";
 
 type Decoded = { sub?: string; username?: string; admin?: boolean; superuser?: boolean; exp?: number };
 export type User = { username: string; admin: boolean; superuser: boolean };
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   // Decode user on access token changes
-  useEffect(() => {
+ /* useEffect(() => {
     if (!accessToken) { setUser(null); return; }
     try {
       const d = jwtDecode<Decoded>(accessToken);
@@ -40,6 +41,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser({ username, admin: !!d.admin, superuser: !!d.superuser });
     } catch { setUser(null); }
   }, [accessToken]);
+
+  */
+
+    useEffect(() => {
+        if (!accessToken) {
+          setUser(null);
+          return;
+        }
+
+        let cancelled = false;
+
+        (async () => {
+          try {
+            const d = jwtDecode<Decoded>(accessToken);
+            const username = (d.username || d.sub || "") as string;
+            if (!cancelled) {
+              setUser({ username, admin: !!d.admin, superuser: !!d.superuser });
+            }
+          } catch (err: any) {
+            // token invalid → force logout
+            if (!cancelled) {
+              setUser(null);
+              setAccessToken(null);
+            }
+          }
+        })();
+
+        return () => {
+          cancelled = true;
+        };
+      }, [accessToken]);
+
+
 
   const login = (access: string, refresh: string, rememberFlag: boolean) => {
     setRemember(rememberFlag);

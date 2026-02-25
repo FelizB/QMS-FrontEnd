@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useAuth } from "./AuthContext";
+import { CurrentUser } from "./CurrentUser";
 
 type RequireAuthProps = {
   children: ReactNode;

@@ -10,7 +10,7 @@ function Header({onToggleSidebar}: HeaderProps) {
     const [open, setOpen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
   return (
-    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
+    <div className="bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
       <div className="flex items-center justify-between">
         {/* left section */}
         <div className="flex items-center space-x-4">
@@ -22,9 +22,6 @@ function Header({onToggleSidebar}: HeaderProps) {
             <h1 className="text-2xl front-black text-slate-800 dark:text-white">
               Dashboard
             </h1>
-            <p className=" front-black text-slate-800 dark:text-white">
-              Welcome back, Alex! here's is what's happening today
-              </p>
           </div>
         </div>
         {/* center section */}
@@ -92,7 +89,7 @@ function Header({onToggleSidebar}: HeaderProps) {
 
           {/* popover */}
               
-             <ProfilePopover open={open} onClose={() => setOpen(false)} anchorRef={btnRef.current} />
+             <ProfilePopover open={open} onClose={() => setOpen(false)} anchorEl={btnRef} />
        
           
           </div>

@@ -1,6 +1,5 @@
-import axios, { AxiosError} from "axios";
-  
-import type {AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   currentAccessToken,
   currentRefreshToken,
@@ -46,7 +45,6 @@ async function callRefresh(): Promise<{ access_token: string; refresh_token?: st
 
 /** Helper to detect network-level failures (server down, DNS, CORS block, timeout). */
 function isNetworkError(err: AxiosError) {
-  // Axios sets code for timeouts and general network failures
   return !!(
     err.code === "ECONNABORTED" ||                  // timeout
     err.message?.includes("Network Error") ||       // generic network
@@ -54,6 +52,20 @@ function isNetworkError(err: AxiosError) {
     (!err.response && err.request)                  // no response received
   );
 }
+
+/** ADDED: Extract API error "code" from our backend's shapes */
+function extractApiCode(data: any): string | undefined {
+  if (!data) return;
+  if (typeof data.code === "string") return data.code;
+  if (typeof data.error === "string") return data.error;
+  if (data.detail) {
+    if (typeof data.detail === "string") return data.detail;
+    if (typeof data.detail.code === "string") return data.detail.code;
+  }
+}
+
+/** ADDED: 401 codes that should NOT trigger refresh; we log out immediately */
+const AUTH_401_STOP = new Set(["TOKEN_INVALIDATED", "USER_LOGGED_OUT", "REFRESH_REVOKED", "NO_AUTH"]);
 
 api.interceptors.response.use(
   (res: AxiosResponse) => res,
@@ -65,9 +77,17 @@ api.interceptors.response.use(
 
     // ---- Normalize network errors so UI can show a clear message
     if (isNetworkError(error)) {
-      // Convert to a consistent shape (so your extractErrorMessage can render a string)
       error.message = "Cannot reach the server. Check your connection or try again.";
       return Promise.reject(error);
+    }
+
+    // ADDED: Short-circuit for explicit auth errors (do NOT attempt refresh)
+    if (status === 401) {
+      const apiCode = extractApiCode(error.response?.data);
+      if (apiCode && AUTH_401_STOP.has(apiCode)) {
+        window.dispatchEvent(new Event("auth:logout"));
+        return Promise.reject(error);
+      }
     }
 
     // ---- 401 handling with refresh (unchanged)
@@ -103,3 +123,31 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+
+
+
+
+/* =======================
+   ADDED: logout API helper
+   ======================= */
+
+export type LogoutResponse = { code: string; message: string; details?: string | null };
+
+/** Call backend logout and normalize 200/202/204/401 */
+export async function postLogout(): Promise<LogoutResponse | null> {
+  const rt = currentRefreshToken();
+  const res = await api.post<LogoutResponse>(
+    "/auth/logout",
+    rt ? { refresh_token: rt } : undefined,
+    { validateStatus: (s) => [200, 202, 204, 401].includes(s) }
+  );
+
+  if (res.status === 204) {
+    return { code: "LOGOUT_SUCCESS", message: "Logged out successfully.", details: null };
+  }
+  if (res.status === 401) {
+    return { code: "ALREADY_LOGGED_OUT", message: "Session already ended.", details: null };
+  }
+  return res.data ?? { code: "LOGOUT_SUCCESS", message: "Logged out.", details: null };
+}

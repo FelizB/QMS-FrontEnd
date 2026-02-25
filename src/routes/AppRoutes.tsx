@@ -20,9 +20,14 @@ import Settings from "../pages/Settings";
 import {AdminUsers} from "../pages/AdminUsers";
 import SuperPanel from "../pages/SuperPanel";
 import { RequireAuth } from "../auth/RequireAuth";
+import BootGate from "../components/common/BootGate";
+import { BootstrapAuthLogout } from "../auth/AuthLougout";
 
 export default function AppRoutes() {
   return (
+    <>
+    <BootstrapAuthLogout/>
+    <BootGate>
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" />} />
       <Route path="/login" element={<Login />} />
@@ -77,5 +82,7 @@ export default function AppRoutes() {
       <Route path="/unauthorized" element={<div>Unauthorized</div>} />
       <Route path="*" element={<Navigate to="/dashboard" />} />
     </Routes>
+    </BootGate>
+    </>
   );
 }

@@ -25,7 +25,7 @@ const KpiCard: React.FC<KpiCardProps> = ({
   className,
 }) => {
   return (
-    <div className={`rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${className || ""}`}>
+    <div className={`rounded-xl border border-slate-200 bg-white shadow-xl p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/80 ${className || ""}`}>
       {/* Header row */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">

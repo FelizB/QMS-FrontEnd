@@ -7,10 +7,10 @@ import {
 } from "recharts";
 
 type DonutGaugeProps = {
-  value: number;          // 0..100
-  size?: number;          // px, applied via container
-  thickness?: number;     // % of radius, e.g., 12..20
-  color?: string;         // any CSS color
+  value: number;         
+  size?: number;          
+  thickness?: number;     
+  color?: string;         
   trackColor?: string;
   centerTextColor?: string;
   className?: string;
@@ -20,9 +20,9 @@ const DonutCards: React.FC<DonutGaugeProps> = ({
   value,
   size = 90,
   thickness = 14,
-  color = "#3B82F6",         // Tailwind blue-500
-  trackColor = "#E5E7EB",    // gray-200
-  centerTextColor = "#0f172a", // slate-900
+  color = "#3B82F6",        
+  trackColor = "#E5E7EB",    
+  centerTextColor = "#0f172a", 
   className,
 }) => {
   const clamped = Math.max(0, Math.min(100, value));

@@ -32,11 +32,9 @@ function App() {
 
   return (
     <QueryClientProvider client={qc}>
-      <AuthProvider>
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>
-      </AuthProvider>
     </QueryClientProvider>
   );
 

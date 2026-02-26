@@ -9,9 +9,9 @@ import AnalyticsInsights from "../pages/AnalyticsInsights";
 import UsersAllUsers from "../pages/UsersAllUsers";
 import UsersRoles from "../pages/UsersRoles";
 import UsersActivity from "../pages/UsersActivity";
-import EcommerceProducts from "../pages/EcommerceProducts";
-import EcommerceOrders from "../pages/EcommerceOrders";
-import EcommerceCustomers from "../pages/EcommerceCustomers";
+import WorkspacePortfolios from "../pages/WorkspacePortfolios";
+import WorkspacePrograms from "../pages/WorkspacePrograms";
+import WorkspaceProjects from "../pages/WorkspaceProjects";
 import Inventory from "../pages/Inventory";
 import Transactions from "../pages/Transactions";
 import CalendarPage from "../pages/CalendarPage";
@@ -22,6 +22,7 @@ import SuperPanel from "../pages/SuperPanel";
 import { RequireAuth } from "../auth/RequireAuth";
 import BootGate from "../components/common/BootGate";
 import { BootstrapAuthLogout } from "../auth/AuthLougout";
+import ProfilePage from "../components/layout/profile/Profile";
 
 export default function AppRoutes() {
   return (
@@ -49,14 +50,15 @@ export default function AppRoutes() {
         <Route path="users/all-users" element={<UsersAllUsers />} />
         <Route path="users/roles" element={<UsersRoles />} />
         <Route path="users/activity" element={<UsersActivity />} />
-        <Route path="ecommerce/products" element={<EcommerceProducts />} />
-        <Route path="ecommerce/orders" element={<EcommerceOrders />} />
-        <Route path="ecommerce/customers" element={<EcommerceCustomers />} />
+        <Route path="workspace/portfolios" element={<WorkspacePortfolios />} />
+        <Route path="workspace/programs" element={<WorkspacePrograms />} />
+        <Route path="workspace/projects" element={<WorkspaceProjects />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="calendar" element={<CalendarPage />} />
-        <Route path="reports" element={<ReportsPage />} />
+        <Route path="report/reports" element={<ReportsPage />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="profile" element={<ProfilePage/>}/>
       </Route>
 
       {/* Admin or Superuser only */}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { LogOut, Settings, User } from "lucide-react";
 import { useUser } from "../../auth/useAuthHydrate";
 import { LogoutButton } from "./LogoutButton";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type ProfilePopoverProps = {
   open: boolean;
@@ -9,9 +10,20 @@ type ProfilePopoverProps = {
   anchorEl: React.RefObject<HTMLButtonElement | null>;
 };
 
+const menu =[
+    { id: 'profile', icon:User ,label:"View Profile", path:'profile'},
+    { id:"settings", icon: Settings, label:"Account Settings", path:'settings' }
+]
+
 const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl }) => {
   const panelRef = useRef<HTMLDivElement>(null);
   const { user, loading } = useUser();
+  const location = useLocation()
+  const currentPath = location.pathname.replace(/^\//, '')
+  const navigate = useNavigate()
+  const handleNavigation = (path: string) => {
+    navigate(`/${path}`)
+  }
 
   // Close on outside click
   useEffect(() => {
@@ -57,6 +69,8 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
     : user?.admin     ? "Administrator"
     : user            ? "Normal"
     : "—";
+  const firstName = user?.first_name ?? "_";
+  const lastName = user?.last_name ?? "_";
   const avatar ="https://i.pravatar.cc/300";
 
   return (
@@ -70,12 +84,12 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
       <div className="flex items-center space-x-3 p-4">
         <img
           src={avatar}
-          alt={displayName}
+          alt="name"
           className="h-20 w-20 rounded-full ring-2 ring-blue-500 object-cover"
         />
         <div className="p-1">
           <p className="pt-1 text-sm font-medium text-slate-800 dark:text-slate-200">
-            {loading ? "Loading…" : displayName}
+            {loading ? "Loading…" : firstName} {loading ? ".":lastName}
           </p>
           <p className="pt-1 text-xs text-slate-500 dark:text-slate-400">
             {loading ? "—" : email}
@@ -88,29 +102,30 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
 
       {/* Links */}
       <div className="mt-2 space-y-1">
-        <button
-          role="menuitem"
-          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-200 dark:hover:bg-slate-800"
-          onClick={() => {
-            // navigate('/profile');
-            onClose();
-          }}
-        >
-          <User className="h-4 w-4 text-slate-400" />
-          View Profile
-        </button>
-
-        <button
-          role="menuitem"
-          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-200 dark:hover:bg-slate-800"
-          onClick={() => {
-            // navigate('/settings');
-            onClose();
-          }}
-        >
-          <Settings className="h-4 w-4 text-slate-400" />
-          Account Settings
-        </button>
+        {menu.map((item)=>{
+         const isActive = currentPath === item.path;
+         return(
+          <div
+            className={
+              `flex w-full mb-2 rounded-xl transition-colors duration-200
+              ${isActive
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25'
+                  : 'text-slate-600 dark:text-slate-300'
+              }`
+            }
+          >
+            <button
+              role="menuitem"
+              className={`flex w-full items-center gap-4 p-3 text-left rounded-xl
+                          ${!isActive ? 'hover:bg-slate-100 dark:hover:bg-slate-900/50' : 'hover:bg-blue-600'}`}
+              onClick={() => { handleNavigation(item.path); onClose(); }}
+            >
+              <item.icon className={`h-4 w-4 ${isActive ? 'text-white/80' : 'text-slate-400'}`} />
+              {item.label}
+            </button>
+          </div>
+         )
+         })}
 
         <div className="my-1 h-px bg-slate-200 dark:bg-slate-700" />
 

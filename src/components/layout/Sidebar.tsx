@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 // add explicit path for routing
 const menuItems = [
-  { id: 'dashboard', icon: LayoutDashboard, label:"Dashboard", path:'dashboard', badge:"New" },
+  { id: 'dashboard', icon: LayoutDashboard, label:"Dashboard", path:'dashboard', /* badge:"New"*/ },
   {
     id: 'analytics',
     icon: BarChart3,
@@ -12,7 +12,6 @@ const menuItems = [
     path: 'analytics',
     submenu: [
       { id:"overview", label:"Overview", path:'analytics/overview', icon: PieChart },
-      { id:"reports", label:"Reports", path:'analytics/reports', icon: BarChart },
       { id:"insights", label:"Insights", path:'analytics/insights', icon: BarChart3 }
     ]
   },
@@ -20,7 +19,6 @@ const menuItems = [
     id: 'users',
     icon: Users,
     label: 'Users',
-    count:"2.4k",
     path: 'users',
     submenu: [
       { id:"all-users", label:"All Users", path:'users/all-users', icon: UsersIcon },
@@ -29,20 +27,28 @@ const menuItems = [
     ]
   },
   {
-    id: 'ecommerce',
+    id: 'workspaces',
     icon: ShoppingBag,
-    label: 'E-commerce',
-    path: 'ecommerce',
+    label: 'WorkSpaces',
+    path: 'workspace',
     submenu: [
-      { id:"products", label:"Products", path:'ecommerce/products', icon: ShoppingCart },
-      { id:"orders", label:"Orders", path:'ecommerce/orders', icon: Package },
-      { id:"customers", label:"Customers", path:'ecommerce/customers', icon: User }
+      { id:"portfolios", label:"Portfolios", path:'workspace/portfolios', icon: ShoppingCart },
+      { id:"programs", label:"Programs", path:'workspace/programs', icon: Package },
+      { id:"projects", label:"Projects", path:'workspace/projects', icon: User }
     ]
   },
-  { id: 'inventory', icon: Package, label: 'Inventory', path:'inventory', count:"847" },
-  { id:"transactions", icon: MessageSquare, label:"Transactions", path:'transactions', badge:"12" },
+  { id: 'inventory', icon: Package, label: 'Inventory', path:'inventory'},
+  { id:"transactions", icon: MessageSquare, label:"Transactions", path:'transactions', /* badge:"12" */ },
   { id:"calendar", icon: Calendar, label:"Calendar", path:'calendar' },
-  { id:"reports", icon: FileText, label:"Reports", path:'reports' },
+  {
+    id: 'report',
+    icon: FileText,
+    label: 'Report',
+    path: 'report',
+    submenu: [
+      { id:"reports", label:"Reports", path:'report/reports', icon: FileText },
+    ]
+  },
   { id:"settings", icon: Settings, label:"Settings", path:'settings' }
 ]
 
@@ -126,17 +132,20 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
                   <>
                   {!collapsed && (
                     <>
-                      <span className='font-medium ml-2'>{item.label}</span>
-                      {item.badge && (
+                      <span className='font-medium ml-2'>
+                        {item.label} </span>
+                    {/* {item.badge && (
                           <span className='px-2 py-1 text-xs bg-red-500 text-white-rounded-full'>
-                        {item.badge}
+                        {item.badge} 
                       </span>
                       )}
+                      {/*
                       {item.count && (
                         <span className='px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full'> 
                           {item.count}
                         </span>
                       )}
+                        */}
                       </>  
                    )}
               
@@ -194,6 +203,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
         {!collapsed && (
             <div className="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              {/*
                 <img
                   src="https://i.pravatar.cc/300"
                   alt="User"
@@ -207,6 +217,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
                     </div>
                 
                   </div>
+                  */}
                 </div>
             </div>
         )}

@@ -12,7 +12,15 @@ import {
   Calendar,
   User as UserIcon,
   BadgeCheck,
+  User,
+  UserKeyIcon,
+  Boxes,
+  Box,
+  Signature,
+  ShieldCheck,
 } from "lucide-react";
+import { useUser } from "../../../auth/useAuthHydrate";
+import { mapUserToProfile } from "./profileData";
 
 type WorkItem = {
   company: string;
@@ -191,14 +199,22 @@ const TabButton: React.FC<{ active?: boolean; onClick?: () => void; children: Re
 );
 
 const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE }) => {
-  const initials = useInitials(data.name);
   const [tab, setTab] = useState<"Timeline" | "About">("About");
+
+  const { user, loading } = useUser();
+
+  if (loading) {
+    return <div className="p-4">Loading…</div>;
+  }
+
+  const mapped = mapUserToProfile(user);
+
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-white via-slate-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        {/* Main "card" container */}
+      <div className="mx-auto max-w-8xl px-8 py-8">
         <div className="rounded-2xl border border-white/40 bg-white/70 p-6 shadow-xl backdrop-blur dark:border-white/10 dark:bg-white/5">
+
           {/* Header */}
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             {/* Left: avatar + name & meta */}
@@ -213,21 +229,26 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                     loading="lazy"
                   />
                 ) : (
-                  <div className="h-full w-full grid place-items-center bg-gradient-to-br from-slate-200 to-slate-50 text-3xl font-bold text-slate-600">
-                    {initials}
+                  <div className="h-full w-full grid place-items-center bg-gradient-to-br from-slate-200 to-slate-50 text-3xl font-bold text-slate-600">           
+
+                      <span className="font-bold text-[30px] leading-none">
+                        {mapped.header.initials?.[0] ? <span style={{ color: mapped.header.c1 }}>{mapped.header.initials[0]}</span> : <span className="text-slate-400">—</span>}
+                        {mapped.header.initials?.[1] ? <span style={{ color: mapped.header.c2 }}>{mapped.header.initials[1]}</span> : null}
+                      </span>
+
                   </div>
                 )}
               </div>
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{data.name}</h1>
+                  <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{mapped.header.name}</h1>
                   <BadgeCheck className="h-5 w-5 text-sky-500" />
                 </div>
-                <div className="mt-1 text-sm font-semibold text-sky-600">{data.title}</div>
+                <div className="mt-1 text-sm font-semibold text-sky-600">{mapped.header.role }</div>
                 <div className="mt-1 flex items-center gap-1 text-sm text-slate-500">
                   <MapPin className="h-4 w-4" />
-                  <span>{data.location}</span>
+                  <span>{mapped.header.country}</span>
                 </div>
 
                 {/* Rankings */}
@@ -267,38 +288,75 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
+          {/*-- end of header section ---- */}
 
-          {/* Content grid */}
+          <div className="my-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-slate-700" />
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {/* LEFT COLUMN (Work + Skills) */}
+
+          {/*  ---------LEFT COLUMN (Work + Skills) ----------*/}
             <aside className="lg:col-span-1">
-              {/* Work */}
+
+              {/* Basics  */}
               <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
-                <div className="flex items-center justify-between">
-                  <SectionTitle>Work</SectionTitle>
-                </div>
-                <div className="mt-3 space-y-4">
-                  {data.work.map((w, idx) => (
-                    <div key={idx} className="rounded-lg border border-slate-100 p-3 dark:border-slate-800">
-                      <div className="flex items-center justify-between">
-                        <div className="font-semibold text-slate-800 dark:text-slate-100">{w.company}</div>
-                        {w.badge && (
-                          <BadgePill tone={w.badge === "Primary" ? "primary" : "secondary"}>
-                            {w.badge}
-                          </BadgePill>
-                        )}
+                  <div className="flex p-3">
+                    <div className="w-full">
+                      <div className="w-full border-b border-slate-100 pb-2 dark:border-slate-800">
+                        <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                          Basic Information
+                        </h4>
                       </div>
-                      <div className="mt-1 whitespace-pre-line text-xs text-slate-500">{w.address}</div>
+                    
+                      <LabelValue
+                        icon={<User className="h-4 w-4" />}
+                        label= "username"
+                        value={<span className="leading-relaxed">{mapped.basics.username}</span>}
+                      />
+                      <LabelValue
+                        icon={<UserKeyIcon className="h-4 w-4" />}
+                        label="Role"
+                        value={<span className="leading-relaxed">{mapped.basics.role}</span>}
+                      />
+                      <LabelValue
+                        icon={<Box className="h-4 w-4" />}
+                        label="Unit"
+                        value={<span className="leading-relaxed">{mapped.basics.unit}</span>}
+                      />
+                      <LabelValue
+                        icon={<Boxes className="h-4 w-4" />}
+                        label="Department"
+                        value={<span className="leading-relaxed">{mapped.basics.department}</span>}
+                      />
+                      <LabelValue
+                        icon={<Signature className="h-4 w-4" />}
+                        label="Approval"
+                        value={<span className={
+                                  mapped.basics.approval === "Approved"
+                                    ? "text-green-600 dark:text-green-400 font-medium animate-pulse drop-shadow-[0_0_8px_rgba(34,197,94,0.6)] "
+                                    : "text-red-600 dark:text-red-400 font-medium animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                                }
+                        >{mapped.basics.approval}</span>}
+                      />
+                      <LabelValue
+                        icon={<ShieldCheck className="h-4 w-4" />}
+                        label="Status"
+                        value={<span className={
+                                  mapped.basics.status === "Active"
+                                    ? "text-green-600 dark:text-green-400 font-medium animate-pulse drop-shadow-[0_0_8px_rgba(34,197,94,0.6)] "
+                                    : "text-red-600 dark:text-red-400 font-medium animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                                }>
+                          
+                          {mapped.basics.status}</span>}
+                      />
                     </div>
-                  ))}
-                </div>
+                  </div>
               </div>
 
               {/* Skills */}
               <div className="mt-6 rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
-                <SectionTitle>Skills</SectionTitle>
+                <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
+                    <SectionTitle>Skills</SectionTitle>
+                </div>
+                
                 <div className="mt-2">
                   {data.skills.map((s, i) => (
                     <SkillBar key={i} {...s} />
@@ -307,7 +365,7 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
               </div>
             </aside>
 
-            {/* RIGHT COLUMN (Tabs + About) */}
+            {/* --------- RIGHT COLUMN (Tabs + About) ---------- */}
             <section className="lg:col-span-2">
               <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
                 {/* Tabs */}
@@ -326,36 +384,39 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                   </TabButton>
                 </div>
 
-                {/* Panels */}
+                {/* Contact information - About */}
+                
                 {tab === "About" ? (
                   <div className="grid grid-cols-1 gap-8 p-2 pt-4 md:grid-cols-2">
                     <div>
+                         <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
                       <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                         Contact Information
                       </h4>
+                      </div>
                       <LabelValue
                         icon={<Phone className="h-4 w-4" />}
-                        label="Phone"
+                        label= "phone"
                         value={
                           <a
-                            href={`tel:${data.contact.phone.replace(/\s+/g, "")}`}
+                            href={`tel:${mapped.contact.phone.replace(/\s+/g, "")}`}
                             className="text-sky-600 hover:underline"
                           >
-                            {data.contact.phone}
+                            {mapped.contact.phone}
                           </a>
                         }
                       />
                       <LabelValue
                         icon={<MapPin className="h-4 w-4" />}
                         label="Address"
-                        value={<span className="leading-relaxed">{data.contact.address}</span>}
+                        value={<span className="leading-relaxed">{mapped.contact.address}</span>}
                       />
                       <LabelValue
                         icon={<Mail className="h-4 w-4" />}
                         label="E-mail"
                         value={
-                          <a href={`mailto:${data.contact.email}`} className="text-sky-600 hover:underline">
-                            {data.contact.email}
+                          <a href={`mailto:${mapped.contact.email}`} className="text-sky-600 hover:underline">
+                            {mapped.contact.email}
                           </a>
                         }
                       />
@@ -364,28 +425,31 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                         label="Site"
                         value={
                           <a
-                            href={`https://${data.contact.site.replace(/^https?:\/\//, "")}`}
+                            href={`https://${mapped.contact.site.replace(/^https?:\/\//, "")}`}
                             target="_blank"
                             rel="noreferrer"
                             className="text-sky-600 hover:underline break-all"
                           >
-                            {data.contact.site}
+                            {mapped.contact.site}
                           </a>
                         }
                       />
                     </div>
 
                     <div>
+                     <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
                       <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                         Basic Information
                       </h4>
-                      <LabelValue icon={<Calendar className="h-4 w-4" />} label="Birthday" value={data.basic.birthday} />
-                      <LabelValue icon={<UserIcon className="h-4 w-4" />} label="Gender" value={data.basic.gender} />
+                      </div>
+                      <LabelValue icon={<Calendar className="h-4 w-4" />} label="Birthday" value={mapped.contact.birthday} />
+                      <LabelValue icon={<UserIcon className="h-4 w-4" />} label="Gender" value={mapped.contact.gender} />
                     </div>
                   </div>
                 ) : (
                   <div className="p-2 pt-4 text-sm text-slate-500">
-                    {/* Placeholder timeline items */}
+
+            {/* Placeholder timeline items */}
                     <div className="space-y-4">
                       <div className="flex gap-3">
                         <div className="mt-1 h-2 w-2 rounded-full bg-sky-500" />
@@ -418,7 +482,50 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                   </div>
                 )}
               </div>
+
+              {/*------lower section -------*/}
+
+              <div className="rounded-xl border  mt-5 border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
+                <div className="flex  p-4 items-center justify-between ">
+                  <div className="w-full border-b border-slate-100 pb-2 dark:border-slate-800">
+                      <SectionTitle>Work</SectionTitle>
+                  </div>
+                  
+                </div>
+                   <div className="rounded-lg border border-slate-100 p-3 dark:border-slate-800">
+                      <div className="flex items-center justify-between">
+                        <div className="font-semibold text-slate-800 dark:text-slate-100">
+                          {mapped.primary_worksites.name}
+                          </div>
+                          <BadgePill tone={"primary"}>
+                            Primary
+                          </BadgePill>
+                      </div>
+                      <div className="mt-1 whitespace-pre-line text-xs text-slate-500">
+                        {mapped.primary_worksites.city}{" , "}{mapped.primary_worksites.country} 
+                        {"\n"} 
+                        {mapped.primary_worksites.address}{" - "}{mapped.primary_worksites.code} 
+                        </div>
+                    </div>
+
+                    <div className="rounded-lg mt-3 border border-slate-100 p-3 dark:border-slate-800">
+                      <div className="flex items-center justify-between">
+                        <div className="font-semibold text-slate-800 dark:text-slate-100">
+                          {mapped.secondary_worksites.name}
+                        </div>
+                          <BadgePill tone={"secondary"}>
+                            Secondary
+                          </BadgePill>
+                      </div>
+                      <div className="mt-1 whitespace-pre-line text-xs text-slate-500">
+                        {mapped.secondary_worksites.city}{" , "}{mapped.secondary_worksites.country} 
+                        {"\n"} 
+                        {mapped.secondary_worksites.address}{" - "}{mapped.secondary_worksites.code} 
+                        </div>
+                    </div>
+              </div>
             </section>
+
           </div>
         </div>
       </div>

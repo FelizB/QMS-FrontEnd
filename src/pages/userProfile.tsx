@@ -1,4 +1,4 @@
-import ProfilePage from "../components/layout/Profile";
+import ProfilePage from "../components/layout/profile/Profile";
 
 function userProfile(){
     return(

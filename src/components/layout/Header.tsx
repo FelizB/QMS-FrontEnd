@@ -1,6 +1,7 @@
 import { Bell, ChevronDown, Filter, Menu, Plus, Search, Settings, Sun } from "lucide-react";
 import React, { useRef, useState } from "react";
 import ProfilePopover from "./ProfilePopover";
+import { useUser } from "../../auth/useAuthHydrate";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -9,6 +10,13 @@ interface HeaderProps {
 function Header({onToggleSidebar}: HeaderProps) {
     const [open, setOpen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
+    const { user, loading } = useUser();
+    const displayName = user?.username ?? "—";
+    const roleText =
+      user?.superuser ? "Super Administrator"
+      : user?.admin     ? "Administrator"
+      : user            ? "Normal"
+      : "—";
   return (
     <div className="bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -79,8 +87,8 @@ function Header({onToggleSidebar}: HeaderProps) {
                   className="w-8 h-8 rounded-full ring-2 ring-blue-500"
                 />
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-medium text-slate-800 dark:text-slate-200">Feliz B</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Administrator</p>
+                  <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{displayName}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{roleText}</p>
                 </div>
                 <ChevronDown
                   className={`w-4 h-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}

@@ -44,7 +44,7 @@ type ContactInfo = {
 type BasicInfo = {
   birthday: string; // display string (e.g., "Dec 26, 2000")
   gender: string;
-};
+}; 
 
 type ProfileData = {
   name: string;

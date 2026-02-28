@@ -4,6 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Boot theme from cookie BEFORE app mounts -->
+    <script>
+      (function () {
+        try {
+          var name = "theme=";
+          var parts = (document.cookie || "").split(";").map(function (c) { return c.trim(); });
+          var theme = "light";
+          for (var i = 0; i < parts.length; i++) {
+            if (parts[i].indexOf(name) === 0) {
+              var v = parts[i].substring(name.length);
+              if (v === "dark" || v === "light") { theme = v; }
+            }
+          }
+          if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+          // Optional: ensure native controls follow chosen theme
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="stylesheet" href="/src/App.css" />
     <title>qms-frontend</title>
   </head>

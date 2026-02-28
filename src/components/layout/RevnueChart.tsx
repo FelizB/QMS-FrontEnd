@@ -58,7 +58,8 @@ function RevenueChart() {
                 backgroundColor:"rgba(255,255,255,0.95)",
                 border:"none",
                 borderRadius:"12px",
-                boxShadow:"0 10px 40px rgba(0,0,0,0.1)"
+                boxShadow:"0 10px 40px rgba(0,0,0,0.1)",
+                color:"black"
             }}
             formatter={(value)=>[`$${value?.toLocaleString()}`,""]}
             />

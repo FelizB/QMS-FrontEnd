@@ -1,4 +1,7 @@
 import React, { useMemo, useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import { qmsApi } from "../../../api/apiEndpoints";
+
 import {
   MapPin,
   Star,
@@ -21,88 +24,10 @@ import {
 } from "lucide-react";
 import { useUser } from "../../../auth/useAuthHydrate";
 import { mapUserToProfile } from "./profileData";
+import SkeletonLoader from "../../common/SkeletonLoader";
+import { SkillBar } from "../SkillsBar";
 
-type WorkItem = {
-  company: string;
-  address: string;
-  badge?: "Primary" | "Secondary";
-};
 
-type Skill = {
-  name: string;
-  level: number; // 0..100
-  color?: string; // tailwind color (e.g., 'from-blue-500 to-blue-300')
-};
-
-type ContactInfo = {
-  phone: string;
-  address: string;
-  email: string;
-  site: string;
-};
-
-type BasicInfo = {
-  birthday: string; // display string (e.g., "Dec 26, 2000")
-  gender: string;
-}; 
-
-type ProfileData = {
-  name: string;
-  title: string;
-  location: string;
-  rankingScore: number; // 0..10
-  ratingOutOf5: number; // 0..5
-  avatarUrl?: string;
-  work: WorkItem[];
-  skills: Skill[];
-  contact: ContactInfo;
-  basic: BasicInfo;
-};
-
-const DEFAULT_PROFILE: ProfileData = {
-  name: "Jeremy Rose",
-  title: "Product Designer",
-  location: "New York, NY",
-  rankingScore: 8.6,
-  ratingOutOf5: 4.5,
-  work: [
-    {
-      company: "Spotify New York",
-      address: "170 William Street\nNew York, NY 10038-212-315-51",
-      badge: "Primary",
-    },
-    {
-      company: "Metropolitan Museum",
-      address: "534 E 65th Street\nNew York, NY 10065-78 156-187-60",
-      badge: "Secondary",
-    },
-  ],
-  skills: [
-    { name: "Android", level: 92, color: "from-blue-500 to-indigo-400" },
-    { name: "Web-Design", level: 78, color: "from-emerald-500 to-teal-400" },
-    { name: "UI/UX", level: 86, color: "from-fuchsia-500 to-pink-400" },
-    { name: "Video Editing", level: 63, color: "from-sky-500 to-cyan-400" },
-  ],
-  contact: {
-    phone: "+1 234 567 890",
-    address: "534 E 65th Street, New York, NY 10065-78 156-187-60",
-    email: "hello@rsmarquetech.com",
-    site: "www.rsmarquetech.com",
-  },
-  basic: {
-    birthday: "Dec 26, 2000",
-    gender: "Male",
-  },
-};
-
-function useInitials(name: string) {
-  return useMemo(() => {
-    const parts = name.trim().split(/\s+/);
-    const first = parts[0]?.[0] ?? "";
-    const last = parts[parts.length - 1]?.[0] ?? "";
-    return (first + last).toUpperCase();
-  }, [name]);
-}
 
 const RatingStars: React.FC<{ value: number; size?: number; colorClass?: string }> = ({
   value,
@@ -160,27 +85,7 @@ const LabelValue: React.FC<{
   </div>
 );
 
-const SkillBar: React.FC<Skill> = ({ name, level, color = "from-blue-500 to-indigo-400" }) => {
-  const width = Math.max(0, Math.min(100, level));
-  return (
-    <div className="py-2">
-      <div className="flex items-center justify-between">
-        <span className="text-[13px] text-slate-700 dark:text-slate-200">{name}</span>
-        <span className="text-[11px] text-slate-400">{width}%</span>
-      </div>
-      <div className="mt-1 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800">
-        <div
-          className={`h-1.5 rounded-full bg-gradient-to-r ${color}`}
-          style={{ width: `${width}%` }}
-        />
-      </div>
-    </div>
-  );
-};
 
-const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h3 className="text-[12px] font-semibold uppercase tracking-wider text-slate-500">{children}</h3>
-);
 
 const TabButton: React.FC<{ active?: boolean; onClick?: () => void; children: React.ReactNode }> = ({
   active,
@@ -197,17 +102,40 @@ const TabButton: React.FC<{ active?: boolean; onClick?: () => void; children: Re
     {active && <span className="absolute left-2 right-2 -bottom-2 block h-[2px] bg-slate-900 dark:bg-white rounded-full" />}
   </button>
 );
+  
 
-const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE }) => {
+
+const ProfilePage: React.FC<{}> = ({}) => {
+
   const [tab, setTab] = useState<"Timeline" | "About">("About");
-
   const { user, loading } = useUser();
 
+  const mapped = mapUserToProfile(user);
+  const userId = user?.id; // number | undefined
+  type UserSkillOut = {
+    id: number;
+    name: string;
+    percent: number;
+  };
+  const query = useQuery<UserSkillOut[]>({
+    queryKey: ["skills", userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      const res = await qmsApi.users_skills_v1_get_listSkills(userId!);
+      return res.data;
+    },
+  });
+  const skills = query.data ?? [];
+
   if (loading) {
-    return <div className="p-4">Loading…</div>;
+    return <div className="p-4"><SkeletonLoader/></div>;
   }
 
-  const mapped = mapUserToProfile(user);
+  if (!userId) {
+    return <div className="p-4">No user selected</div>;
+  }
+
+  
 
 
   return (
@@ -221,10 +149,10 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
             <div className="flex items-start gap-5">
               {/* Avatar / Initials */}
               <div className="relative h-24 w-24 overflow-hidden rounded-2xl ring-4 ring-white/60 dark:ring-white/10">
-                {data.avatarUrl ? (
+                {mapped.header.avatar? (
                   <img
-                    src={data.avatarUrl}
-                    alt={data.name}
+                    src={mapped.header.avatar}
+                    alt={mapped.header.name}
                     className="h-full w-full object-cover"
                     loading="lazy"
                   />
@@ -255,9 +183,9 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                 <div className="mt-3 flex items-center gap-3">
                   <div className="text-sm text-slate-500">Rankings</div>
                   <div className="text-xl font-semibold text-slate-900 dark:text-white">
-                    {data.rankingScore.toFixed(1)}
+                    {5}
                   </div>
-                  <RatingStars value={data.ratingOutOf5} />
+                  <RatingStars value={5} />
                 </div>
               </div>
             </div>
@@ -354,14 +282,19 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
               {/* Skills */}
               <div className="mt-6 rounded-xl border border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
                 <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
-                    <SectionTitle>Skills</SectionTitle>
-                </div>
-                
+                <div className="w-full border-b border-slate-100 pb-2 dark:border-slate-800">
+                        <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                          SKILLS
+                        </h4>
+                      </div>
+                </div>             
                 <div className="mt-2">
-                  {data.skills.map((s, i) => (
-                    <SkillBar key={i} {...s} />
+                  {skills.map((s) => (
+                    <SkillBar key={s.id} name={s.name} level={s.percent}/>
                   ))}
+                  
                 </div>
+               
               </div>
             </aside>
 
@@ -397,14 +330,7 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                       <LabelValue
                         icon={<Phone className="h-4 w-4" />}
                         label= "phone"
-                        value={
-                          <a
-                            href={`tel:${mapped.contact.phone.replace(/\s+/g, "")}`}
-                            className="text-sky-600 hover:underline"
-                          >
-                            {mapped.contact.phone}
-                          </a>
-                        }
+                        value={<span className="leading-relaxed">{mapped.contact.phone}</span>}
                       />
                       <LabelValue
                         icon={<MapPin className="h-4 w-4" />}
@@ -439,7 +365,7 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
                     <div>
                      <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
                       <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                        Basic Information
+                        More
                       </h4>
                       </div>
                       <LabelValue icon={<Calendar className="h-4 w-4" />} label="Birthday" value={mapped.contact.birthday} />
@@ -488,7 +414,11 @@ const ProfilePage: React.FC<{ data?: ProfileData }> = ({ data = DEFAULT_PROFILE 
               <div className="rounded-xl border  mt-5 border-slate-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
                 <div className="flex  p-4 items-center justify-between ">
                   <div className="w-full border-b border-slate-100 pb-2 dark:border-slate-800">
-                      <SectionTitle>Work</SectionTitle>
+                  <div className="border-b border-slate-100 pb-2 dark:border-slate-800">
+                      <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                        Work
+                      </h4>
+                      </div>
                   </div>
                   
                 </div>

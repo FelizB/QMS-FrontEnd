@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@tailwind utilities;
+
+
+
+@layer base {
+  html, body {
+    @apply min-h-full bg-white text-slate-900;
+  }
+  html.dark, html.dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+
+
+:root { color-scheme: light dark; } /* advertise both */
+html.dark { color-scheme: dark !important; }
+html:not(.dark) { color-scheme: light !important; }
+

@@ -70,16 +70,16 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
 
   // when the route changes, make sure the parent of a subpage is expanded
   React.useEffect(() => {
-    const parts = currentPath.split('/')
-    if (parts.length > 1) {
-      setExpandedMenu(prev => {
-        const next = new Set(prev)
-        next.add(parts[0])
-        return next
-      })
-    }
-  }, [currentPath])
-
+  const parts = currentPath.split('/');
+  setExpandedMenu(prev => {
+    const next = new Set(prev);
+    // Always expand the first-level group
+    if (parts[0]) next.add(parts[0]);            // e.g., 'workspace'
+    // Optionally expand second-level group if your data model needs it
+    if (parts[1]) next.add(parts[0]);            // you already have first-level only
+    return next;
+  });
+}, [currentPath]);
   const handleNavigation = (path: string) => {
     navigate(`/${path}`)
   }
@@ -89,18 +89,21 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
       {/* Logo */}
       <div className="p-6 border-b border-slatee-200/50 dark:border-slate-700/50">
         <div className="flex items-center space-x-3">
+           {/*
             <div className='w-10 h-10 bg-blue-600 rounded-xl flex item-center justify-center shadow-lg'>
                 <Zap className='w-6 h-6 text-white' />
             </div>
+            */}
             {/* Conditional Rendering */}
             <div >
               <h1 className='text-xl font-bold text-slate-800 dark:text-white' >
                 QMS
               </h1>
+              {/*
               <p className='text-sm text-slate-500 dark:text-slate-400' >
                 Admin Panel
-                </p>
-
+              </p>
+              */}
 
             </div>
           </div>
@@ -162,7 +165,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
              {item.submenu && expandedItems.has(item.id) && (
                 <div className={`${collapsed ? 'ml-0 mt-2 space-y-1' : 'ml-8 mt-2 space-y-1'}` }>
                   {item.submenu.map((subitem)=>{
-                    const isActive = currentPath === subitem.path;
+                    const isActive = currentPath === subitem.path || currentPath.startsWith(subitem.path + '/');
                     return (
                       <button
                         key={subitem.id}

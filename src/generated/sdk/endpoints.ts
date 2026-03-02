@@ -12,6 +12,7 @@ import type {
   AppPresentationSchemasTeststepSchemaTestStepOut,
   BodyLoginApiV1AuthTokenPost,
   BodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost,
+  BulkDeleteIn,
   BulkSkillsIn,
   BulkSkillsResult,
   CasesWithoutStepsOut,
@@ -24,6 +25,7 @@ import type {
   LogoutOut,
   LongestCasesOut,
   PagedResult,
+  PagedTasks,
   PortfolioBreakdownOut,
   PortfolioCasesWithoutStepsOut,
   PortfolioCreate,
@@ -80,6 +82,10 @@ import type {
   RefreshIn,
   ReleaseCoverageOut,
   StepTrendOut,
+  TaskCreate,
+  TaskOut,
+  TaskUpdate,
+  TasksV1GetListTasksParams,
   TestCaseAgingOut,
   TestCaseBreakdownLabeledOut,
   TestCaseBreakdownOut,
@@ -1180,6 +1186,88 @@ const users_skills_v1_post_bulkAddSkills = (
     }
   
 /**
+ * @summary List Tasks
+ */
+const tasks_v1_get_listTasks = (
+    projectId: number,
+    params?: TasksV1GetListTasksParams,
+ ) => {
+      return customInstance<PagedTasks>(
+      {url: `/api/v1/tasks/projects/${projectId}/tasks`, method: 'GET',
+        params
+    },
+      );
+    }
+  
+/**
+ * @summary Create Task
+ */
+const tasks_v1_post_createTask = (
+    projectId: number,
+    taskCreate: TaskCreate,
+ ) => {
+      return customInstance<TaskOut>(
+      {url: `/api/v1/tasks/projects/${projectId}/tasks`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: taskCreate
+    },
+      );
+    }
+  
+/**
+ * @summary Get Task
+ */
+const tasks_v1_get_getTask = (
+    taskId: number,
+ ) => {
+      return customInstance<TaskOut>(
+      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'GET'
+    },
+      );
+    }
+  
+/**
+ * @summary Update Task
+ */
+const tasks_v1_patch_updateTask = (
+    taskId: number,
+    taskUpdate: TaskUpdate,
+ ) => {
+      return customInstance<TaskOut>(
+      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: taskUpdate
+    },
+      );
+    }
+  
+/**
+ * @summary Delete Task
+ */
+const tasks_v1_delete_deleteTask = (
+    taskId: number,
+ ) => {
+      return customInstance<void>(
+      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'DELETE'
+    },
+      );
+    }
+  
+/**
+ * @summary Bulk Delete Tasks
+ */
+const tasks_v1_post_bulkDeleteTasks = (
+    bulkDeleteIn: BulkDeleteIn,
+ ) => {
+      return customInstance<void>(
+      {url: `/api/v1/tasks/tasks/bulk-delete`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: bulkDeleteIn
+    },
+      );
+    }
+  
+/**
  * @summary Register
  */
 const auth_v1_post_register = (
@@ -1262,7 +1350,7 @@ const auth_v1_post_logout = (
       );
     }
   
-return {users_v1_get_listUsers,users_v1_get_getUserByUsername,users_v1_get_getUserById,users_v1_get_getUserByEmail,users_v1_patch_updateUser,users_v1_delete_deleteUser,portfolios_v1_post_createPortfolio,portfolios_v1_get_listPortfolios,portfolios_v1_get_getPortfolio,portfolios_v1_patch_updatePortfolio,portfolios_v1_delete_deletePortfolio,programs_v1_post_createProgramForPortfolio,programs_v1_get_listPrograms,programs_v1_get_listAllPrograms,programs_v1_get_getProgram,programs_v1_patch_updateProgram,programs_v1_delete_deleteProgram,projects_v1_get_listProjects,projects_v1_post_createProject,projects_v1_get_getProject,projects_v1_delete_deleteProject,projects_v1_put_updateProject,projects_v1_post_refreshCachesAll,projects_v1_post_refreshCachesRelease,testcases_v1_post_createTestCase,testcases_v1_put_updateTestCase,testcases_v1_get_listTestCasesByProject,testcases_v1_get_countTestCasesGet,testcases_v1_post_countTestCasesPost,testcases_v1_post_searchTestCases,testcases_v1_get_getTestCase,testcases_v1_delete_deleteTestCase,testcases_v1_post_moveTestCase,teststeps_v1_post_createTestStep,teststeps_v1_get_listTestSteps,teststeps_v1_patch_updateTestStep,teststeps_v1_delete_deleteTestStep,teststeps_v1_post_reorderTestSteps,testcases_v1_get_getTestCaseById,files_v1_post_uploadAFile,files_v1_get_listFiles,files_v1_get_downloadAFile,files_v1_delete_soft_deleteAFile,projectanalytics_v1_get_getTestCaseSummary,projectanalytics_v1_get_getTestStepSummary,projectanalytics_v1_get_getTestCaseTrend,projectanalytics_v1_get_getTestCaseBreakdown,projectanalytics_v1_get_getCasesWithoutSteps,projectanalytics_v1_get_getAgingMetrics,projectanalytics_v1_get_getLongestCases,projectanalytics_v1_get_getReleaseCoverage,projectanalytics_v1_get_getPriorityHealth,projectanalytics_v1_get_getTestCaseBreakdownLabeled,portfolioanalytics_v1_get_portfolioSummary,portfolioanalytics_v1_get_portfolioBreakdowns,portfolioanalytics_v1_get_portfolioCasesWithoutSteps,portfolioanalytics_v1_get_portfolioTrend,portfolioanalytics_v1_get_portfolioTopProjects,programanalytics_v1_get_programSummary,programanalytics_v1_get_programBreakdowns,programanalytics_v1_get_programCasesWithoutSteps,programanalytics_v1_get_programTrend,programanalytics_v1_get_programTopProjects,testcaseanalytics_v1_get_testCaseSummary,testcaseanalytics_v1_get_testStepsExecutionSummary,testcaseanalytics_v1_get_testCaseTrends,testcaseanalytics_v1_get_testCaseAging,testcaseanalytics_v1_get_testCaseCoverage,testcaseanalytics_v1_get_testCasesByFolder,testcaseanalytics_v1_get_stepExecutionTrend,testcaseanalytics_v1_get_analyticsHealthcard,users_skills_v1_get_listSkills,users_skills_v1_post_addSkill,users_skills_v1_put_updateSkill,users_skills_v1_delete_deleteSkill,users_skills_v1_post_bulkAddSkills,auth_v1_post_register,auth_v1_post_login,auth_v1_post_refreshToken,auth_v1_get_me,auth_v1_post_logout}};
+return {users_v1_get_listUsers,users_v1_get_getUserByUsername,users_v1_get_getUserById,users_v1_get_getUserByEmail,users_v1_patch_updateUser,users_v1_delete_deleteUser,portfolios_v1_post_createPortfolio,portfolios_v1_get_listPortfolios,portfolios_v1_get_getPortfolio,portfolios_v1_patch_updatePortfolio,portfolios_v1_delete_deletePortfolio,programs_v1_post_createProgramForPortfolio,programs_v1_get_listPrograms,programs_v1_get_listAllPrograms,programs_v1_get_getProgram,programs_v1_patch_updateProgram,programs_v1_delete_deleteProgram,projects_v1_get_listProjects,projects_v1_post_createProject,projects_v1_get_getProject,projects_v1_delete_deleteProject,projects_v1_put_updateProject,projects_v1_post_refreshCachesAll,projects_v1_post_refreshCachesRelease,testcases_v1_post_createTestCase,testcases_v1_put_updateTestCase,testcases_v1_get_listTestCasesByProject,testcases_v1_get_countTestCasesGet,testcases_v1_post_countTestCasesPost,testcases_v1_post_searchTestCases,testcases_v1_get_getTestCase,testcases_v1_delete_deleteTestCase,testcases_v1_post_moveTestCase,teststeps_v1_post_createTestStep,teststeps_v1_get_listTestSteps,teststeps_v1_patch_updateTestStep,teststeps_v1_delete_deleteTestStep,teststeps_v1_post_reorderTestSteps,testcases_v1_get_getTestCaseById,files_v1_post_uploadAFile,files_v1_get_listFiles,files_v1_get_downloadAFile,files_v1_delete_soft_deleteAFile,projectanalytics_v1_get_getTestCaseSummary,projectanalytics_v1_get_getTestStepSummary,projectanalytics_v1_get_getTestCaseTrend,projectanalytics_v1_get_getTestCaseBreakdown,projectanalytics_v1_get_getCasesWithoutSteps,projectanalytics_v1_get_getAgingMetrics,projectanalytics_v1_get_getLongestCases,projectanalytics_v1_get_getReleaseCoverage,projectanalytics_v1_get_getPriorityHealth,projectanalytics_v1_get_getTestCaseBreakdownLabeled,portfolioanalytics_v1_get_portfolioSummary,portfolioanalytics_v1_get_portfolioBreakdowns,portfolioanalytics_v1_get_portfolioCasesWithoutSteps,portfolioanalytics_v1_get_portfolioTrend,portfolioanalytics_v1_get_portfolioTopProjects,programanalytics_v1_get_programSummary,programanalytics_v1_get_programBreakdowns,programanalytics_v1_get_programCasesWithoutSteps,programanalytics_v1_get_programTrend,programanalytics_v1_get_programTopProjects,testcaseanalytics_v1_get_testCaseSummary,testcaseanalytics_v1_get_testStepsExecutionSummary,testcaseanalytics_v1_get_testCaseTrends,testcaseanalytics_v1_get_testCaseAging,testcaseanalytics_v1_get_testCaseCoverage,testcaseanalytics_v1_get_testCasesByFolder,testcaseanalytics_v1_get_stepExecutionTrend,testcaseanalytics_v1_get_analyticsHealthcard,users_skills_v1_get_listSkills,users_skills_v1_post_addSkill,users_skills_v1_put_updateSkill,users_skills_v1_delete_deleteSkill,users_skills_v1_post_bulkAddSkills,tasks_v1_get_listTasks,tasks_v1_post_createTask,tasks_v1_get_getTask,tasks_v1_patch_updateTask,tasks_v1_delete_deleteTask,tasks_v1_post_bulkDeleteTasks,auth_v1_post_register,auth_v1_post_login,auth_v1_post_refreshToken,auth_v1_get_me,auth_v1_post_logout}};
 export type UsersV1GetListUsersResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_listUsers']>>>
 export type UsersV1GetGetUserByUsernameResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_getUserByUsername']>>>
 export type UsersV1GetGetUserByIdResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_getUserById']>>>
@@ -1339,6 +1427,12 @@ export type UsersSkillsV1PostAddSkillResult = NonNullable<Awaited<ReturnType<Ret
 export type UsersSkillsV1PutUpdateSkillResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_put_updateSkill']>>>
 export type UsersSkillsV1DeleteDeleteSkillResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_delete_deleteSkill']>>>
 export type UsersSkillsV1PostBulkAddSkillsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_post_bulkAddSkills']>>>
+export type TasksV1GetListTasksResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_get_listTasks']>>>
+export type TasksV1PostCreateTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_post_createTask']>>>
+export type TasksV1GetGetTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_get_getTask']>>>
+export type TasksV1PatchUpdateTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_patch_updateTask']>>>
+export type TasksV1DeleteDeleteTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_delete_deleteTask']>>>
+export type TasksV1PostBulkDeleteTasksResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_post_bulkDeleteTasks']>>>
 export type AuthV1PostRegisterResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_register']>>>
 export type AuthV1PostLoginResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_login']>>>
 export type AuthV1PostRefreshTokenResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_refreshToken']>>>

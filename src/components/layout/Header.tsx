@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import ProfilePopover from "./ProfilePopover";
 import { useUser } from "../../auth/useAuthHydrate";
 import ThemeToggle from "../common/ThemeToggle";
+import { ToggleButton } from "./Elements/ToggleButton";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -23,10 +24,7 @@ function Header({onToggleSidebar}: HeaderProps) {
       <div className="flex items-center justify-between">
         {/* left section */}
         <div className="flex items-center space-x-4">
-          <button className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" 
-          onClick={onToggleSidebar}>
-            <Menu className="w-5 h-5" />
-          </button>
+            <ToggleButton onToggleSidebar={onToggleSidebar}/>
           <div className="hidden md:block">
             <h1 className="text-2xl front-black text-slate-800 dark:text-white">
               Dashboard

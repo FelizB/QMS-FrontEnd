@@ -1,3 +1,7 @@
-export default function WorkspaceProjects() {
-  return <div>Projects</div>;
+import ProjectsLayout from "../components/layout/workspaces/ProjectsLayout";
+
+function WorkspaceProjects() {
+  return <div><ProjectsLayout/></div>;
 }
+
+export default WorkspaceProjects;

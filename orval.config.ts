@@ -2,7 +2,8 @@
 
 const config = {
   qms: {
-    input: './openapi.json',
+    //input: './openapi.json',
+    input :"http://localhost:8000/openapi.json",
 
     output: {
       mode: 'single',
@@ -10,7 +11,7 @@ const config = {
       schemas: './src/generated/sdk/models',
       client: 'axios',
       prettier: true,
-      clean: true,
+      clean: false,
 
       override: {
         reactQuery: {

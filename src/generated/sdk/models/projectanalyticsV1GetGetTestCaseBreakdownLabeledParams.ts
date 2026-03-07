@@ -6,8 +6,8 @@
  */
 
 export type ProjectanalyticsV1GetGetTestCaseBreakdownLabeledParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-include_nulls?: boolean;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  include_nulls?: boolean;
 };

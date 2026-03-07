@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { WorksiteInfo } from './worksiteInfo';
+import type { WorksiteInfo } from "./worksiteInfo";
 
 export interface UserCreate {
   /**

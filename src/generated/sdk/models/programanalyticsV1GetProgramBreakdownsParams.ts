@@ -6,6 +6,6 @@
  */
 
 export type ProgramanalyticsV1GetProgramBreakdownsParams = {
-include_deleted?: boolean;
-include_nulls?: boolean;
+  include_deleted?: boolean;
+  include_nulls?: boolean;
 };

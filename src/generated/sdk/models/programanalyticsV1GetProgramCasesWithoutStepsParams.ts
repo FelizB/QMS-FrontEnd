@@ -6,10 +6,10 @@
  */
 
 export type ProgramanalyticsV1GetProgramCasesWithoutStepsParams = {
-include_deleted?: boolean;
-/**
- * @minimum 1
- * @maximum 1000
- */
-limit?: number;
+  include_deleted?: boolean;
+  /**
+   * @minimum 1
+   * @maximum 1000
+   */
+  limit?: number;
 };

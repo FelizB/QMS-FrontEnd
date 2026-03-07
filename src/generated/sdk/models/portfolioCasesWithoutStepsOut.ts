@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { PortfolioCasesWithoutStepsOutItemsItem } from './portfolioCasesWithoutStepsOutItemsItem';
+import type { PortfolioCasesWithoutStepsOutItemsItem } from "./portfolioCasesWithoutStepsOutItemsItem";
 
 export interface PortfolioCasesWithoutStepsOut {
   portfolio_id: number;

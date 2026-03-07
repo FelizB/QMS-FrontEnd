@@ -12,7 +12,7 @@ import UsersRoles from "../pages/UsersRoles";
 import UsersActivity from "../pages/UsersActivity";
 import WorkspacePortfolios from "../pages/WorkspacePortfolios";
 import WorkspacePrograms from "../pages/WorkspacePrograms";
-import WorkspaceProjects from "../pages/WorkspaceProjects"; // gateway returning ProjectsLayout ONLY
+import WorkspaceProjects from "../pages/WorkspaceProjects";
 import Inventory from "../pages/Inventory";
 import Transactions from "../pages/Transactions";
 import CalendarPage from "../pages/CalendarPage";

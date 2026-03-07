@@ -6,9 +6,9 @@
  */
 
 export type TestcaseanalyticsV1GetTestCaseCoverageParams = {
-release_id?: number | null;
-/**
- * Execution status id representing NOT_RUN
- */
-not_run_status_id?: number | null;
+  release_id?: number | null;
+  /**
+   * Execution status id representing NOT_RUN
+   */
+  not_run_status_id?: number | null;
 };

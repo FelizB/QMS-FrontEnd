@@ -6,5 +6,5 @@
  */
 
 export type PortfoliosV1DeleteDeletePortfolioParams = {
-concurrency_guid: string;
+  concurrency_guid: string;
 };

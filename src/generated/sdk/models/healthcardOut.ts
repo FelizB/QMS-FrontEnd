@@ -4,9 +4,9 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut } from './appPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut';
-import type { CoverageOut } from './coverageOut';
-import type { StepOverviewOut } from './stepOverviewOut';
+import type { AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut } from "./appPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut";
+import type { CoverageOut } from "./coverageOut";
+import type { StepOverviewOut } from "./stepOverviewOut";
 
 export interface HealthcardOut {
   summary: AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut;

@@ -6,5 +6,5 @@
  */
 
 export type ProjectsV1PostRefreshCachesAllParams = {
-run_async?: boolean;
+  run_async?: boolean;
 };

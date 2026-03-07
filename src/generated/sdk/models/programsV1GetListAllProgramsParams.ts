@@ -6,10 +6,10 @@
  */
 
 export type ProgramsV1GetListAllProgramsParams = {
-skip?: number;
-/**
- * @maximum 200
- */
-limit?: number;
-q?: string | null;
+  skip?: number;
+  /**
+   * @maximum 200
+   */
+  limit?: number;
+  q?: string | null;
 };

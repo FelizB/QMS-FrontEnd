@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { WorksiteInfoExtra } from './worksiteInfoExtra';
+import type { WorksiteInfoExtra } from "./worksiteInfoExtra";
 
 export interface WorksiteInfo {
   code?: string | null;

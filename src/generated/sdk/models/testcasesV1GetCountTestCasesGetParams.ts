@@ -6,8 +6,8 @@
  */
 
 export type TestcasesV1GetCountTestCasesGetParams = {
-/**
- * Optional Release ID filter
- */
-release_id?: number | null;
+  /**
+   * Optional Release ID filter
+   */
+  release_id?: number | null;
 };

@@ -6,11 +6,11 @@
  */
 
 export type ProgramanalyticsV1GetProgramTrendParams = {
-include_deleted?: boolean;
-/**
- * @pattern ^(day|week|month)$
- */
-bucket?: string;
-start_date?: string | null;
-end_date?: string | null;
+  include_deleted?: boolean;
+  /**
+   * @pattern ^(day|week|month)$
+   */
+  bucket?: string;
+  start_date?: string | null;
+  end_date?: string | null;
 };

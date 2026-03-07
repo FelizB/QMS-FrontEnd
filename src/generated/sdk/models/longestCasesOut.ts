@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { LongestCaseItemOut } from './longestCaseItemOut';
+import type { LongestCaseItemOut } from "./longestCaseItemOut";
 
 export interface LongestCasesOut {
   project_id: number;

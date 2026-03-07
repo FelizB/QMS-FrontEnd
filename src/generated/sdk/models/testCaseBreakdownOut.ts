@@ -4,8 +4,8 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TestCaseBreakdownOutByPriorityId } from './testCaseBreakdownOutByPriorityId';
-import type { TestCaseBreakdownOutByTypeId } from './testCaseBreakdownOutByTypeId';
+import type { TestCaseBreakdownOutByPriorityId } from "./testCaseBreakdownOutByPriorityId";
+import type { TestCaseBreakdownOutByTypeId } from "./testCaseBreakdownOutByTypeId";
 
 export interface TestCaseBreakdownOut {
   project_id: number;

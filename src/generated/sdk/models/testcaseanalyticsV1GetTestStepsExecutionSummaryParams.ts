@@ -6,8 +6,8 @@
  */
 
 export type TestcaseanalyticsV1GetTestStepsExecutionSummaryParams = {
-/**
- * Optional release filter
- */
-release_id?: number | null;
+  /**
+   * Optional release filter
+   */
+  release_id?: number | null;
 };

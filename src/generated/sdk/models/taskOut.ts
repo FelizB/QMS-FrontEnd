@@ -4,10 +4,10 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { Person } from './person';
-import type { TaskPriority } from './taskPriority';
-import type { TaskStatus } from './taskStatus';
-import type { TaskType } from './taskType';
+import type { Person } from "./person";
+import type { TaskPriority } from "./taskPriority";
+import type { TaskStatus } from "./taskStatus";
+import type { TaskType } from "./taskType";
 
 export interface TaskOut {
   id: number;

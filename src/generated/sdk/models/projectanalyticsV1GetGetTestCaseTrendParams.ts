@@ -4,13 +4,13 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProjectanalyticsV1GetGetTestCaseTrendBucket } from './projectanalyticsV1GetGetTestCaseTrendBucket';
+import type { ProjectanalyticsV1GetGetTestCaseTrendBucket } from "./projectanalyticsV1GetGetTestCaseTrendBucket";
 
 export type ProjectanalyticsV1GetGetTestCaseTrendParams = {
-bucket?: ProjectanalyticsV1GetGetTestCaseTrendBucket;
-start_date?: string | null;
-end_date?: string | null;
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
+  bucket?: ProjectanalyticsV1GetGetTestCaseTrendBucket;
+  start_date?: string | null;
+  end_date?: string | null;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
 };

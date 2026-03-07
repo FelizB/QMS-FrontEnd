@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProjectSummaryDelete } from './projectSummaryDelete';
+import type { ProjectSummaryDelete } from "./projectSummaryDelete";
 
 export interface ProjectDeleteOut {
   message: string;

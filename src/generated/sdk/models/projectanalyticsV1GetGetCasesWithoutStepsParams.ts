@@ -6,16 +6,16 @@
  */
 
 export type ProjectanalyticsV1GetGetCasesWithoutStepsParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-/**
- * Include a list of case ids/names without steps
- */
-include_ids?: boolean;
-/**
- * @minimum 1
- * @maximum 1000
- */
-limit?: number;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  /**
+   * Include a list of case ids/names without steps
+   */
+  include_ids?: boolean;
+  /**
+   * @minimum 1
+   * @maximum 1000
+   */
+  limit?: number;
 };

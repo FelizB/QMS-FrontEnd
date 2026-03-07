@@ -6,11 +6,11 @@
  */
 
 export type ProjectanalyticsV1GetGetTestCaseBreakdownParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-/**
- * Include rows where priority/type is NULL
- */
-include_nulls?: boolean;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  /**
+   * Include rows where priority/type is NULL
+   */
+  include_nulls?: boolean;
 };

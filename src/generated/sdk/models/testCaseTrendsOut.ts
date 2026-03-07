@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TrendPoint } from './trendPoint';
+import type { TrendPoint } from "./trendPoint";
 
 export interface TestCaseTrendsOut {
   period: string;

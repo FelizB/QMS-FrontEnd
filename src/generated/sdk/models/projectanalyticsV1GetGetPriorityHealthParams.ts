@@ -6,16 +6,16 @@
  */
 
 export type ProjectanalyticsV1GetGetPriorityHealthParams = {
-/**
- * CSV of priority_id values considered 'high' e.g. '1,2'
- */
-high_priority_ids?: string | null;
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-/**
- * @minimum 1
- * @maximum 3650
- */
-stale_days?: number;
+  /**
+   * CSV of priority_id values considered 'high' e.g. '1,2'
+   */
+  high_priority_ids?: string | null;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  /**
+   * @minimum 1
+   * @maximum 3650
+   */
+  stale_days?: number;
 };

@@ -6,5 +6,5 @@
  */
 
 export type TestcasesV1PostCountTestCasesPostParams = {
-release_id?: number | null;
+  release_id?: number | null;
 };

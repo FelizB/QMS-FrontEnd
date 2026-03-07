@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { AppPresentationSchemasTestcaseSchemaTestStepOut } from './appPresentationSchemasTestcaseSchemaTestStepOut';
+import type { AppPresentationSchemasTestcaseSchemaTestStepOut } from "./appPresentationSchemasTestcaseSchemaTestStepOut";
 
 export interface TestCaseOut {
   id: number;

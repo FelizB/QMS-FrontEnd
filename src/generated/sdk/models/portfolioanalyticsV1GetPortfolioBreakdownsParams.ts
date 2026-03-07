@@ -6,6 +6,6 @@
  */
 
 export type PortfolioanalyticsV1GetPortfolioBreakdownsParams = {
-include_deleted?: boolean;
-include_nulls?: boolean;
+  include_deleted?: boolean;
+  include_nulls?: boolean;
 };

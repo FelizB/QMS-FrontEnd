@@ -6,16 +6,16 @@
  */
 
 export type TestcaseanalyticsV1GetTestCaseTrendsParams = {
-/**
- * @pattern ^(day|week|month)$
- */
-period?: string;
-/**
- * YYYY-MM-DD or timestamp (UTC)
- */
-date_from?: string | null;
-/**
- * YYYY-MM-DD or timestamp (UTC)
- */
-date_to?: string | null;
+  /**
+   * @pattern ^(day|week|month)$
+   */
+  period?: string;
+  /**
+   * YYYY-MM-DD or timestamp (UTC)
+   */
+  date_from?: string | null;
+  /**
+   * YYYY-MM-DD or timestamp (UTC)
+   */
+  date_to?: string | null;
 };

@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { UserSkillIn } from './userSkillIn';
+import type { UserSkillIn } from "./userSkillIn";
 
 export interface BulkSkillsIn {
   skills: UserSkillIn[];

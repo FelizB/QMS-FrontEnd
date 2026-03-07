@@ -6,7 +6,7 @@
  */
 
 export type ProjectanalyticsV1GetGetTestCaseSummaryParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
 };

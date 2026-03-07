@@ -6,23 +6,23 @@
  */
 
 export type TestcasesV1GetListTestCasesByProjectParams = {
-/**
- * Search in name/description
- */
-q?: string | null;
-/**
- * Page number
- * @minimum 1
- */
-page?: number;
-/**
- * Page size
- * @minimum 1
- * @maximum 200
- */
-size?: number;
-/**
- * Include soft-deleted rows
- */
-include_deleted?: boolean;
+  /**
+   * Search in name/description
+   */
+  q?: string | null;
+  /**
+   * Page number
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * Page size
+   * @minimum 1
+   * @maximum 200
+   */
+  size?: number;
+  /**
+   * Include soft-deleted rows
+   */
+  include_deleted?: boolean;
 };

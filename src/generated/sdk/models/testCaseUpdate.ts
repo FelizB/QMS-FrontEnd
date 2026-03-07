@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TestStepIn } from './testStepIn';
+import type { TestStepIn } from "./testStepIn";
 
 export interface TestCaseUpdate {
   id: number;

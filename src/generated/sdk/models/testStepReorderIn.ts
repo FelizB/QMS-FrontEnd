@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ReorderItem } from './reorderItem';
+import type { ReorderItem } from "./reorderItem";
 
 export interface TestStepReorderIn {
   test_case_id: number;

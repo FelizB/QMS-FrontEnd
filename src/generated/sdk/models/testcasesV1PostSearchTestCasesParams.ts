@@ -6,9 +6,9 @@
  */
 
 export type TestcasesV1PostSearchTestCasesParams = {
-starting_row?: number;
-number_of_rows?: number;
-sort_field?: string;
-sort_direction?: string;
-release_id?: number | null;
+  starting_row?: number;
+  number_of_rows?: number;
+  sort_field?: string;
+  sort_direction?: string;
+  release_id?: number | null;
 };

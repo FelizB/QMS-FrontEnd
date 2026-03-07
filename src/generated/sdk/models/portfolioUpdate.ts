@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { PortfolioUpdateCustomProperties } from './portfolioUpdateCustomProperties';
+import type { PortfolioUpdateCustomProperties } from "./portfolioUpdateCustomProperties";
 
 export interface PortfolioUpdate {
   name?: string | null;
@@ -14,6 +14,7 @@ export interface PortfolioUpdate {
   artifact_type_id?: number | null;
   is_active?: boolean | null;
   is_default?: boolean | null;
+  last_updated_date?: string | null;
   custom_properties?: PortfolioUpdateCustomProperties;
   concurrency_guid: string;
 }

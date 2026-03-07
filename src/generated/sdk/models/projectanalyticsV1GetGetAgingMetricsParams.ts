@@ -6,13 +6,13 @@
  */
 
 export type ProjectanalyticsV1GetGetAgingMetricsParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-/**
- * Threshold in days for 'stale' counts
- * @minimum 1
- * @maximum 3650
- */
-stale_days?: number;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  /**
+   * Threshold in days for 'stale' counts
+   * @minimum 1
+   * @maximum 3650
+   */
+  stale_days?: number;
 };

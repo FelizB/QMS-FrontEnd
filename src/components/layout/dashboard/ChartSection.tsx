@@ -1,4 +1,4 @@
-import RevenueChart from '../layout/RevnueChart';
+import RevenueChart from './RevnueChart';
 import SalesChart from './SalesChart';
 
 function ChartSection() {

@@ -6,10 +6,10 @@
  */
 
 export type PortfoliosV1GetListPortfoliosParams = {
-skip?: number;
-/**
- * @maximum 200
- */
-limit?: number;
-q?: string | null;
+  skip?: number;
+  /**
+   * @maximum 200
+   */
+  limit?: number;
+  q?: string | null;
 };

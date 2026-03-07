@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TrendLinePoint } from './trendLinePoint';
+import type { TrendLinePoint } from "./trendLinePoint";
 
 export interface StepTrendOut {
   period: string;

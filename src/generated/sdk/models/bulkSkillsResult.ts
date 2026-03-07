@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { UserSkillOut } from './userSkillOut';
+import type { UserSkillOut } from "./userSkillOut";
 
 export interface BulkSkillsResult {
   created: UserSkillOut[];

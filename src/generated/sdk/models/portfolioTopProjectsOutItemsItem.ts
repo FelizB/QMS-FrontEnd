@@ -5,4 +5,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type PortfolioTopProjectsOutItemsItem = {[key: string]: number | string};
+export type PortfolioTopProjectsOutItemsItem = {
+  [key: string]: number | string;
+};

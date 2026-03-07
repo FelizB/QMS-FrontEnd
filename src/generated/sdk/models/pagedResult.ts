@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TestCaseOut } from './testCaseOut';
+import type { TestCaseOut } from "./testCaseOut";
 
 export interface PagedResult {
   total: number;

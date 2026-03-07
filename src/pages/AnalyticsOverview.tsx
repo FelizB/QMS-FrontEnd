@@ -1,5 +1,5 @@
 import React from "react";
-import Analyticals from "../components/layout/Analyticals";
+import Analyticals from "../components/layout/analytics/Analyticals";
 
 
 function AnalyticsOverview (){

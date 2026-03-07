@@ -5,12 +5,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type TaskPriority = typeof TaskPriority[keyof typeof TaskPriority];
-
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority];
 
 export const TaskPriority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
-  CRITICAL: 'CRITICAL',
+  LOW: "LOW",
+  MEDIUM: "MEDIUM",
+  HIGH: "HIGH",
+  CRITICAL: "CRITICAL",
 } as const;

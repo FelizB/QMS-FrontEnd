@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramUpdateCustomProperties } from './programUpdateCustomProperties';
+import type { ProgramUpdateCustomProperties } from "./programUpdateCustomProperties";
 
 export interface ProgramUpdate {
   name?: string | null;

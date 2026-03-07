@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramOutCustomProperties } from './programOutCustomProperties';
+import type { ProgramOutCustomProperties } from "./programOutCustomProperties";
 
 export interface ProgramOut {
   /**
@@ -24,5 +24,6 @@ export interface ProgramOut {
   id: number;
   guid: string;
   concurrency_guid: string;
+  created_at: string;
   last_updated_date: string;
 }

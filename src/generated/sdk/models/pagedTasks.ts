@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TaskOut } from './taskOut';
+import type { TaskOut } from "./taskOut";
 
 export interface PagedTasks {
   items: TaskOut[];

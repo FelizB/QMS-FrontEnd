@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId } from './appPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId';
+import type { AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId } from "./appPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId";
 
 export interface AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut {
   project_id: number;

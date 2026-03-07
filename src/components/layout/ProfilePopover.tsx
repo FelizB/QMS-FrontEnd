@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { LogOut, Settings, User } from "lucide-react";
 import { useUser } from "../../auth/useAuthHydrate";
-import { LogoutButton } from "./LogoutButton";
+import { LogoutButton } from "../layout/authorization/LogoutButton";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type ProfilePopoverProps = {

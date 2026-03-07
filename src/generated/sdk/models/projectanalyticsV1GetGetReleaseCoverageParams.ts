@@ -6,5 +6,5 @@
  */
 
 export type ProjectanalyticsV1GetGetReleaseCoverageParams = {
-include_deleted?: boolean;
+  include_deleted?: boolean;
 };

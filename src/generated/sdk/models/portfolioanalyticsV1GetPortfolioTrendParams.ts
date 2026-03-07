@@ -6,11 +6,11 @@
  */
 
 export type PortfolioanalyticsV1GetPortfolioTrendParams = {
-include_deleted?: boolean;
-/**
- * @pattern ^(day|week|month)$
- */
-bucket?: string;
-start_date?: string | null;
-end_date?: string | null;
+  include_deleted?: boolean;
+  /**
+   * @pattern ^(day|week|month)$
+   */
+  bucket?: string;
+  start_date?: string | null;
+  end_date?: string | null;
 };

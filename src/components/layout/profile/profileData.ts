@@ -1,4 +1,3 @@
-// mapUserToProfile.ts
 import { type UserData } from "../../../auth/CurrentUser";
 import {
   getRoleText,

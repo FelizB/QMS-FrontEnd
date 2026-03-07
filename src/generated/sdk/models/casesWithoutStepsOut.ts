@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { CaseLiteOut } from './caseLiteOut';
+import type { CaseLiteOut } from "./caseLiteOut";
 
 export interface CasesWithoutStepsOut {
   project_id: number;

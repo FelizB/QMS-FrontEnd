@@ -6,5 +6,5 @@
  */
 
 export type TestcaseanalyticsV1GetTestCasesByFolderParams = {
-release_id?: number | null;
+  release_id?: number | null;
 };

@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { PortfolioTrendPointOut } from './portfolioTrendPointOut';
+import type { PortfolioTrendPointOut } from "./portfolioTrendPointOut";
 
 export interface PortfolioTrendOut {
   portfolio_id: number;

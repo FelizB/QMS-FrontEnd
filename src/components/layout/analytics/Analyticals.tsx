@@ -1,5 +1,5 @@
 
-import KpiCard from "../layout/cards/KpiCard";
+import KpiCard from "../cards/KpiCard";
 
 
 const data =[

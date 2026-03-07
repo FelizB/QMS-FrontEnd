@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { FolderCount } from './folderCount';
+import type { FolderCount } from "./folderCount";
 
 export interface FolderBreakdownOut {
   items?: FolderCount[];

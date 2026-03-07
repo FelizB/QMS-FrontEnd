@@ -6,5 +6,5 @@
  */
 
 export type PortfolioanalyticsV1GetPortfolioSummaryParams = {
-include_deleted?: boolean;
+  include_deleted?: boolean;
 };

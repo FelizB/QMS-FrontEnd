@@ -5,4 +5,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProgramCasesWithoutStepsOutItemsItem = {[key: string]: number | string | null};
+export type ProgramCasesWithoutStepsOutItemsItem = {
+  [key: string]: number | string | null;
+};

@@ -1,5 +1,5 @@
 import { LogOut } from "lucide-react";
-import { postLogout } from "../../api/axio";
+import { postLogout } from "../../../api/axio";
 import { useState } from "react";
 
 

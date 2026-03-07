@@ -6,5 +6,5 @@
  */
 
 export type ProgramsV1DeleteDeleteProgramParams = {
-concurrency_guid: string;
+  concurrency_guid: string;
 };

@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TestCaseStepSummaryItem } from './testCaseStepSummaryItem';
+import type { TestCaseStepSummaryItem } from "./testCaseStepSummaryItem";
 
 export interface TestStepsExecutionSummaryOut {
   items: TestCaseStepSummaryItem[];

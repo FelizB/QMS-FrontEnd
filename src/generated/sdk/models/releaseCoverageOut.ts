@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ReleaseBucketOut } from './releaseBucketOut';
+import type { ReleaseBucketOut } from "./releaseBucketOut";
 
 export interface ReleaseCoverageOut {
   project_id: number;

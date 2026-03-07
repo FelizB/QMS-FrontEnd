@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramTrendPointOut } from './programTrendPointOut';
+import type { ProgramTrendPointOut } from "./programTrendPointOut";
 
 export interface ProgramTrendOut {
   program_id: number;

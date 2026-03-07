@@ -6,5 +6,5 @@
  */
 
 export type ProgramanalyticsV1GetProgramSummaryParams = {
-include_deleted?: boolean;
+  include_deleted?: boolean;
 };

@@ -6,8 +6,8 @@
  */
 
 export type TestcasesV1PostMoveTestCaseParams = {
-/**
- * Destination folder
- */
-test_case_folder_id: number;
+  /**
+   * Destination folder
+   */
+  test_case_folder_id: number;
 };

@@ -11,4 +11,6 @@ export interface ProjectSummary {
   name: string;
   is_active: boolean;
   percent_complete?: number | null;
+  creation_date: string;
+  updated_date: string;
 }

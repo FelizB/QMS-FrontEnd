@@ -6,13 +6,13 @@
  */
 
 export type TestcaseanalyticsV1GetAnalyticsHealthcardParams = {
-release_id?: number | null;
-/**
- * Step execution status id for 'Passed'
- */
-passed_status_id?: number | null;
-/**
- * Step execution status id for 'Not Run'
- */
-not_run_status_id?: number | null;
+  release_id?: number | null;
+  /**
+   * Step execution status id for 'Passed'
+   */
+  passed_status_id?: number | null;
+  /**
+   * Step execution status id for 'Not Run'
+   */
+  not_run_status_id?: number | null;
 };

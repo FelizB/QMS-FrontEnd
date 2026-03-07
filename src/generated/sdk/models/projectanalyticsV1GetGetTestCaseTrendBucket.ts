@@ -5,11 +5,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type ProjectanalyticsV1GetGetTestCaseTrendBucket = typeof ProjectanalyticsV1GetGetTestCaseTrendBucket[keyof typeof ProjectanalyticsV1GetGetTestCaseTrendBucket];
-
+export type ProjectanalyticsV1GetGetTestCaseTrendBucket =
+  (typeof ProjectanalyticsV1GetGetTestCaseTrendBucket)[keyof typeof ProjectanalyticsV1GetGetTestCaseTrendBucket];
 
 export const ProjectanalyticsV1GetGetTestCaseTrendBucket = {
-  day: 'day',
-  week: 'week',
-  month: 'month',
+  day: "day",
+  week: "week",
+  month: "month",
 } as const;

@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { LabeledCount } from './labeledCount';
+import type { LabeledCount } from "./labeledCount";
 
 export interface ProgramBreakdownOut {
   program_id: number;

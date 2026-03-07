@@ -6,12 +6,12 @@
  */
 
 export type ProjectanalyticsV1GetGetLongestCasesParams = {
-include_deleted?: boolean;
-release_id?: number | null;
-folder_id?: number | null;
-/**
- * @minimum 1
- * @maximum 500
- */
-limit?: number;
+  include_deleted?: boolean;
+  release_id?: number | null;
+  folder_id?: number | null;
+  /**
+   * @minimum 1
+   * @maximum 500
+   */
+  limit?: number;
 };

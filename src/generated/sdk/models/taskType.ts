@@ -5,11 +5,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type TaskType = typeof TaskType[keyof typeof TaskType];
-
+export type TaskType = (typeof TaskType)[keyof typeof TaskType];
 
 export const TaskType = {
-  TASK: 'TASK',
-  BUG: 'BUG',
-  FEATURE: 'FEATURE',
+  TASK: "TASK",
+  BUG: "BUG",
+  FEATURE: "FEATURE",
 } as const;

@@ -6,20 +6,20 @@
  */
 
 export type TasksV1GetListTasksParams = {
-search?: string | null;
-type?: string | null;
-priority?: string | null;
-status?: string | null;
-assigneeId?: string | null;
-dueFrom?: string | null;
-dueTo?: string | null;
-/**
- * @minimum 1
- */
-page?: number;
-/**
- * @minimum 1
- * @maximum 100
- */
-pageSize?: number;
+  search?: string | null;
+  type?: string | null;
+  priority?: string | null;
+  status?: string | null;
+  assigneeId?: string | null;
+  dueFrom?: string | null;
+  dueTo?: string | null;
+  /**
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * @minimum 1
+   * @maximum 100
+   */
+  pageSize?: number;
 };

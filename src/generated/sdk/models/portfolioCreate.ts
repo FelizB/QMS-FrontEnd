@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { PortfolioCreateCustomProperties } from './portfolioCreateCustomProperties';
+import type { PortfolioCreateCustomProperties } from "./portfolioCreateCustomProperties";
 
 export interface PortfolioCreate {
   /**
@@ -18,5 +18,7 @@ export interface PortfolioCreate {
   artifact_type_id?: number | null;
   is_active?: boolean;
   is_default?: boolean;
+  created_at?: string;
+  last_updated_date?: string;
   custom_properties?: PortfolioCreateCustomProperties;
 }

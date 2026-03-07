@@ -13,4 +13,5 @@ export interface PortfolioOut {
   guid: string;
   concurrency_guid: string;
   last_updated_date: string;
+  created_at: string;
 }

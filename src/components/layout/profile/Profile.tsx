@@ -24,8 +24,8 @@ import {
 } from "lucide-react";
 import { useUser } from "../../../auth/useAuthHydrate";
 import { mapUserToProfile } from "./profileData";
-import SkeletonLoader from "../../common/SkeletonLoader";
-import { SkillBar } from "../SkillsBar";
+import {SkeletonLoader} from "../../common/SkeletonLoader";
+import { SkillBar } from "./SkillsBar";
 
 
 

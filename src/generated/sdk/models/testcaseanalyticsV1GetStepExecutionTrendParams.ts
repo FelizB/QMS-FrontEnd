@@ -6,17 +6,17 @@
  */
 
 export type TestcaseanalyticsV1GetStepExecutionTrendParams = {
-/**
- * @pattern ^(day|week|month)$
- */
-period?: string;
-release_id?: number | null;
-/**
- * UTC, e.g., 2026-01-01
- */
-date_from?: string | null;
-/**
- * UTC exclusive upper bound, e.g., 2026-02-01
- */
-date_to?: string | null;
+  /**
+   * @pattern ^(day|week|month)$
+   */
+  period?: string;
+  release_id?: number | null;
+  /**
+   * UTC, e.g., 2026-01-01
+   */
+  date_from?: string | null;
+  /**
+   * UTC exclusive upper bound, e.g., 2026-02-01
+   */
+  date_to?: string | null;
 };

@@ -6,13 +6,13 @@
  */
 
 export type TestcaseanalyticsV1GetTestCaseAgingParams = {
-/**
- * @minimum 1
- * @maximum 365
- */
-days_without_update?: number;
-/**
- * ExecutionStatus id that represents NOT_RUN
- */
-not_run_id?: number;
+  /**
+   * @minimum 1
+   * @maximum 365
+   */
+  days_without_update?: number;
+  /**
+   * ExecutionStatus id that represents NOT_RUN
+   */
+  not_run_id?: number;
 };

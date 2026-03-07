@@ -6,10 +6,10 @@
  */
 
 export type ProgramanalyticsV1GetProgramTopProjectsParams = {
-include_deleted?: boolean;
-/**
- * @minimum 1
- * @maximum 100
- */
-limit?: number;
+  include_deleted?: boolean;
+  /**
+   * @minimum 1
+   * @maximum 100
+   */
+  limit?: number;
 };

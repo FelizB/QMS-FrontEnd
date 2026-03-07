@@ -6,6 +6,6 @@
  */
 
 export type FilesV1GetListFilesParams = {
-test_case_id?: number | null;
-test_step_id?: number | null;
+  test_case_id?: number | null;
+  test_step_id?: number | null;
 };

@@ -4,9 +4,9 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { TaskPriority } from './taskPriority';
-import type { TaskStatus } from './taskStatus';
-import type { TaskType } from './taskType';
+import type { TaskPriority } from "./taskPriority";
+import type { TaskStatus } from "./taskStatus";
+import type { TaskType } from "./taskType";
 
 export interface TaskUpdate {
   title?: string | null;

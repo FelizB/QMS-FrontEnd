@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { PortfolioTopProjectsOutItemsItem } from './portfolioTopProjectsOutItemsItem';
+import type { PortfolioTopProjectsOutItemsItem } from "./portfolioTopProjectsOutItemsItem";
 
 export interface PortfolioTopProjectsOut {
   portfolio_id: number;

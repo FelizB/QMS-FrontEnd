@@ -1,7 +1,6 @@
-// SkillBar.tsx
 import React from 'react';
-import { pickGradientForLevel } from '../common/color-picker';
-import type { GradientClass } from '../common/colors';
+import { pickGradientForLevel } from '../../common/color-picker';
+import type { GradientClass } from '../../common/colors';
 
 
 type Skill = {

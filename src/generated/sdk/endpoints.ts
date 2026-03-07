@@ -18,12 +18,16 @@ import type {
   CasesWithoutStepsOut,
   CountOut,
   CoverageOut,
+  DashboardSummaryOut,
+  DashboardanalyticsV1GetMonthlyCreationsOfPortfoliosProgramsProjectsParams,
   DeleteResponse,
+  EnumListOut,
   FilesV1GetListFilesParams,
   FolderBreakdownOut,
   HealthcardOut,
   LogoutOut,
   LongestCasesOut,
+  MonthlyCreationsOut,
   PagedResult,
   PagedTasks,
   PortfolioBreakdownOut,
@@ -64,18 +68,21 @@ import type {
   ProjectCreate,
   ProjectDeleteOut,
   ProjectOut,
+  ProjectStatusCountsOut,
   ProjectSummary,
   ProjectUpdate,
   ProjectanalyticsV1GetGetAgingMetricsParams,
   ProjectanalyticsV1GetGetCasesWithoutStepsParams,
   ProjectanalyticsV1GetGetLongestCasesParams,
   ProjectanalyticsV1GetGetPriorityHealthParams,
+  ProjectanalyticsV1GetGetProjectsMonthlyParams,
   ProjectanalyticsV1GetGetReleaseCoverageParams,
   ProjectanalyticsV1GetGetTestCaseBreakdownLabeledParams,
   ProjectanalyticsV1GetGetTestCaseBreakdownParams,
   ProjectanalyticsV1GetGetTestCaseSummaryParams,
   ProjectanalyticsV1GetGetTestCaseTrendParams,
   ProjectanalyticsV1GetGetTestStepSummaryParams,
+  ProjectsMonthlyOut,
   ProjectsV1GetListProjectsParams,
   ProjectsV1PostRefreshCachesAllParams,
   ProjectsV1PostRefreshCachesReleaseParams,
@@ -121,1320 +128,2024 @@ import type {
   UserSkillOut,
   UserSummary,
   UserUpdate,
-  UsersV1GetListUsersParams
-} from './models';
+  UsersV1GetListUsersParams,
+} from "./models";
 
-import { customInstance } from '../../sdk/customInstance';
+import { customInstance } from "../../sdk/customInstance";
 export const getQMSBackend = () => {
-/**
- * @summary List Users
- */
-const users_v1_get_listUsers = (
-    params?: UsersV1GetListUsersParams,
- ) => {
-      return customInstance<UserSummary[]>(
-      {url: `/api/v1/users/`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get User By Username
- */
-const users_v1_get_getUserByUsername = (
-    username: string,
- ) => {
-      return customInstance<UserSummary>(
-      {url: `/api/v1/users/by-username/${username}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Get User By Id
- */
-const users_v1_get_getUserById = (
-    id: number,
- ) => {
-      return customInstance<UserSummary>(
-      {url: `/api/v1/users/by-id/${id}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Get User By Email
- */
-const users_v1_get_getUserByEmail = (
-    email: string,
- ) => {
-      return customInstance<UserSummary>(
-      {url: `/api/v1/users/by-email/${email}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Update User
- */
-const users_v1_patch_updateUser = (
-    id: number,
-    userUpdate: UserUpdate,
- ) => {
-      return customInstance<UserSummary>(
-      {url: `/api/v1/users/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: userUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Delete User
- */
-const users_v1_delete_deleteUser = (
-    id: number,
- ) => {
-      return customInstance<UserDeleteResponse>(
-      {url: `/api/v1/users/${id}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Create Portfolio
- */
-const portfolios_v1_post_createPortfolio = (
+  /**
+   * @summary List Users
+   */
+  const users_v1_get_listUsers = (params?: UsersV1GetListUsersParams) => {
+    return customInstance<UserSummary[]>({
+      url: `/api/v1/users/`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get User By Username
+   */
+  const users_v1_get_getUserByUsername = (username: string) => {
+    return customInstance<UserSummary>({
+      url: `/api/v1/users/by-username/${username}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Get User By Id
+   */
+  const users_v1_get_getUserById = (id: number) => {
+    return customInstance<UserSummary>({
+      url: `/api/v1/users/by-id/${id}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Get User By Email
+   */
+  const users_v1_get_getUserByEmail = (email: string) => {
+    return customInstance<UserSummary>({
+      url: `/api/v1/users/by-email/${email}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Update User
+   */
+  const users_v1_patch_updateUser = (id: number, userUpdate: UserUpdate) => {
+    return customInstance<UserSummary>({
+      url: `/api/v1/users/${id}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: userUpdate,
+    });
+  };
+
+  /**
+   * @summary Delete User
+   */
+  const users_v1_delete_deleteUser = (id: number) => {
+    return customInstance<UserDeleteResponse>({
+      url: `/api/v1/users/${id}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Create Portfolio
+   */
+  const portfolios_v1_post_createPortfolio = (
     portfolioCreate: PortfolioCreate,
- ) => {
-      return customInstance<PortfolioOut>(
-      {url: `/api/v1/portfolios`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: portfolioCreate
-    },
-      );
-    }
-  
-/**
- * @summary List Portfolios
- */
-const portfolios_v1_get_listPortfolios = (
+  ) => {
+    return customInstance<PortfolioOut>({
+      url: `/api/v1/portfolios`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: portfolioCreate,
+    });
+  };
+
+  /**
+   * @summary List Portfolios
+   */
+  const portfolios_v1_get_listPortfolios = (
     params?: PortfoliosV1GetListPortfoliosParams,
- ) => {
-      return customInstance<PortfolioPagedResult>(
-      {url: `/api/v1/portfolios`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Portfolio
- */
-const portfolios_v1_get_getPortfolio = (
-    portfolioId: number,
- ) => {
-      return customInstance<PortfolioOut>(
-      {url: `/api/v1/portfolios/${portfolioId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Update Portfolio
- */
-const portfolios_v1_patch_updatePortfolio = (
+  ) => {
+    return customInstance<PortfolioPagedResult>({
+      url: `/api/v1/portfolios`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Portfolio
+   */
+  const portfolios_v1_get_getPortfolio = (portfolioId: number) => {
+    return customInstance<PortfolioOut>({
+      url: `/api/v1/portfolios/${portfolioId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Update Portfolio
+   */
+  const portfolios_v1_patch_updatePortfolio = (
     portfolioId: number,
     portfolioUpdate: PortfolioUpdate,
- ) => {
-      return customInstance<PortfolioOut>(
-      {url: `/api/v1/portfolios/${portfolioId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: portfolioUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Delete Portfolio
- */
-const portfolios_v1_delete_deletePortfolio = (
+  ) => {
+    return customInstance<PortfolioOut>({
+      url: `/api/v1/portfolios/${portfolioId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: portfolioUpdate,
+    });
+  };
+
+  /**
+   * @summary Delete Portfolio
+   */
+  const portfolios_v1_delete_deletePortfolio = (
     portfolioId: number,
     params: PortfoliosV1DeleteDeletePortfolioParams,
- ) => {
-      return customInstance<PortfolioDeleteResponse>(
-      {url: `/api/v1/portfolios/${portfolioId}`, method: 'DELETE',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Create Program For Portfolio
- */
-const programs_v1_post_createProgramForPortfolio = (
+  ) => {
+    return customInstance<PortfolioDeleteResponse>({
+      url: `/api/v1/portfolios/${portfolioId}`,
+      method: "DELETE",
+      params,
+    });
+  };
+
+  /**
+   * @summary Create Program For Portfolio
+   */
+  const programs_v1_post_createProgramForPortfolio = (
     portfolioId: number,
     programCreate: ProgramCreate,
- ) => {
-      return customInstance<ProgramOut>(
-      {url: `/api/v1/portfolios/${portfolioId}/programs`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: programCreate
-    },
-      );
-    }
-  
-/**
- * @summary List Programs
- */
-const programs_v1_get_listPrograms = (
+  ) => {
+    return customInstance<ProgramOut>({
+      url: `/api/v1/portfolios/${portfolioId}/programs`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: programCreate,
+    });
+  };
+
+  /**
+   * @summary List Programs
+   */
+  const programs_v1_get_listPrograms = (
     portfolioId: number,
     params?: ProgramsV1GetListProgramsParams,
- ) => {
-      return customInstance<ProgramOut[]>(
-      {url: `/api/v1/portfolios/${portfolioId}/programs`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary List All Programs
- */
-const programs_v1_get_listAllPrograms = (
+  ) => {
+    return customInstance<ProgramOut[]>({
+      url: `/api/v1/portfolios/${portfolioId}/programs`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary List All Programs
+   */
+  const programs_v1_get_listAllPrograms = (
     params?: ProgramsV1GetListAllProgramsParams,
- ) => {
-      return customInstance<ProgramOut[]>(
-      {url: `/api/v1/programs`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Program
- */
-const programs_v1_get_getProgram = (
-    programId: number,
- ) => {
-      return customInstance<ProgramOut>(
-      {url: `/api/v1/programs/${programId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Update Program
- */
-const programs_v1_patch_updateProgram = (
+  ) => {
+    return customInstance<ProgramOut[]>({
+      url: `/api/v1/programs`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Program
+   */
+  const programs_v1_get_getProgram = (programId: number) => {
+    return customInstance<ProgramOut>({
+      url: `/api/v1/programs/${programId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Update Program
+   */
+  const programs_v1_patch_updateProgram = (
     programId: number,
     programUpdate: ProgramUpdate,
- ) => {
-      return customInstance<ProgramOut>(
-      {url: `/api/v1/programs/${programId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: programUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Delete Program
- */
-const programs_v1_delete_deleteProgram = (
+  ) => {
+    return customInstance<ProgramOut>({
+      url: `/api/v1/programs/${programId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: programUpdate,
+    });
+  };
+
+  /**
+   * @summary Delete Program
+   */
+  const programs_v1_delete_deleteProgram = (
     programId: number,
     params: ProgramsV1DeleteDeleteProgramParams,
- ) => {
-      return customInstance<ProgramDeleteResponse>(
-      {url: `/api/v1/programs/${programId}`, method: 'DELETE',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary List Projects
- */
-const projects_v1_get_listProjects = (
+  ) => {
+    return customInstance<ProgramDeleteResponse>({
+      url: `/api/v1/programs/${programId}`,
+      method: "DELETE",
+      params,
+    });
+  };
+
+  /**
+   * @summary List Projects
+   */
+  const projects_v1_get_listProjects = (
     params?: ProjectsV1GetListProjectsParams,
- ) => {
-      return customInstance<ProjectSummary[]>(
-      {url: `/api/v1/projects`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Create Project
- */
-const projects_v1_post_createProject = (
-    projectCreate: ProjectCreate,
- ) => {
-      return customInstance<ProjectOut>(
-      {url: `/api/v1/projects`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: projectCreate
-    },
-      );
-    }
-  
-/**
- * @summary Get Project
- */
-const projects_v1_get_getProject = (
-    projectId: number,
- ) => {
-      return customInstance<ProjectOut>(
-      {url: `/api/v1/projects/${projectId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Delete Project
- */
-const projects_v1_delete_deleteProject = (
-    projectId: number,
- ) => {
-      return customInstance<ProjectDeleteOut>(
-      {url: `/api/v1/projects/${projectId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Update Project
- */
-const projects_v1_put_updateProject = (
+  ) => {
+    return customInstance<ProjectSummary[]>({
+      url: `/api/v1/projects`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Create Project
+   */
+  const projects_v1_post_createProject = (projectCreate: ProjectCreate) => {
+    return customInstance<ProjectOut>({
+      url: `/api/v1/projects`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: projectCreate,
+    });
+  };
+
+  /**
+   * @summary Get Project
+   */
+  const projects_v1_get_getProject = (projectId: number) => {
+    return customInstance<ProjectOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Delete Project
+   */
+  const projects_v1_delete_deleteProject = (projectId: number) => {
+    return customInstance<ProjectDeleteOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Update Project
+   */
+  const projects_v1_put_updateProject = (
     projectId: number,
     projectUpdate: ProjectUpdate,
- ) => {
-      return customInstance<ProjectOut>(
-      {url: `/api/v1/projects/${projectId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: projectUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Refresh Caches All
- */
-const projects_v1_post_refreshCachesAll = (
+  ) => {
+    return customInstance<ProjectOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: projectUpdate,
+    });
+  };
+
+  /**
+   * @summary Refresh Caches All
+   */
+  const projects_v1_post_refreshCachesAll = (
     projectId: number,
     params?: ProjectsV1PostRefreshCachesAllParams,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/projects/${projectId}/refresh-caches`, method: 'POST',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Refresh Caches Release
- */
-const projects_v1_post_refreshCachesRelease = (
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/projects/${projectId}/refresh-caches`,
+      method: "POST",
+      params,
+    });
+  };
+
+  /**
+   * @summary Refresh Caches Release
+   */
+  const projects_v1_post_refreshCachesRelease = (
     projectId: number,
     releaseId: number,
     params?: ProjectsV1PostRefreshCachesReleaseParams,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/projects/${projectId}/refresh-caches/${releaseId}`, method: 'POST',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Create Test Case
- */
-const testcases_v1_post_createTestCase = (
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/projects/${projectId}/refresh-caches/${releaseId}`,
+      method: "POST",
+      params,
+    });
+  };
+
+  /**
+   * @summary Create Test Case
+   */
+  const testcases_v1_post_createTestCase = (
     projectId: number,
     testCaseCreate: TestCaseCreate,
- ) => {
-      return customInstance<TestCaseOut>(
-      {url: `/api/v1/projects/${projectId}/test-cases`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: testCaseCreate
-    },
-      );
-    }
-  
-/**
- * @summary Update Test Case
- */
-const testcases_v1_put_updateTestCase = (
+  ) => {
+    return customInstance<TestCaseOut>({
+      url: `/api/v1/projects/${projectId}/test-cases`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: testCaseCreate,
+    });
+  };
+
+  /**
+   * @summary Update Test Case
+   */
+  const testcases_v1_put_updateTestCase = (
     projectId: number,
     testCaseUpdate: TestCaseUpdate,
- ) => {
-      return customInstance<TestCaseOut>(
-      {url: `/api/v1/projects/${projectId}/test-cases`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: testCaseUpdate
-    },
-      );
-    }
-  
-/**
- * @summary List Test Cases by Project
- */
-const testcases_v1_get_listTestCasesByProject = (
+  ) => {
+    return customInstance<TestCaseOut>({
+      url: `/api/v1/projects/${projectId}/test-cases`,
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: testCaseUpdate,
+    });
+  };
+
+  /**
+   * @summary List Test Cases by Project
+   */
+  const testcases_v1_get_listTestCasesByProject = (
     projectId: number,
     params?: TestcasesV1GetListTestCasesByProjectParams,
- ) => {
-      return customInstance<TestCaseOut[]>(
-      {url: `/api/v1/projects/${projectId}/test-cases`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Count Test Cases Get
- */
-const testcases_v1_get_countTestCasesGet = (
+  ) => {
+    return customInstance<TestCaseOut[]>({
+      url: `/api/v1/projects/${projectId}/test-cases`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Count Test Cases Get
+   */
+  const testcases_v1_get_countTestCasesGet = (
     projectId: number,
     params?: TestcasesV1GetCountTestCasesGetParams,
- ) => {
-      return customInstance<CountOut>(
-      {url: `/api/v1/projects/${projectId}/test-cases/count`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Count Test Cases Post
- */
-const testcases_v1_post_countTestCasesPost = (
+  ) => {
+    return customInstance<CountOut>({
+      url: `/api/v1/projects/${projectId}/test-cases/count`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Count Test Cases Post
+   */
+  const testcases_v1_post_countTestCasesPost = (
     projectId: number,
     testcasesV1PostCountTestCasesPostBody: TestcasesV1PostCountTestCasesPostBody,
     params?: TestcasesV1PostCountTestCasesPostParams,
- ) => {
-      return customInstance<CountOut>(
-      {url: `/api/v1/projects/${projectId}/test-cases/count`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
+  ) => {
+    return customInstance<CountOut>({
+      url: `/api/v1/projects/${projectId}/test-cases/count`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       data: testcasesV1PostCountTestCasesPostBody,
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Search Test Cases
- */
-const testcases_v1_post_searchTestCases = (
+      params,
+    });
+  };
+
+  /**
+   * @summary Search Test Cases
+   */
+  const testcases_v1_post_searchTestCases = (
     projectId: number,
     testcasesV1PostSearchTestCasesBody: TestcasesV1PostSearchTestCasesBody,
     params?: TestcasesV1PostSearchTestCasesParams,
- ) => {
-      return customInstance<PagedResult>(
-      {url: `/api/v1/projects/${projectId}/test-cases/search`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
+  ) => {
+    return customInstance<PagedResult>({
+      url: `/api/v1/projects/${projectId}/test-cases/search`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       data: testcasesV1PostSearchTestCasesBody,
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case
- */
-const testcases_v1_get_getTestCase = (
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Test Case
+   */
+  const testcases_v1_get_getTestCase = (
     projectId: number,
     testCaseId: number,
- ) => {
-      return customInstance<TestCaseOut>(
-      {url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Delete Test Case
- */
-const testcases_v1_delete_deleteTestCase = (
+  ) => {
+    return customInstance<TestCaseOut>({
+      url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Delete Test Case
+   */
+  const testcases_v1_delete_deleteTestCase = (
     projectId: number,
     testCaseId: number,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Move Test Case
- */
-const testcases_v1_post_moveTestCase = (
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Move Test Case
+   */
+  const testcases_v1_post_moveTestCase = (
     projectId: number,
     testCaseId: number,
     params: TestcasesV1PostMoveTestCaseParams,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}/move`, method: 'POST',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Create Test Step
- */
-const teststeps_v1_post_createTestStep = (
-    testStepCreate: TestStepCreate,
- ) => {
-      return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut>(
-      {url: `/api/v1/teststeps`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: testStepCreate
-    },
-      );
-    }
-  
-/**
- * @summary List Test Steps
- */
-const teststeps_v1_get_listTestSteps = (
-    testCaseId: number,
- ) => {
-      return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut[]>(
-      {url: `/api/v1/teststeps/by-case/${testCaseId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Update Test Step
- */
-const teststeps_v1_patch_updateTestStep = (
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/projects/${projectId}/test-cases/${testCaseId}/move`,
+      method: "POST",
+      params,
+    });
+  };
+
+  /**
+   * @summary Create Test Step
+   */
+  const teststeps_v1_post_createTestStep = (testStepCreate: TestStepCreate) => {
+    return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut>({
+      url: `/api/v1/teststeps`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: testStepCreate,
+    });
+  };
+
+  /**
+   * @summary List Test Steps
+   */
+  const teststeps_v1_get_listTestSteps = (testCaseId: number) => {
+    return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut[]>({
+      url: `/api/v1/teststeps/by-case/${testCaseId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Update Test Step
+   */
+  const teststeps_v1_patch_updateTestStep = (
     stepId: number,
     testStepUpdate: TestStepUpdate,
- ) => {
-      return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut>(
-      {url: `/api/v1/teststeps/${stepId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: testStepUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Delete Test Step
- */
-const teststeps_v1_delete_deleteTestStep = (
-    stepId: number,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/teststeps/${stepId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Reorder Test Steps
- */
-const teststeps_v1_post_reorderTestSteps = (
+  ) => {
+    return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut>({
+      url: `/api/v1/teststeps/${stepId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: testStepUpdate,
+    });
+  };
+
+  /**
+   * @summary Delete Test Step
+   */
+  const teststeps_v1_delete_deleteTestStep = (stepId: number) => {
+    return customInstance<unknown>({
+      url: `/api/v1/teststeps/${stepId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Reorder Test Steps
+   */
+  const teststeps_v1_post_reorderTestSteps = (
     testStepReorderIn: TestStepReorderIn,
- ) => {
-      return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut[]>(
-      {url: `/api/v1/teststeps/reorder`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: testStepReorderIn
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case By Id
- */
-const testcases_v1_get_getTestCaseById = (
-    testCaseById: number,
- ) => {
-      return customInstance<TestCaseOut>(
-      {url: `/api/v1/testcases/${testCaseById}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Upload a file
- */
-const files_v1_post_uploadAFile = (
+  ) => {
+    return customInstance<AppPresentationSchemasTeststepSchemaTestStepOut[]>({
+      url: `/api/v1/teststeps/reorder`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: testStepReorderIn,
+    });
+  };
+
+  /**
+   * @summary Get Test Case By Id
+   */
+  const testcases_v1_get_getTestCaseById = (testCaseById: number) => {
+    return customInstance<TestCaseOut>({
+      url: `/api/v1/testcases/${testCaseById}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Upload a file
+   */
+  const files_v1_post_uploadAFile = (
     projectId: number,
     bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost: BodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost,
- ) => {const formData = new FormData();
-if(bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id !== undefined && bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id !== null) {
- formData.append(`test_case_id`, bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id.toString())
- }
-if(bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id !== undefined && bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id !== null) {
- formData.append(`test_step_id`, bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id.toString())
- }
-formData.append(`upload`, bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.upload);
-
-      return customInstance<unknown>(
-      {url: `/api/v1/api/v1/projects/${projectId}/files`, method: 'POST',
-       data: formData
-    },
+  ) => {
+    const formData = new FormData();
+    if (
+      bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id !==
+        undefined &&
+      bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id !== null
+    ) {
+      formData.append(
+        `test_case_id`,
+        bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_case_id.toString(),
       );
     }
-  
-/**
- * @summary List files
- */
-const files_v1_get_listFiles = (
+    if (
+      bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id !==
+        undefined &&
+      bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id !== null
+    ) {
+      formData.append(
+        `test_step_id`,
+        bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.test_step_id.toString(),
+      );
+    }
+    formData.append(
+      `upload`,
+      bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost.upload,
+    );
+
+    return customInstance<unknown>({
+      url: `/api/v1/api/v1/projects/${projectId}/files`,
+      method: "POST",
+      data: formData,
+    });
+  };
+
+  /**
+   * @summary List files
+   */
+  const files_v1_get_listFiles = (
     projectId: number,
     params?: FilesV1GetListFilesParams,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/api/v1/projects/${projectId}/files`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Download a file
- */
-const files_v1_get_downloadAFile = (
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/api/v1/projects/${projectId}/files`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Download a file
+   */
+  const files_v1_get_downloadAFile = (projectId: number, fileId: number) => {
+    return customInstance<unknown>({
+      url: `/api/v1/api/v1/projects/${projectId}/files/${fileId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Soft delete a file
+   */
+  const files_v1_delete_softDeleteAFile = (
     projectId: number,
     fileId: number,
- ) => {
-      return customInstance<unknown>(
-      {url: `/api/v1/api/v1/projects/${projectId}/files/${fileId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Soft-delete a file
- */
-const files_v1_delete_soft_deleteAFile = (
-    projectId: number,
-    fileId: number,
- ) => {
-      return customInstance<void>(
-      {url: `/api/v1/api/v1/projects/${projectId}/files/${fileId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case Summary
- */
-const projectanalytics_v1_get_getTestCaseSummary = (
+  ) => {
+    return customInstance<void>({
+      url: `/api/v1/api/v1/projects/${projectId}/files/${fileId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Get Test Case Summary
+   */
+  const projectanalytics_v1_get_getTestCaseSummary = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetTestCaseSummaryParams,
- ) => {
-      return customInstance<AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Step Summary
- */
-const projectanalytics_v1_get_getTestStepSummary = (
+  ) => {
+    return customInstance<AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut>(
+      {
+        url: `/api/v1/analytics/projects/${projectId}/test-cases/summary`,
+        method: "GET",
+        params,
+      },
+    );
+  };
+
+  /**
+   * @summary Get Test Step Summary
+   */
+  const projectanalytics_v1_get_getTestStepSummary = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetTestStepSummaryParams,
- ) => {
-      return customInstance<TestStepSummaryOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-steps/summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case Trend
- */
-const projectanalytics_v1_get_getTestCaseTrend = (
+  ) => {
+    return customInstance<TestStepSummaryOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-steps/summary`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Test Case Trend
+   */
+  const projectanalytics_v1_get_getTestCaseTrend = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetTestCaseTrendParams,
- ) => {
-      return customInstance<TrendPointOut[]>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/trend`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case Breakdown
- */
-const projectanalytics_v1_get_getTestCaseBreakdown = (
+  ) => {
+    return customInstance<TrendPointOut[]>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/trend`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Test Case Breakdown
+   */
+  const projectanalytics_v1_get_getTestCaseBreakdown = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetTestCaseBreakdownParams,
- ) => {
-      return customInstance<TestCaseBreakdownOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/breakdown`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Cases Without Steps
- */
-const projectanalytics_v1_get_getCasesWithoutSteps = (
+  ) => {
+    return customInstance<TestCaseBreakdownOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/breakdown`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Cases Without Steps
+   */
+  const projectanalytics_v1_get_getCasesWithoutSteps = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetCasesWithoutStepsParams,
- ) => {
-      return customInstance<CasesWithoutStepsOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/quality/without-steps`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Aging Metrics
- */
-const projectanalytics_v1_get_getAgingMetrics = (
+  ) => {
+    return customInstance<CasesWithoutStepsOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/quality/without-steps`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Aging Metrics
+   */
+  const projectanalytics_v1_get_getAgingMetrics = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetAgingMetricsParams,
- ) => {
-      return customInstance<AgingMetricsOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/aging`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Longest Cases
- */
-const projectanalytics_v1_get_getLongestCases = (
+  ) => {
+    return customInstance<AgingMetricsOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/aging`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Longest Cases
+   */
+  const projectanalytics_v1_get_getLongestCases = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetLongestCasesParams,
- ) => {
-      return customInstance<LongestCasesOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/longest`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Release Coverage
- */
-const projectanalytics_v1_get_getReleaseCoverage = (
+  ) => {
+    return customInstance<LongestCasesOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/longest`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Release Coverage
+   */
+  const projectanalytics_v1_get_getReleaseCoverage = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetReleaseCoverageParams,
- ) => {
-      return customInstance<ReleaseCoverageOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/releases/coverage`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Priority Health
- */
-const projectanalytics_v1_get_getPriorityHealth = (
+  ) => {
+    return customInstance<ReleaseCoverageOut>({
+      url: `/api/v1/analytics/projects/${projectId}/releases/coverage`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Priority Health
+   */
+  const projectanalytics_v1_get_getPriorityHealth = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetPriorityHealthParams,
- ) => {
-      return customInstance<PriorityHealthOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/priority-health`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Get Test Case Breakdown Labeled
- */
-const projectanalytics_v1_get_getTestCaseBreakdownLabeled = (
+  ) => {
+    return customInstance<PriorityHealthOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/priority-health`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Test Case Breakdown Labeled
+   */
+  const projectanalytics_v1_get_getTestCaseBreakdownLabeled = (
     projectId: number,
     params?: ProjectanalyticsV1GetGetTestCaseBreakdownLabeledParams,
- ) => {
-      return customInstance<TestCaseBreakdownLabeledOut>(
-      {url: `/api/v1/analytics/projects/${projectId}/test-cases/breakdown-labeled`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Portfolio Summary
+  ) => {
+    return customInstance<TestCaseBreakdownLabeledOut>({
+      url: `/api/v1/analytics/projects/${projectId}/test-cases/breakdown-labeled`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Counts of projects by status
+   */
+  const projectanalytics_v1_get_countsOfProjectsByStatus = () => {
+    return customInstance<ProjectStatusCountsOut>({
+      url: `/api/v1/analytics/projects/status-counts`,
+      method: "GET",
+    });
+  };
+
+  /**
+ * Returns monthly counts for projects created and how many of those are active.
+Defaults to current year if `year` is not provided.
+ * @summary Get Projects Monthly
  */
-const portfolioanalytics_v1_get_portfolioSummary = (
+  const projectanalytics_v1_get_getProjectsMonthly = (
+    params?: ProjectanalyticsV1GetGetProjectsMonthlyParams,
+  ) => {
+    return customInstance<ProjectsMonthlyOut>({
+      url: `/api/v1/analytics/projects/monthly`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Portfolio Summary
+   */
+  const portfolioanalytics_v1_get_portfolioSummary = (
     portfolioId: number,
     params?: PortfolioanalyticsV1GetPortfolioSummaryParams,
- ) => {
-      return customInstance<PortfolioSummaryOut>(
-      {url: `/api/v1/analytics/portfolios/${portfolioId}/summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Portfolio Breakdowns
- */
-const portfolioanalytics_v1_get_portfolioBreakdowns = (
+  ) => {
+    return customInstance<PortfolioSummaryOut>({
+      url: `/api/v1/analytics/portfolios/${portfolioId}/summary`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Portfolio Breakdowns
+   */
+  const portfolioanalytics_v1_get_portfolioBreakdowns = (
     portfolioId: number,
     params?: PortfolioanalyticsV1GetPortfolioBreakdownsParams,
- ) => {
-      return customInstance<PortfolioBreakdownOut>(
-      {url: `/api/v1/analytics/portfolios/${portfolioId}/breakdowns`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Portfolio Cases Without Steps
- */
-const portfolioanalytics_v1_get_portfolioCasesWithoutSteps = (
+  ) => {
+    return customInstance<PortfolioBreakdownOut>({
+      url: `/api/v1/analytics/portfolios/${portfolioId}/breakdowns`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Portfolio Cases Without Steps
+   */
+  const portfolioanalytics_v1_get_portfolioCasesWithoutSteps = (
     portfolioId: number,
     params?: PortfolioanalyticsV1GetPortfolioCasesWithoutStepsParams,
- ) => {
-      return customInstance<PortfolioCasesWithoutStepsOut>(
-      {url: `/api/v1/analytics/portfolios/${portfolioId}/quality/without-steps`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Portfolio Trend
- */
-const portfolioanalytics_v1_get_portfolioTrend = (
+  ) => {
+    return customInstance<PortfolioCasesWithoutStepsOut>({
+      url: `/api/v1/analytics/portfolios/${portfolioId}/quality/without-steps`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Portfolio Trend
+   */
+  const portfolioanalytics_v1_get_portfolioTrend = (
     portfolioId: number,
     params?: PortfolioanalyticsV1GetPortfolioTrendParams,
- ) => {
-      return customInstance<PortfolioTrendOut>(
-      {url: `/api/v1/analytics/portfolios/${portfolioId}/trend`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Portfolio Top Projects
- */
-const portfolioanalytics_v1_get_portfolioTopProjects = (
+  ) => {
+    return customInstance<PortfolioTrendOut>({
+      url: `/api/v1/analytics/portfolios/${portfolioId}/trend`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Portfolio Top Projects
+   */
+  const portfolioanalytics_v1_get_portfolioTopProjects = (
     portfolioId: number,
     params?: PortfolioanalyticsV1GetPortfolioTopProjectsParams,
- ) => {
-      return customInstance<PortfolioTopProjectsOut>(
-      {url: `/api/v1/analytics/portfolios/${portfolioId}/top-projects`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Program Summary
- */
-const programanalytics_v1_get_programSummary = (
+  ) => {
+    return customInstance<PortfolioTopProjectsOut>({
+      url: `/api/v1/analytics/portfolios/${portfolioId}/top-projects`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Program Summary
+   */
+  const programanalytics_v1_get_programSummary = (
     programId: number,
     params?: ProgramanalyticsV1GetProgramSummaryParams,
- ) => {
-      return customInstance<ProgramSummaryOut>(
-      {url: `/api/v1/analytics/programs/${programId}/summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Program Breakdowns
- */
-const programanalytics_v1_get_programBreakdowns = (
+  ) => {
+    return customInstance<ProgramSummaryOut>({
+      url: `/api/v1/analytics/programs/${programId}/summary`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Program Breakdowns
+   */
+  const programanalytics_v1_get_programBreakdowns = (
     programId: number,
     params?: ProgramanalyticsV1GetProgramBreakdownsParams,
- ) => {
-      return customInstance<ProgramBreakdownOut>(
-      {url: `/api/v1/analytics/programs/${programId}/breakdowns`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Program Cases Without Steps
- */
-const programanalytics_v1_get_programCasesWithoutSteps = (
+  ) => {
+    return customInstance<ProgramBreakdownOut>({
+      url: `/api/v1/analytics/programs/${programId}/breakdowns`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Program Cases Without Steps
+   */
+  const programanalytics_v1_get_programCasesWithoutSteps = (
     programId: number,
     params?: ProgramanalyticsV1GetProgramCasesWithoutStepsParams,
- ) => {
-      return customInstance<ProgramCasesWithoutStepsOut>(
-      {url: `/api/v1/analytics/programs/${programId}/quality/without-steps`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Program Trend
- */
-const programanalytics_v1_get_programTrend = (
+  ) => {
+    return customInstance<ProgramCasesWithoutStepsOut>({
+      url: `/api/v1/analytics/programs/${programId}/quality/without-steps`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Program Trend
+   */
+  const programanalytics_v1_get_programTrend = (
     programId: number,
     params?: ProgramanalyticsV1GetProgramTrendParams,
- ) => {
-      return customInstance<ProgramTrendOut>(
-      {url: `/api/v1/analytics/programs/${programId}/trend`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Program Top Projects
- */
-const programanalytics_v1_get_programTopProjects = (
+  ) => {
+    return customInstance<ProgramTrendOut>({
+      url: `/api/v1/analytics/programs/${programId}/trend`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Program Top Projects
+   */
+  const programanalytics_v1_get_programTopProjects = (
     programId: number,
     params?: ProgramanalyticsV1GetProgramTopProjectsParams,
- ) => {
-      return customInstance<ProgramTopProjectsOut>(
-      {url: `/api/v1/analytics/programs/${programId}/top-projects`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Case Summary
- */
-const testcaseanalytics_v1_get_testCaseSummary = (
+  ) => {
+    return customInstance<ProgramTopProjectsOut>({
+      url: `/api/v1/analytics/programs/${programId}/top-projects`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Test Case Summary
+   */
+  const testcaseanalytics_v1_get_testCaseSummary = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestCaseSummaryParams,
- ) => {
-      return customInstance<AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-cases/summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Steps Execution Summary
- */
-const testcaseanalytics_v1_get_testStepsExecutionSummary = (
+  ) => {
+    return customInstance<AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut>(
+      {
+        url: `/api/v1/projects/${projectId}/analytics/test-cases/summary`,
+        method: "GET",
+        params,
+      },
+    );
+  };
+
+  /**
+   * @summary Test Steps Execution Summary
+   */
+  const testcaseanalytics_v1_get_testStepsExecutionSummary = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestStepsExecutionSummaryParams,
- ) => {
-      return customInstance<TestStepsExecutionSummaryOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-steps/execution-summary`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Case Trends
- */
-const testcaseanalytics_v1_get_testCaseTrends = (
+  ) => {
+    return customInstance<TestStepsExecutionSummaryOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-steps/execution-summary`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Test Case Trends
+   */
+  const testcaseanalytics_v1_get_testCaseTrends = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestCaseTrendsParams,
- ) => {
-      return customInstance<TestCaseTrendsOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-cases/trends`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Case Aging
- */
-const testcaseanalytics_v1_get_testCaseAging = (
+  ) => {
+    return customInstance<TestCaseTrendsOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-cases/trends`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Test Case Aging
+   */
+  const testcaseanalytics_v1_get_testCaseAging = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestCaseAgingParams,
- ) => {
-      return customInstance<TestCaseAgingOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-cases/aging`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Case Coverage
- */
-const testcaseanalytics_v1_get_testCaseCoverage = (
+  ) => {
+    return customInstance<TestCaseAgingOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-cases/aging`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Test Case Coverage
+   */
+  const testcaseanalytics_v1_get_testCaseCoverage = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestCaseCoverageParams,
- ) => {
-      return customInstance<CoverageOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-cases/coverage`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Test Cases By Folder
- */
-const testcaseanalytics_v1_get_testCasesByFolder = (
+  ) => {
+    return customInstance<CoverageOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-cases/coverage`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Test Cases By Folder
+   */
+  const testcaseanalytics_v1_get_testCasesByFolder = (
     projectId: number,
     params?: TestcaseanalyticsV1GetTestCasesByFolderParams,
- ) => {
-      return customInstance<FolderBreakdownOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-cases/by-folder`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Step Execution Trend
- */
-const testcaseanalytics_v1_get_stepExecutionTrend = (
+  ) => {
+    return customInstance<FolderBreakdownOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-cases/by-folder`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Step Execution Trend
+   */
+  const testcaseanalytics_v1_get_stepExecutionTrend = (
     projectId: number,
     params?: TestcaseanalyticsV1GetStepExecutionTrendParams,
- ) => {
-      return customInstance<StepTrendOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/test-steps/trend`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Analytics Healthcard
- */
-const testcaseanalytics_v1_get_analyticsHealthcard = (
+  ) => {
+    return customInstance<StepTrendOut>({
+      url: `/api/v1/projects/${projectId}/analytics/test-steps/trend`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Analytics Healthcard
+   */
+  const testcaseanalytics_v1_get_analyticsHealthcard = (
     projectId: number,
     params?: TestcaseanalyticsV1GetAnalyticsHealthcardParams,
- ) => {
-      return customInstance<HealthcardOut>(
-      {url: `/api/v1/projects/${projectId}/analytics/healthcard`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary List Skills
- */
-const users_skills_v1_get_listSkills = (
-    userId: number,
- ) => {
-      return customInstance<UserSkillOut[]>(
-      {url: `/api/v1/users/${userId}/skills`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Add Skill
- */
-const users_skills_v1_post_addSkill = (
+  ) => {
+    return customInstance<HealthcardOut>({
+      url: `/api/v1/projects/${projectId}/analytics/healthcard`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary List Skills
+   */
+  const users_skills_v1_get_listSkills = (userId: number) => {
+    return customInstance<UserSkillOut[]>({
+      url: `/api/v1/users/${userId}/skills`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Add Skill
+   */
+  const users_skills_v1_post_addSkill = (
     userId: number,
     userSkillIn: UserSkillIn,
- ) => {
-      return customInstance<UserSkillOut>(
-      {url: `/api/v1/users/${userId}/skills`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: userSkillIn
-    },
-      );
-    }
-  
-/**
- * @summary Update Skill
- */
-const users_skills_v1_put_updateSkill = (
+  ) => {
+    return customInstance<UserSkillOut>({
+      url: `/api/v1/users/${userId}/skills`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: userSkillIn,
+    });
+  };
+
+  /**
+   * @summary Update Skill
+   */
+  const users_skills_v1_put_updateSkill = (
     userId: number,
     skillId: number,
     userSkillIn: UserSkillIn,
- ) => {
-      return customInstance<UserSkillOut>(
-      {url: `/api/v1/users/${userId}/skills/${skillId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: userSkillIn
-    },
-      );
-    }
-  
-/**
- * @summary Delete Skill
- */
-const users_skills_v1_delete_deleteSkill = (
+  ) => {
+    return customInstance<UserSkillOut>({
+      url: `/api/v1/users/${userId}/skills/${skillId}`,
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: userSkillIn,
+    });
+  };
+
+  /**
+   * @summary Delete Skill
+   */
+  const users_skills_v1_delete_deleteSkill = (
     userId: number,
     skillId: number,
- ) => {
-      return customInstance<DeleteResponse>(
-      {url: `/api/v1/users/${userId}/skills/${skillId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Bulk Add Skills
- */
-const users_skills_v1_post_bulkAddSkills = (
+  ) => {
+    return customInstance<DeleteResponse>({
+      url: `/api/v1/users/${userId}/skills/${skillId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Bulk Add Skills
+   */
+  const users_skills_v1_post_bulkAddSkills = (
     userId: number,
     bulkSkillsIn: BulkSkillsIn,
- ) => {
-      return customInstance<BulkSkillsResult>(
-      {url: `/api/v1/users/${userId}/skills/bulk`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: bulkSkillsIn
-    },
-      );
-    }
-  
-/**
- * @summary List Tasks
- */
-const tasks_v1_get_listTasks = (
+  ) => {
+    return customInstance<BulkSkillsResult>({
+      url: `/api/v1/users/${userId}/skills/bulk`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: bulkSkillsIn,
+    });
+  };
+
+  /**
+   * @summary List Tasks
+   */
+  const tasks_v1_get_listTasks = (
     projectId: number,
     params?: TasksV1GetListTasksParams,
- ) => {
-      return customInstance<PagedTasks>(
-      {url: `/api/v1/tasks/projects/${projectId}/tasks`, method: 'GET',
-        params
-    },
-      );
-    }
-  
-/**
- * @summary Create Task
- */
-const tasks_v1_post_createTask = (
+  ) => {
+    return customInstance<PagedTasks>({
+      url: `/api/v1/tasks/projects/${projectId}/tasks`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Create Task
+   */
+  const tasks_v1_post_createTask = (
     projectId: number,
     taskCreate: TaskCreate,
- ) => {
-      return customInstance<TaskOut>(
-      {url: `/api/v1/tasks/projects/${projectId}/tasks`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: taskCreate
-    },
-      );
-    }
-  
-/**
- * @summary Get Task
- */
-const tasks_v1_get_getTask = (
-    taskId: number,
- ) => {
-      return customInstance<TaskOut>(
-      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Update Task
- */
-const tasks_v1_patch_updateTask = (
+  ) => {
+    return customInstance<TaskOut>({
+      url: `/api/v1/tasks/projects/${projectId}/tasks`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: taskCreate,
+    });
+  };
+
+  /**
+   * @summary Get Task
+   */
+  const tasks_v1_get_getTask = (taskId: number) => {
+    return customInstance<TaskOut>({
+      url: `/api/v1/tasks/tasks/${taskId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Update Task
+   */
+  const tasks_v1_patch_updateTask = (
     taskId: number,
     taskUpdate: TaskUpdate,
- ) => {
-      return customInstance<TaskOut>(
-      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: taskUpdate
-    },
-      );
-    }
-  
-/**
- * @summary Delete Task
- */
-const tasks_v1_delete_deleteTask = (
-    taskId: number,
- ) => {
-      return customInstance<void>(
-      {url: `/api/v1/tasks/tasks/${taskId}`, method: 'DELETE'
-    },
-      );
-    }
-  
-/**
- * @summary Bulk Delete Tasks
- */
-const tasks_v1_post_bulkDeleteTasks = (
-    bulkDeleteIn: BulkDeleteIn,
- ) => {
-      return customInstance<void>(
-      {url: `/api/v1/tasks/tasks/bulk-delete`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: bulkDeleteIn
-    },
-      );
-    }
-  
-/**
- * @summary Register
- */
-const auth_v1_post_register = (
-    userCreate: UserCreate,
- ) => {
-      return customInstance<AppPresentationSchemasAuthSchemaUserOut>(
-      {url: `/api/v1/auth/register`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: userCreate
-    },
-      );
-    }
-  
-/**
- * @summary Login
- */
-const auth_v1_post_login = (
-    bodyLoginApiV1AuthTokenPost: BodyLoginApiV1AuthTokenPost,
- ) => {const formUrlEncoded = new URLSearchParams();
-if(bodyLoginApiV1AuthTokenPost.grant_type !== undefined && bodyLoginApiV1AuthTokenPost.grant_type !== null) {
- formUrlEncoded.append(`grant_type`, bodyLoginApiV1AuthTokenPost.grant_type);
- }
-formUrlEncoded.append(`username`, bodyLoginApiV1AuthTokenPost.username);
-formUrlEncoded.append(`password`, bodyLoginApiV1AuthTokenPost.password);
-if(bodyLoginApiV1AuthTokenPost.scope !== undefined) {
- formUrlEncoded.append(`scope`, bodyLoginApiV1AuthTokenPost.scope);
- }
-if(bodyLoginApiV1AuthTokenPost.client_id !== undefined && bodyLoginApiV1AuthTokenPost.client_id !== null) {
- formUrlEncoded.append(`client_id`, bodyLoginApiV1AuthTokenPost.client_id);
- }
-if(bodyLoginApiV1AuthTokenPost.client_secret !== undefined && bodyLoginApiV1AuthTokenPost.client_secret !== null) {
- formUrlEncoded.append(`client_secret`, bodyLoginApiV1AuthTokenPost.client_secret);
- }
+  ) => {
+    return customInstance<TaskOut>({
+      url: `/api/v1/tasks/tasks/${taskId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: taskUpdate,
+    });
+  };
 
-      return customInstance<TokenOut>(
-      {url: `/api/v1/auth/token`, method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded', },
-       data: formUrlEncoded
-    },
+  /**
+   * @summary Delete Task
+   */
+  const tasks_v1_delete_deleteTask = (taskId: number) => {
+    return customInstance<void>({
+      url: `/api/v1/tasks/tasks/${taskId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Bulk Delete Tasks
+   */
+  const tasks_v1_post_bulkDeleteTasks = (bulkDeleteIn: BulkDeleteIn) => {
+    return customInstance<void>({
+      url: `/api/v1/tasks/tasks/bulk-delete`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: bulkDeleteIn,
+    });
+  };
+
+  /**
+   * @summary Monthly creations of portfolios, programs, projects
+   */
+  const dashboardanalytics_v1_get_monthlyCreationsOfPortfoliosProgramsProjects =
+    (
+      params?: DashboardanalyticsV1GetMonthlyCreationsOfPortfoliosProgramsProjectsParams,
+    ) => {
+      return customInstance<MonthlyCreationsOut>({
+        url: `/api/v1/api/v1/analytics/org/creations-monthly`,
+        method: "GET",
+        params,
+      });
+    };
+
+  /**
+   * @summary Dashboard summary: totals + monthly deltas
+   */
+  const dashboardanalytics_v1_get_dashboardSummaryTotalsMonthlyDeltas = () => {
+    return customInstance<DashboardSummaryOut>({
+      url: `/api/v1/api/v1/analytics/dashboard/summary`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary List Enum
+   */
+  const enums_v1_get_listEnum = (enumName: string) => {
+    return customInstance<EnumListOut>({
+      url: `/api/v1/api/v1/enums/${enumName}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Register
+   */
+  const auth_v1_post_register = (userCreate: UserCreate) => {
+    return customInstance<AppPresentationSchemasAuthSchemaUserOut>({
+      url: `/api/v1/auth/register`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: userCreate,
+    });
+  };
+
+  /**
+   * @summary Login
+   */
+  const auth_v1_post_login = (
+    bodyLoginApiV1AuthTokenPost: BodyLoginApiV1AuthTokenPost,
+  ) => {
+    const formUrlEncoded = new URLSearchParams();
+    if (
+      bodyLoginApiV1AuthTokenPost.grant_type !== undefined &&
+      bodyLoginApiV1AuthTokenPost.grant_type !== null
+    ) {
+      formUrlEncoded.append(
+        `grant_type`,
+        bodyLoginApiV1AuthTokenPost.grant_type,
       );
     }
-  
-/**
- * @summary Refresh Token
- */
-const auth_v1_post_refreshToken = (
-    refreshIn: RefreshIn,
- ) => {
-      return customInstance<TokenOut>(
-      {url: `/api/v1/auth/refresh`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refreshIn
-    },
+    formUrlEncoded.append(`username`, bodyLoginApiV1AuthTokenPost.username);
+    formUrlEncoded.append(`password`, bodyLoginApiV1AuthTokenPost.password);
+    if (bodyLoginApiV1AuthTokenPost.scope !== undefined) {
+      formUrlEncoded.append(`scope`, bodyLoginApiV1AuthTokenPost.scope);
+    }
+    if (
+      bodyLoginApiV1AuthTokenPost.client_id !== undefined &&
+      bodyLoginApiV1AuthTokenPost.client_id !== null
+    ) {
+      formUrlEncoded.append(`client_id`, bodyLoginApiV1AuthTokenPost.client_id);
+    }
+    if (
+      bodyLoginApiV1AuthTokenPost.client_secret !== undefined &&
+      bodyLoginApiV1AuthTokenPost.client_secret !== null
+    ) {
+      formUrlEncoded.append(
+        `client_secret`,
+        bodyLoginApiV1AuthTokenPost.client_secret,
       );
     }
-  
-/**
- * @summary Me
- */
-const auth_v1_get_me = (
-    
- ) => {
-      return customInstance<AppPresentationSchemasAuthSchemaUserOut>(
-      {url: `/api/v1/auth/me`, method: 'GET'
-    },
-      );
-    }
-  
-/**
- * @summary Logout
- */
-const auth_v1_post_logout = (
-    refreshInNull: RefreshIn | null,
- ) => {
-      return customInstance<LogoutOut>(
-      {url: `/api/v1/auth/logout`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refreshInNull
-    },
-      );
-    }
-  
-return {users_v1_get_listUsers,users_v1_get_getUserByUsername,users_v1_get_getUserById,users_v1_get_getUserByEmail,users_v1_patch_updateUser,users_v1_delete_deleteUser,portfolios_v1_post_createPortfolio,portfolios_v1_get_listPortfolios,portfolios_v1_get_getPortfolio,portfolios_v1_patch_updatePortfolio,portfolios_v1_delete_deletePortfolio,programs_v1_post_createProgramForPortfolio,programs_v1_get_listPrograms,programs_v1_get_listAllPrograms,programs_v1_get_getProgram,programs_v1_patch_updateProgram,programs_v1_delete_deleteProgram,projects_v1_get_listProjects,projects_v1_post_createProject,projects_v1_get_getProject,projects_v1_delete_deleteProject,projects_v1_put_updateProject,projects_v1_post_refreshCachesAll,projects_v1_post_refreshCachesRelease,testcases_v1_post_createTestCase,testcases_v1_put_updateTestCase,testcases_v1_get_listTestCasesByProject,testcases_v1_get_countTestCasesGet,testcases_v1_post_countTestCasesPost,testcases_v1_post_searchTestCases,testcases_v1_get_getTestCase,testcases_v1_delete_deleteTestCase,testcases_v1_post_moveTestCase,teststeps_v1_post_createTestStep,teststeps_v1_get_listTestSteps,teststeps_v1_patch_updateTestStep,teststeps_v1_delete_deleteTestStep,teststeps_v1_post_reorderTestSteps,testcases_v1_get_getTestCaseById,files_v1_post_uploadAFile,files_v1_get_listFiles,files_v1_get_downloadAFile,files_v1_delete_soft_deleteAFile,projectanalytics_v1_get_getTestCaseSummary,projectanalytics_v1_get_getTestStepSummary,projectanalytics_v1_get_getTestCaseTrend,projectanalytics_v1_get_getTestCaseBreakdown,projectanalytics_v1_get_getCasesWithoutSteps,projectanalytics_v1_get_getAgingMetrics,projectanalytics_v1_get_getLongestCases,projectanalytics_v1_get_getReleaseCoverage,projectanalytics_v1_get_getPriorityHealth,projectanalytics_v1_get_getTestCaseBreakdownLabeled,portfolioanalytics_v1_get_portfolioSummary,portfolioanalytics_v1_get_portfolioBreakdowns,portfolioanalytics_v1_get_portfolioCasesWithoutSteps,portfolioanalytics_v1_get_portfolioTrend,portfolioanalytics_v1_get_portfolioTopProjects,programanalytics_v1_get_programSummary,programanalytics_v1_get_programBreakdowns,programanalytics_v1_get_programCasesWithoutSteps,programanalytics_v1_get_programTrend,programanalytics_v1_get_programTopProjects,testcaseanalytics_v1_get_testCaseSummary,testcaseanalytics_v1_get_testStepsExecutionSummary,testcaseanalytics_v1_get_testCaseTrends,testcaseanalytics_v1_get_testCaseAging,testcaseanalytics_v1_get_testCaseCoverage,testcaseanalytics_v1_get_testCasesByFolder,testcaseanalytics_v1_get_stepExecutionTrend,testcaseanalytics_v1_get_analyticsHealthcard,users_skills_v1_get_listSkills,users_skills_v1_post_addSkill,users_skills_v1_put_updateSkill,users_skills_v1_delete_deleteSkill,users_skills_v1_post_bulkAddSkills,tasks_v1_get_listTasks,tasks_v1_post_createTask,tasks_v1_get_getTask,tasks_v1_patch_updateTask,tasks_v1_delete_deleteTask,tasks_v1_post_bulkDeleteTasks,auth_v1_post_register,auth_v1_post_login,auth_v1_post_refreshToken,auth_v1_get_me,auth_v1_post_logout}};
-export type UsersV1GetListUsersResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_listUsers']>>>
-export type UsersV1GetGetUserByUsernameResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_getUserByUsername']>>>
-export type UsersV1GetGetUserByIdResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_getUserById']>>>
-export type UsersV1GetGetUserByEmailResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_get_getUserByEmail']>>>
-export type UsersV1PatchUpdateUserResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_patch_updateUser']>>>
-export type UsersV1DeleteDeleteUserResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_v1_delete_deleteUser']>>>
-export type PortfoliosV1PostCreatePortfolioResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolios_v1_post_createPortfolio']>>>
-export type PortfoliosV1GetListPortfoliosResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolios_v1_get_listPortfolios']>>>
-export type PortfoliosV1GetGetPortfolioResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolios_v1_get_getPortfolio']>>>
-export type PortfoliosV1PatchUpdatePortfolioResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolios_v1_patch_updatePortfolio']>>>
-export type PortfoliosV1DeleteDeletePortfolioResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolios_v1_delete_deletePortfolio']>>>
-export type ProgramsV1PostCreateProgramForPortfolioResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_post_createProgramForPortfolio']>>>
-export type ProgramsV1GetListProgramsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_get_listPrograms']>>>
-export type ProgramsV1GetListAllProgramsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_get_listAllPrograms']>>>
-export type ProgramsV1GetGetProgramResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_get_getProgram']>>>
-export type ProgramsV1PatchUpdateProgramResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_patch_updateProgram']>>>
-export type ProgramsV1DeleteDeleteProgramResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programs_v1_delete_deleteProgram']>>>
-export type ProjectsV1GetListProjectsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_get_listProjects']>>>
-export type ProjectsV1PostCreateProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_post_createProject']>>>
-export type ProjectsV1GetGetProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_get_getProject']>>>
-export type ProjectsV1DeleteDeleteProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_delete_deleteProject']>>>
-export type ProjectsV1PutUpdateProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_put_updateProject']>>>
-export type ProjectsV1PostRefreshCachesAllResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_post_refreshCachesAll']>>>
-export type ProjectsV1PostRefreshCachesReleaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projects_v1_post_refreshCachesRelease']>>>
-export type TestcasesV1PostCreateTestCaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_post_createTestCase']>>>
-export type TestcasesV1PutUpdateTestCaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_put_updateTestCase']>>>
-export type TestcasesV1GetListTestCasesByProjectResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_get_listTestCasesByProject']>>>
-export type TestcasesV1GetCountTestCasesGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_get_countTestCasesGet']>>>
-export type TestcasesV1PostCountTestCasesPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_post_countTestCasesPost']>>>
-export type TestcasesV1PostSearchTestCasesResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_post_searchTestCases']>>>
-export type TestcasesV1GetGetTestCaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_get_getTestCase']>>>
-export type TestcasesV1DeleteDeleteTestCaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_delete_deleteTestCase']>>>
-export type TestcasesV1PostMoveTestCaseResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_post_moveTestCase']>>>
-export type TeststepsV1PostCreateTestStepResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['teststeps_v1_post_createTestStep']>>>
-export type TeststepsV1GetListTestStepsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['teststeps_v1_get_listTestSteps']>>>
-export type TeststepsV1PatchUpdateTestStepResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['teststeps_v1_patch_updateTestStep']>>>
-export type TeststepsV1DeleteDeleteTestStepResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['teststeps_v1_delete_deleteTestStep']>>>
-export type TeststepsV1PostReorderTestStepsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['teststeps_v1_post_reorderTestSteps']>>>
-export type TestcasesV1GetGetTestCaseByIdResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcases_v1_get_getTestCaseById']>>>
-export type FilesV1PostUploadAFileResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['files_v1_post_uploadAFile']>>>
-export type FilesV1GetListFilesResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['files_v1_get_listFiles']>>>
-export type FilesV1GetDownloadAFileResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['files_v1_get_downloadAFile']>>>
-export type FilesV1DeleteSoftDeleteAFileResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['files_v1_delete_soft_deleteAFile']>>>
-export type ProjectanalyticsV1GetGetTestCaseSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getTestCaseSummary']>>>
-export type ProjectanalyticsV1GetGetTestStepSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getTestStepSummary']>>>
-export type ProjectanalyticsV1GetGetTestCaseTrendResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getTestCaseTrend']>>>
-export type ProjectanalyticsV1GetGetTestCaseBreakdownResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getTestCaseBreakdown']>>>
-export type ProjectanalyticsV1GetGetCasesWithoutStepsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getCasesWithoutSteps']>>>
-export type ProjectanalyticsV1GetGetAgingMetricsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getAgingMetrics']>>>
-export type ProjectanalyticsV1GetGetLongestCasesResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getLongestCases']>>>
-export type ProjectanalyticsV1GetGetReleaseCoverageResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getReleaseCoverage']>>>
-export type ProjectanalyticsV1GetGetPriorityHealthResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getPriorityHealth']>>>
-export type ProjectanalyticsV1GetGetTestCaseBreakdownLabeledResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['projectanalytics_v1_get_getTestCaseBreakdownLabeled']>>>
-export type PortfolioanalyticsV1GetPortfolioSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolioanalytics_v1_get_portfolioSummary']>>>
-export type PortfolioanalyticsV1GetPortfolioBreakdownsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolioanalytics_v1_get_portfolioBreakdowns']>>>
-export type PortfolioanalyticsV1GetPortfolioCasesWithoutStepsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolioanalytics_v1_get_portfolioCasesWithoutSteps']>>>
-export type PortfolioanalyticsV1GetPortfolioTrendResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolioanalytics_v1_get_portfolioTrend']>>>
-export type PortfolioanalyticsV1GetPortfolioTopProjectsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['portfolioanalytics_v1_get_portfolioTopProjects']>>>
-export type ProgramanalyticsV1GetProgramSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programanalytics_v1_get_programSummary']>>>
-export type ProgramanalyticsV1GetProgramBreakdownsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programanalytics_v1_get_programBreakdowns']>>>
-export type ProgramanalyticsV1GetProgramCasesWithoutStepsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programanalytics_v1_get_programCasesWithoutSteps']>>>
-export type ProgramanalyticsV1GetProgramTrendResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programanalytics_v1_get_programTrend']>>>
-export type ProgramanalyticsV1GetProgramTopProjectsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['programanalytics_v1_get_programTopProjects']>>>
-export type TestcaseanalyticsV1GetTestCaseSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testCaseSummary']>>>
-export type TestcaseanalyticsV1GetTestStepsExecutionSummaryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testStepsExecutionSummary']>>>
-export type TestcaseanalyticsV1GetTestCaseTrendsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testCaseTrends']>>>
-export type TestcaseanalyticsV1GetTestCaseAgingResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testCaseAging']>>>
-export type TestcaseanalyticsV1GetTestCaseCoverageResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testCaseCoverage']>>>
-export type TestcaseanalyticsV1GetTestCasesByFolderResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_testCasesByFolder']>>>
-export type TestcaseanalyticsV1GetStepExecutionTrendResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_stepExecutionTrend']>>>
-export type TestcaseanalyticsV1GetAnalyticsHealthcardResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['testcaseanalytics_v1_get_analyticsHealthcard']>>>
-export type UsersSkillsV1GetListSkillsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_get_listSkills']>>>
-export type UsersSkillsV1PostAddSkillResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_post_addSkill']>>>
-export type UsersSkillsV1PutUpdateSkillResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_put_updateSkill']>>>
-export type UsersSkillsV1DeleteDeleteSkillResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_delete_deleteSkill']>>>
-export type UsersSkillsV1PostBulkAddSkillsResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['users_skills_v1_post_bulkAddSkills']>>>
-export type TasksV1GetListTasksResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_get_listTasks']>>>
-export type TasksV1PostCreateTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_post_createTask']>>>
-export type TasksV1GetGetTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_get_getTask']>>>
-export type TasksV1PatchUpdateTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_patch_updateTask']>>>
-export type TasksV1DeleteDeleteTaskResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_delete_deleteTask']>>>
-export type TasksV1PostBulkDeleteTasksResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['tasks_v1_post_bulkDeleteTasks']>>>
-export type AuthV1PostRegisterResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_register']>>>
-export type AuthV1PostLoginResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_login']>>>
-export type AuthV1PostRefreshTokenResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_refreshToken']>>>
-export type AuthV1GetMeResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_get_me']>>>
-export type AuthV1PostLogoutResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getQMSBackend>['auth_v1_post_logout']>>>
+
+    return customInstance<TokenOut>({
+      url: `/api/v1/auth/token`,
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: formUrlEncoded,
+    });
+  };
+
+  /**
+   * @summary Refresh Token
+   */
+  const auth_v1_post_refreshToken = (refreshIn: RefreshIn) => {
+    return customInstance<TokenOut>({
+      url: `/api/v1/auth/refresh`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: refreshIn,
+    });
+  };
+
+  /**
+   * @summary Me
+   */
+  const auth_v1_get_me = () => {
+    return customInstance<AppPresentationSchemasAuthSchemaUserOut>({
+      url: `/api/v1/auth/me`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Logout
+   */
+  const auth_v1_post_logout = (refreshInNull: RefreshIn | null) => {
+    return customInstance<LogoutOut>({
+      url: `/api/v1/auth/logout`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: refreshInNull,
+    });
+  };
+
+  return {
+    users_v1_get_listUsers,
+    users_v1_get_getUserByUsername,
+    users_v1_get_getUserById,
+    users_v1_get_getUserByEmail,
+    users_v1_patch_updateUser,
+    users_v1_delete_deleteUser,
+    portfolios_v1_post_createPortfolio,
+    portfolios_v1_get_listPortfolios,
+    portfolios_v1_get_getPortfolio,
+    portfolios_v1_patch_updatePortfolio,
+    portfolios_v1_delete_deletePortfolio,
+    programs_v1_post_createProgramForPortfolio,
+    programs_v1_get_listPrograms,
+    programs_v1_get_listAllPrograms,
+    programs_v1_get_getProgram,
+    programs_v1_patch_updateProgram,
+    programs_v1_delete_deleteProgram,
+    projects_v1_get_listProjects,
+    projects_v1_post_createProject,
+    projects_v1_get_getProject,
+    projects_v1_delete_deleteProject,
+    projects_v1_put_updateProject,
+    projects_v1_post_refreshCachesAll,
+    projects_v1_post_refreshCachesRelease,
+    testcases_v1_post_createTestCase,
+    testcases_v1_put_updateTestCase,
+    testcases_v1_get_listTestCasesByProject,
+    testcases_v1_get_countTestCasesGet,
+    testcases_v1_post_countTestCasesPost,
+    testcases_v1_post_searchTestCases,
+    testcases_v1_get_getTestCase,
+    testcases_v1_delete_deleteTestCase,
+    testcases_v1_post_moveTestCase,
+    teststeps_v1_post_createTestStep,
+    teststeps_v1_get_listTestSteps,
+    teststeps_v1_patch_updateTestStep,
+    teststeps_v1_delete_deleteTestStep,
+    teststeps_v1_post_reorderTestSteps,
+    testcases_v1_get_getTestCaseById,
+    files_v1_post_uploadAFile,
+    files_v1_get_listFiles,
+    files_v1_get_downloadAFile,
+    files_v1_delete_softDeleteAFile,
+    projectanalytics_v1_get_getTestCaseSummary,
+    projectanalytics_v1_get_getTestStepSummary,
+    projectanalytics_v1_get_getTestCaseTrend,
+    projectanalytics_v1_get_getTestCaseBreakdown,
+    projectanalytics_v1_get_getCasesWithoutSteps,
+    projectanalytics_v1_get_getAgingMetrics,
+    projectanalytics_v1_get_getLongestCases,
+    projectanalytics_v1_get_getReleaseCoverage,
+    projectanalytics_v1_get_getPriorityHealth,
+    projectanalytics_v1_get_getTestCaseBreakdownLabeled,
+    projectanalytics_v1_get_countsOfProjectsByStatus,
+    projectanalytics_v1_get_getProjectsMonthly,
+    portfolioanalytics_v1_get_portfolioSummary,
+    portfolioanalytics_v1_get_portfolioBreakdowns,
+    portfolioanalytics_v1_get_portfolioCasesWithoutSteps,
+    portfolioanalytics_v1_get_portfolioTrend,
+    portfolioanalytics_v1_get_portfolioTopProjects,
+    programanalytics_v1_get_programSummary,
+    programanalytics_v1_get_programBreakdowns,
+    programanalytics_v1_get_programCasesWithoutSteps,
+    programanalytics_v1_get_programTrend,
+    programanalytics_v1_get_programTopProjects,
+    testcaseanalytics_v1_get_testCaseSummary,
+    testcaseanalytics_v1_get_testStepsExecutionSummary,
+    testcaseanalytics_v1_get_testCaseTrends,
+    testcaseanalytics_v1_get_testCaseAging,
+    testcaseanalytics_v1_get_testCaseCoverage,
+    testcaseanalytics_v1_get_testCasesByFolder,
+    testcaseanalytics_v1_get_stepExecutionTrend,
+    testcaseanalytics_v1_get_analyticsHealthcard,
+    users_skills_v1_get_listSkills,
+    users_skills_v1_post_addSkill,
+    users_skills_v1_put_updateSkill,
+    users_skills_v1_delete_deleteSkill,
+    users_skills_v1_post_bulkAddSkills,
+    tasks_v1_get_listTasks,
+    tasks_v1_post_createTask,
+    tasks_v1_get_getTask,
+    tasks_v1_patch_updateTask,
+    tasks_v1_delete_deleteTask,
+    tasks_v1_post_bulkDeleteTasks,
+    dashboardanalytics_v1_get_monthlyCreationsOfPortfoliosProgramsProjects,
+    dashboardanalytics_v1_get_dashboardSummaryTotalsMonthlyDeltas,
+    enums_v1_get_listEnum,
+    auth_v1_post_register,
+    auth_v1_post_login,
+    auth_v1_post_refreshToken,
+    auth_v1_get_me,
+    auth_v1_post_logout,
+  };
+};
+export type UsersV1GetListUsersResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["users_v1_get_listUsers"]>
+  >
+>;
+export type UsersV1GetGetUserByUsernameResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_v1_get_getUserByUsername"]
+    >
+  >
+>;
+export type UsersV1GetGetUserByIdResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["users_v1_get_getUserById"]>
+  >
+>;
+export type UsersV1GetGetUserByEmailResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["users_v1_get_getUserByEmail"]>
+  >
+>;
+export type UsersV1PatchUpdateUserResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["users_v1_patch_updateUser"]>
+  >
+>;
+export type UsersV1DeleteDeleteUserResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["users_v1_delete_deleteUser"]>
+  >
+>;
+export type PortfoliosV1PostCreatePortfolioResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["portfolios_v1_post_createPortfolio"]
+    >
+  >
+>;
+export type PortfoliosV1GetListPortfoliosResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["portfolios_v1_get_listPortfolios"]
+    >
+  >
+>;
+export type PortfoliosV1GetGetPortfolioResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["portfolios_v1_get_getPortfolio"]
+    >
+  >
+>;
+export type PortfoliosV1PatchUpdatePortfolioResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["portfolios_v1_patch_updatePortfolio"]
+    >
+  >
+>;
+export type PortfoliosV1DeleteDeletePortfolioResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["portfolios_v1_delete_deletePortfolio"]
+    >
+  >
+>;
+export type ProgramsV1PostCreateProgramForPortfolioResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["programs_v1_post_createProgramForPortfolio"]
+    >
+  >
+>;
+export type ProgramsV1GetListProgramsResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["programs_v1_get_listPrograms"]>
+  >
+>;
+export type ProgramsV1GetListAllProgramsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["programs_v1_get_listAllPrograms"]
+    >
+  >
+>;
+export type ProgramsV1GetGetProgramResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["programs_v1_get_getProgram"]>
+  >
+>;
+export type ProgramsV1PatchUpdateProgramResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["programs_v1_patch_updateProgram"]
+    >
+  >
+>;
+export type ProgramsV1DeleteDeleteProgramResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["programs_v1_delete_deleteProgram"]
+    >
+  >
+>;
+export type ProjectsV1GetListProjectsResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["projects_v1_get_listProjects"]>
+  >
+>;
+export type ProjectsV1PostCreateProjectResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_post_createProject"]
+    >
+  >
+>;
+export type ProjectsV1GetGetProjectResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["projects_v1_get_getProject"]>
+  >
+>;
+export type ProjectsV1DeleteDeleteProjectResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_delete_deleteProject"]
+    >
+  >
+>;
+export type ProjectsV1PutUpdateProjectResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_put_updateProject"]
+    >
+  >
+>;
+export type ProjectsV1PostRefreshCachesAllResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesAll"]
+    >
+  >
+>;
+export type ProjectsV1PostRefreshCachesReleaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesRelease"]
+    >
+  >
+>;
+export type TestcasesV1PostCreateTestCaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_post_createTestCase"]
+    >
+  >
+>;
+export type TestcasesV1PutUpdateTestCaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_put_updateTestCase"]
+    >
+  >
+>;
+export type TestcasesV1GetListTestCasesByProjectResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcases_v1_get_listTestCasesByProject"]
+    >
+  >
+>;
+export type TestcasesV1GetCountTestCasesGetResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_get_countTestCasesGet"]
+    >
+  >
+>;
+export type TestcasesV1PostCountTestCasesPostResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_post_countTestCasesPost"]
+    >
+  >
+>;
+export type TestcasesV1PostSearchTestCasesResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_post_searchTestCases"]
+    >
+  >
+>;
+export type TestcasesV1GetGetTestCaseResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["testcases_v1_get_getTestCase"]>
+  >
+>;
+export type TestcasesV1DeleteDeleteTestCaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_delete_deleteTestCase"]
+    >
+  >
+>;
+export type TestcasesV1PostMoveTestCaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_post_moveTestCase"]
+    >
+  >
+>;
+export type TeststepsV1PostCreateTestStepResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["teststeps_v1_post_createTestStep"]
+    >
+  >
+>;
+export type TeststepsV1GetListTestStepsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["teststeps_v1_get_listTestSteps"]
+    >
+  >
+>;
+export type TeststepsV1PatchUpdateTestStepResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["teststeps_v1_patch_updateTestStep"]
+    >
+  >
+>;
+export type TeststepsV1DeleteDeleteTestStepResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["teststeps_v1_delete_deleteTestStep"]
+    >
+  >
+>;
+export type TeststepsV1PostReorderTestStepsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["teststeps_v1_post_reorderTestSteps"]
+    >
+  >
+>;
+export type TestcasesV1GetGetTestCaseByIdResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcases_v1_get_getTestCaseById"]
+    >
+  >
+>;
+export type FilesV1PostUploadAFileResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["files_v1_post_uploadAFile"]>
+  >
+>;
+export type FilesV1GetListFilesResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["files_v1_get_listFiles"]>
+  >
+>;
+export type FilesV1GetDownloadAFileResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["files_v1_get_downloadAFile"]>
+  >
+>;
+export type FilesV1DeleteSoftDeleteAFileResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["files_v1_delete_softDeleteAFile"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetTestCaseSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getTestCaseSummary"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetTestStepSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getTestStepSummary"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetTestCaseTrendResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getTestCaseTrend"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetTestCaseBreakdownResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getTestCaseBreakdown"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetCasesWithoutStepsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getCasesWithoutSteps"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetAgingMetricsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getAgingMetrics"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetLongestCasesResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getLongestCases"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetReleaseCoverageResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getReleaseCoverage"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetPriorityHealthResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getPriorityHealth"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetTestCaseBreakdownLabeledResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["projectanalytics_v1_get_getTestCaseBreakdownLabeled"]
+      >
+    >
+  >;
+export type ProjectanalyticsV1GetCountsOfProjectsByStatusResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_countsOfProjectsByStatus"]
+    >
+  >
+>;
+export type ProjectanalyticsV1GetGetProjectsMonthlyResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["projectanalytics_v1_get_getProjectsMonthly"]
+    >
+  >
+>;
+export type PortfolioanalyticsV1GetPortfolioSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["portfolioanalytics_v1_get_portfolioSummary"]
+    >
+  >
+>;
+export type PortfolioanalyticsV1GetPortfolioBreakdownsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["portfolioanalytics_v1_get_portfolioBreakdowns"]
+    >
+  >
+>;
+export type PortfolioanalyticsV1GetPortfolioCasesWithoutStepsResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["portfolioanalytics_v1_get_portfolioCasesWithoutSteps"]
+      >
+    >
+  >;
+export type PortfolioanalyticsV1GetPortfolioTrendResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["portfolioanalytics_v1_get_portfolioTrend"]
+    >
+  >
+>;
+export type PortfolioanalyticsV1GetPortfolioTopProjectsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["portfolioanalytics_v1_get_portfolioTopProjects"]
+    >
+  >
+>;
+export type ProgramanalyticsV1GetProgramSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["programanalytics_v1_get_programSummary"]
+    >
+  >
+>;
+export type ProgramanalyticsV1GetProgramBreakdownsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["programanalytics_v1_get_programBreakdowns"]
+    >
+  >
+>;
+export type ProgramanalyticsV1GetProgramCasesWithoutStepsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["programanalytics_v1_get_programCasesWithoutSteps"]
+    >
+  >
+>;
+export type ProgramanalyticsV1GetProgramTrendResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["programanalytics_v1_get_programTrend"]
+    >
+  >
+>;
+export type ProgramanalyticsV1GetProgramTopProjectsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["programanalytics_v1_get_programTopProjects"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestCaseSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_testCaseSummary"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestStepsExecutionSummaryResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_testStepsExecutionSummary"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestCaseTrendsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_testCaseTrends"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestCaseAgingResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["testcaseanalytics_v1_get_testCaseAging"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestCaseCoverageResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_testCaseCoverage"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetTestCasesByFolderResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_testCasesByFolder"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetStepExecutionTrendResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_stepExecutionTrend"]
+    >
+  >
+>;
+export type TestcaseanalyticsV1GetAnalyticsHealthcardResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["testcaseanalytics_v1_get_analyticsHealthcard"]
+    >
+  >
+>;
+export type UsersSkillsV1GetListSkillsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_skills_v1_get_listSkills"]
+    >
+  >
+>;
+export type UsersSkillsV1PostAddSkillResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_skills_v1_post_addSkill"]
+    >
+  >
+>;
+export type UsersSkillsV1PutUpdateSkillResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_skills_v1_put_updateSkill"]
+    >
+  >
+>;
+export type UsersSkillsV1DeleteDeleteSkillResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_skills_v1_delete_deleteSkill"]
+    >
+  >
+>;
+export type UsersSkillsV1PostBulkAddSkillsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_skills_v1_post_bulkAddSkills"]
+    >
+  >
+>;
+export type TasksV1GetListTasksResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["tasks_v1_get_listTasks"]>
+  >
+>;
+export type TasksV1PostCreateTaskResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["tasks_v1_post_createTask"]>
+  >
+>;
+export type TasksV1GetGetTaskResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["tasks_v1_get_getTask"]>>
+>;
+export type TasksV1PatchUpdateTaskResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["tasks_v1_patch_updateTask"]>
+  >
+>;
+export type TasksV1DeleteDeleteTaskResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["tasks_v1_delete_deleteTask"]>
+  >
+>;
+export type TasksV1PostBulkDeleteTasksResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["tasks_v1_post_bulkDeleteTasks"]
+    >
+  >
+>;
+export type DashboardanalyticsV1GetMonthlyCreationsOfPortfoliosProgramsProjectsResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["dashboardanalytics_v1_get_monthlyCreationsOfPortfoliosProgramsProjects"]
+      >
+    >
+  >;
+export type DashboardanalyticsV1GetDashboardSummaryTotalsMonthlyDeltasResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["dashboardanalytics_v1_get_dashboardSummaryTotalsMonthlyDeltas"]
+      >
+    >
+  >;
+export type EnumsV1GetListEnumResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["enums_v1_get_listEnum"]>>
+>;
+export type AuthV1PostRegisterResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_register"]>>
+>;
+export type AuthV1PostLoginResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_login"]>>
+>;
+export type AuthV1PostRefreshTokenResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_refreshToken"]>
+  >
+>;
+export type AuthV1GetMeResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_get_me"]>>
+>;
+export type AuthV1PostLogoutResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_logout"]>>
+>;

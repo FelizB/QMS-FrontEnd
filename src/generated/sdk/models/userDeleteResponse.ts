@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { AppPresentationSchemasUserSchemaUserOut } from './appPresentationSchemasUserSchemaUserOut';
+import type { AppPresentationSchemasUserSchemaUserOut } from "./appPresentationSchemasUserSchemaUserOut";
 
 export interface UserDeleteResponse {
   message: string;

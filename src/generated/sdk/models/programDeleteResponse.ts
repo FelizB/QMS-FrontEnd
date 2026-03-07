@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramDeleteSummaryOut } from './programDeleteSummaryOut';
+import type { ProgramDeleteSummaryOut } from "./programDeleteSummaryOut";
 
 export interface ProgramDeleteResponse {
   message: string;

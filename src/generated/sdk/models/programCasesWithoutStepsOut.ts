@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramCasesWithoutStepsOutItemsItem } from './programCasesWithoutStepsOutItemsItem';
+import type { ProgramCasesWithoutStepsOutItemsItem } from "./programCasesWithoutStepsOutItemsItem";
 
 export interface ProgramCasesWithoutStepsOut {
   program_id: number;

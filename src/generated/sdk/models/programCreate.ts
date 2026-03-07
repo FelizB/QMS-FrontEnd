@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramCreateCustomProperties } from './programCreateCustomProperties';
+import type { ProgramCreateCustomProperties } from "./programCreateCustomProperties";
 
 export interface ProgramCreate {
   /**

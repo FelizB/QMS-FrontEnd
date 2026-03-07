@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { ProgramTopProjectsOutItemsItem } from './programTopProjectsOutItemsItem';
+import type { ProgramTopProjectsOutItemsItem } from "./programTopProjectsOutItemsItem";
 
 export interface ProgramTopProjectsOut {
   program_id: number;

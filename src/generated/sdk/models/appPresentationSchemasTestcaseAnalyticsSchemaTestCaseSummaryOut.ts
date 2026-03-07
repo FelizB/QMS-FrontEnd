@@ -4,7 +4,7 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { KeyCount } from './keyCount';
+import type { KeyCount } from "./keyCount";
 
 export interface AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut {
   by_status?: KeyCount[];

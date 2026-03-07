@@ -8,7 +8,7 @@ import { useAuth } from "../../../auth/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { LoginInput, TokenResponse } from "../../../api/auth.api";
 import { usePostLoginPreload } from "../../../components/common/usePostLoginPreload";
-import AuthCard from "../../../components/layout/AuthCard";
+import AuthCard from "../authorization/AuthCard";
 
 
 function withTimeout<T>(p: Promise<T>, ms = 10000): Promise<T> {

@@ -19,6 +19,8 @@ export interface ProjectCreate {
    * @maxLength 255
    */
   environment: string;
+  project_owner_id?: number | null;
+  project_owner_name?: string | null;
   website?: string | null;
   is_active?: boolean | null;
   status?: string | null;

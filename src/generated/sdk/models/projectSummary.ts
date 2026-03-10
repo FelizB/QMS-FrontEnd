@@ -10,6 +10,8 @@ export interface ProjectSummary {
   environment: string;
   name: string;
   is_active: boolean;
+  project_owner_id?: number | null;
+  project_owner_name?: string | null;
   percent_complete?: number | null;
   creation_date: string;
   updated_date: string;

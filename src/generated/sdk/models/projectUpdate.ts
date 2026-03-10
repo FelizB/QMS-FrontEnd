@@ -11,6 +11,8 @@ export interface ProjectUpdate {
   description?: string | null;
   environment?: string | null;
   website?: string | null;
+  project_owner_id?: number | null;
+  project_owner_name?: string | null;
   is_active?: boolean | null;
   status?: string | null;
   working_hours?: number | null;

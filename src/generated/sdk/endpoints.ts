@@ -20,6 +20,9 @@ import type {
   CoverageOut,
   DashboardSummaryOut,
   DashboardanalyticsV1GetMonthlyCreationsOfPortfoliosProgramsProjectsParams,
+  DashboardanalyticsV1GetRecentProjectCreationsParams,
+  DashboardanalyticsV1GetRecentUnifiedActivityFeedParams,
+  DashboardanalyticsV1GetTopProjectsByUpdatesWithExecutionProgressParams,
   DeleteResponse,
   EnumListOut,
   FilesV1GetListFilesParams,
@@ -86,6 +89,8 @@ import type {
   ProjectsV1GetListProjectsParams,
   ProjectsV1PostRefreshCachesAllParams,
   ProjectsV1PostRefreshCachesReleaseParams,
+  RecentFeedsOut,
+  RecentProjectCreationsOut,
   RefreshIn,
   ReleaseCoverageOut,
   StepTrendOut,
@@ -121,6 +126,7 @@ import type {
   TestcasesV1PostSearchTestCasesBody,
   TestcasesV1PostSearchTestCasesParams,
   TokenOut,
+  TopProjectsOut,
   TrendPointOut,
   UserCreate,
   UserDeleteResponse,
@@ -1304,6 +1310,45 @@ Defaults to current year if `year` is not provided.
   };
 
   /**
+   * @summary Recent unified activity feed
+   */
+  const dashboardanalytics_v1_get_recentUnifiedActivityFeed = (
+    params?: DashboardanalyticsV1GetRecentUnifiedActivityFeedParams,
+  ) => {
+    return customInstance<RecentFeedsOut>({
+      url: `/api/v1/api/v1/analytics/feeds/recent`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Top projects by updates with execution progress
+   */
+  const dashboardanalytics_v1_get_topProjectsByUpdatesWithExecutionProgress = (
+    params?: DashboardanalyticsV1GetTopProjectsByUpdatesWithExecutionProgressParams,
+  ) => {
+    return customInstance<TopProjectsOut>({
+      url: `/api/v1/api/v1/analytics/projects/top`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Recent project creations
+   */
+  const dashboardanalytics_v1_get_recentProjectCreations = (
+    params?: DashboardanalyticsV1GetRecentProjectCreationsParams,
+  ) => {
+    return customInstance<RecentProjectCreationsOut>({
+      url: `/api/v1/api/v1/analytics/projects/recent-creations`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
    * @summary List Enum
    */
   const enums_v1_get_listEnum = (enumName: string) => {
@@ -1491,6 +1536,9 @@ Defaults to current year if `year` is not provided.
     tasks_v1_post_bulkDeleteTasks,
     dashboardanalytics_v1_get_monthlyCreationsOfPortfoliosProgramsProjects,
     dashboardanalytics_v1_get_dashboardSummaryTotalsMonthlyDeltas,
+    dashboardanalytics_v1_get_recentUnifiedActivityFeed,
+    dashboardanalytics_v1_get_topProjectsByUpdatesWithExecutionProgress,
+    dashboardanalytics_v1_get_recentProjectCreations,
     enums_v1_get_listEnum,
     auth_v1_post_register,
     auth_v1_post_login,
@@ -2129,6 +2177,35 @@ export type DashboardanalyticsV1GetDashboardSummaryTotalsMonthlyDeltasResult =
       >
     >
   >;
+export type DashboardanalyticsV1GetRecentUnifiedActivityFeedResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["dashboardanalytics_v1_get_recentUnifiedActivityFeed"]
+      >
+    >
+  >;
+export type DashboardanalyticsV1GetTopProjectsByUpdatesWithExecutionProgressResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["dashboardanalytics_v1_get_topProjectsByUpdatesWithExecutionProgress"]
+      >
+    >
+  >;
+export type DashboardanalyticsV1GetRecentProjectCreationsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<
+        typeof getQMSBackend
+      >["dashboardanalytics_v1_get_recentProjectCreations"]
+    >
+  >
+>;
 export type EnumsV1GetListEnumResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["enums_v1_get_listEnum"]>>
 >;

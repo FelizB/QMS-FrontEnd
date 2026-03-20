@@ -6,12 +6,9 @@ import { type UserSummary } from "../generated/sdk/models";
 import { type User } from "../components/layout/users/userTable";
 
 
-
-
-export default function UsersAllUsers() {
   const api = getQMSBackend();
   
-  const toUser = (s: UserSummary): User => ({
+ export const toUser = (s: UserSummary): User => ({
     id: s.id,
     firstName: s.first_name,
     lastName: s.last_name,
@@ -28,6 +25,9 @@ export default function UsersAllUsers() {
     externalLogin: false,
     twoFactorEnabled: false,
   });
+
+export default function UsersAllUsers() {
+
 
 
   const limit = 50;

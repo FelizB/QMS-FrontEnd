@@ -30,10 +30,15 @@ import ProjectAnalytics from "../components/layout/workspaces/ProjectAnalytics";
 import ProjectTeams from "../components/layout/workspaces/ProjectsTeams";
 import { ProjectTasks } from "../components/layout/workspaces/ProjectTasks";
 import ProjectCalendry from "../components/layout/workspaces/ProjectCalendry";
+import UserEditPage from "../components/layout/users/UserEdit";
+import UserRegistrationPage from "../components/layout/users/UserRegistration";
+import ApprovalDashboard from "../pages/ApprovalDashboard";
 
 export default function AppRoutes() {
   return (
     <>
+    // routes.tsx
+
       <BootstrapAuthLogout />
       <BootGate>
         <Routes>
@@ -55,6 +60,8 @@ export default function AppRoutes() {
             <Route path="analytics/insights" element={<AnalyticsInsights />} />
 
             <Route path="users/all-users" element={<UsersAllUsers />} />
+            <Route path="/users/:id/edit" element={<UserEditPage/>} />
+            <Route path="/users/register" element={<UserRegistrationPage/>} />
             <Route path="users/roles" element={<UsersRoles />} />
             <Route path="users/activity" element={<UsersActivity />} />
 
@@ -79,6 +86,7 @@ export default function AppRoutes() {
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="report/reports" element={<ReportsPage />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="tasks" element={<ApprovalDashboard />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
 

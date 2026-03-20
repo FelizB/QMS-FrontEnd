@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown, PieChart, BarChart, User, ShoppingCart, Users as UsersIcon, Activity } from 'lucide-react'
+import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown, PieChart, BarChart, User, ShoppingCart, Users as UsersIcon, Activity, ActivityIcon} from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 // add explicit path for routing
@@ -49,6 +49,7 @@ const menuItems = [
       { id:"reports", label:"Reports", path:'report/reports', icon: FileText },
     ]
   },
+   { id:"tasks", icon: ActivityIcon, label:"Tasks", path:'tasks' },
   { id:"settings", icon: Settings, label:"Settings", path:'settings' }
 ]
 

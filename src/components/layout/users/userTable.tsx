@@ -18,7 +18,13 @@ import {
   Paper,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { darkText, darkInput } from '../../common/T-colors';
+import { useUserMutations } from './useUserMutations';
+import type { UserCreate, UserUpdate } from '../../../generated/sdk/models';
+import { useNavigate } from 'react-router-dom';
 
+// ---------------- Your local table row type ----------------
 export interface User {
   id: number;
   firstName: string;
@@ -28,7 +34,7 @@ export interface User {
   isAdmin: boolean;
   email: string;
   department?: string;
-  unit?: string;            // using “unit” in your latest code
+  unit?: string;            // “unit”
   userNumber: string;
   externalLogin: boolean;
   twoFactorEnabled: boolean;
@@ -48,51 +54,14 @@ export interface UserFilters {
 
 interface Props {
   users: User[];
-  onEdit: (user: User) => void;
+  onEdit: (user: User) => void; // kept for compatibility; still invoked
   isLoading: boolean;
   error: any;
 }
 
-/** Shared dark-mode helpers */
-const darkText = {
-  color: (theme: any) =>
-    theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-};
-
-const darkInput = {
-  '& .MuiInputBase-input': {
-    color: (theme: any) =>
-      theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-  },
-  '& .MuiInputLabel-root': {
-    color: (theme: any) =>
-      theme.palette.mode === 'dark' ? theme.palette.grey[300] : 'inherit',
-    '&.Mui-focused': {
-      color: (theme: any) =>
-        theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-    },
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: (theme: any) =>
-      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.28)' : undefined,
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: (theme: any) =>
-      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.38)' : undefined,
-  },
-  '& .MuiSvgIcon-root': {
-    color: (theme: any) =>
-      theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-  },
-  '& .MuiSelect-icon': {
-    color: (theme: any) =>
-      theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-  },
-  '& .MuiMenu-paper': {
-    bgcolor: (theme: any) =>
-      theme.palette.mode === 'dark' ? '#0f172a' : undefined,
-  },
-};
+// ---- Route helpers (adjust to your routing if different) ----
+const ROUTE_CREATE_USER = '/users/register';
+const routeEditUser = (id: number) => `/users/${id}/edit`;
 
 export const UsersTable: React.FC<Props> = ({
   users,
@@ -100,9 +69,13 @@ export const UsersTable: React.FC<Props> = ({
   isLoading,
   error,
 }) => {
+  const navigate = useNavigate();
+
   const [filters, setFilters] = React.useState<UserFilters>({});
   const [selected, setSelected] = React.useState<number[]>([]);
   const [status, setStatus] = React.useState<'active' | 'all'>('active');
+
+  const { deleteManyAsync } = useUserMutations();
 
   const filteredUsers = users.filter((u) => {
     if (status === 'active' && !u.active) return false;
@@ -118,22 +91,43 @@ export const UsersTable: React.FC<Props> = ({
     setSelected(checked ? filteredUsers.map((u) => u.id) : []);
   };
 
+  // Map table row → baseline for edit prefill (snake_case aligned to UserUpdate)
+  function tableUserToUpdateBaseline(u: User): UserUpdate {
+    return {
+      username: u.username,
+      email: u.email,
+      department: u.department ?? null,
+      unit: u.unit ?? null,
+      active: u.active,
+      approved: null,
+      locked: null,
+      admin: u.isAdmin,
+      first_name: u.firstName,
+      middle_name: u.middleInitial ?? null,
+      last_name: u.lastName,
+      rss_token: null,
+      phone: null,
+      site: null,
+      address: null,
+      country: null,
+      skills: null,
+      primary_worksite_info: null,
+      secondary_worksite_info: null,
+    };
+  }
+
   if (isLoading) return <div>Loading…</div>;
   if (error) return <div className="text-red-500">Failed to load users. Please refresh.</div>;
 
   return (
     <Box
+      className="text-slate-500 dark:text-slate-400 bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6 relative"
       sx={{
+        color: 'var(--app-text-color)',
         p: 2,
         borderRadius: 2,
+        bgcolor: 'transparent',
         backdropFilter: 'blur(6px)',
-        bgcolor: (t) =>
-          t.palette.mode === 'dark' ? 'rgba(15,23,42,0.8)' : 'rgba(255,255,255,0.8)',
-        border: (t) =>
-          `1px solid ${
-            t.palette.mode === 'dark' ? 'rgba(148,163,184,0.35)' : 'rgba(226,232,240,0.5)'
-          }`,
-        ...darkText,
       }}
     >
       {/* Intro */}
@@ -147,40 +141,78 @@ export const UsersTable: React.FC<Props> = ({
       </Box>
 
       {/* Header controls */}
-      <Stack direction="row" justifyContent="space-between" mb={2} alignItems="center">
+      <Stack direction="row" justifyContent="space-between" mb={2} alignItems="center" gap={2}>
         <Stack direction="row" spacing={1}>
-          <Button variant="contained">+ Add</Button>
+          {/* ADD → go to registration page */}
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate(ROUTE_CREATE_USER);
+            }}
+          >
+            + Add
+          </Button>
           <Button variant="outlined" sx={darkText}>Filter</Button>
           <Button variant="text" sx={darkText} onClick={() => setFilters({})}>
             Clear Filter
           </Button>
         </Stack>
 
-        <Select
-          size="small"
-          value={status}
-          onChange={(e) => setStatus(e.target.value as any)}
-          sx={{ minWidth: 160, ...darkInput }}
-        >
-          <MenuItem value="active">All Active</MenuItem>
-          <MenuItem value="all">All Users</MenuItem>
-        </Select>
+        <Stack direction="row" gap={1} alignItems="center">
+          <Button
+            startIcon={<DeleteIcon />}
+            color="error"
+            variant="outlined"
+            disabled={selected.length === 0}
+            onClick={async () => {
+              if (selected.length === 0) return;
+              await deleteManyAsync(selected);
+              setSelected([]);
+            }}
+          >
+            Delete selected ({selected.length})
+          </Button>
+
+          <Select
+            size="small"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as any)}
+            displayEmpty
+            sx={{ minWidth: 160, ...darkInput }}
+          >
+            <MenuItem value="active">All Active</MenuItem>
+            <MenuItem value="all">All Users</MenuItem>
+          </Select>
+        </Stack>
       </Stack>
 
       {/* Table */}
       <TableContainer
+        className="text-slate-500 dark:text-slate-400"
         component={Paper}
         variant="outlined"
         sx={{
+          ...darkText,
           bgcolor: 'transparent',
-          borderColor: (t) =>
-            t.palette.mode === 'dark' ? 'rgba(148,163,184,0.35)' : undefined,
+          borderColor: (t) => (t.palette.mode === 'dark' ? 'rgba(148,163,184,0.35)' : undefined),
         }}
       >
         <Table size="small">
           <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox" sx={darkText} />
+            <TableRow sx={{ fontWeight: 'bold' }}>
+              <TableCell padding="checkbox" sx={darkText}>
+                <Checkbox
+                  indeterminate={selected.length > 0 && selected.length < filteredUsers.length}
+                  checked={filteredUsers.length > 0 && selected.length === filteredUsers.length}
+                  onChange={(e) => toggleSelectAll(e.target.checked)}
+                  sx={{
+                    color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : 'grey'),
+                    '&.Mui-checked': {
+                      color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : undefined),
+                    },
+                  }}
+                />
+              </TableCell>
               <TableCell sx={darkText}>First Name</TableCell>
               <TableCell sx={darkText}>MI</TableCell>
               <TableCell sx={darkText}>Last Name</TableCell>
@@ -230,7 +262,7 @@ export const UsersTable: React.FC<Props> = ({
                   value={filters.admin ?? ''}
                   onChange={(e) => setFilters((f) => ({ ...f, admin: e.target.value as any }))}
                   displayEmpty
-                  sx={{ minWidth: 140, ...darkInput }}
+                  sx={{ color: 'GrayText', minWidth: 140, ...darkInput }}
                 >
                   <MenuItem value="">-- Any --</MenuItem>
                   <MenuItem value="yes">Yes</MenuItem>
@@ -267,10 +299,9 @@ export const UsersTable: React.FC<Props> = ({
                       )
                     }
                     sx={{
-                      color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : undefined),
+                      color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : 'grey'),
                       '&.Mui-checked': {
-                        color: (t) =>
-                          t.palette.mode === 'dark' ? t.palette.common.white : undefined,
+                        color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : undefined),
                       },
                     }}
                   />
@@ -291,8 +322,17 @@ export const UsersTable: React.FC<Props> = ({
                 <TableCell>
                   <IconButton
                     size="small"
-                    onClick={() => onEdit(user)}
-                    sx={{ color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : 'inherit') }}
+                    onClick={() => {
+                      onEdit?.(user); // keep parent callback
+                      // ➜ EDIT → navigate to edit page with baseline for instant prefill
+                      navigate(routeEditUser(user.id), {
+                        state: {
+                          initialUser: user,
+                          initialUpdateBaseline: tableUserToUpdateBaseline(user),
+                        },
+                      });
+                    }}
+                    sx={{ color: (t) => (t.palette.mode === 'dark' ? t.palette.common.white : 'cyan') }}
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>

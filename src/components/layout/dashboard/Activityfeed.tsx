@@ -86,7 +86,7 @@ export default function ActivityFeed() {
   } = useQuery({
     queryKey: ["recent-activity-feed", 10],
     queryFn: async () => {
-      const res = await api.dashboardanalytics_v1_get_recentUnifiedActivityFeed({ limit: 10 });
+      const res = await api.dashboardanalytics_v1_get_recentUnifiedActivityFeed({ limit: 8 });
       return res.data;
     },
   });

@@ -1,3 +1,6 @@
+import RoleMatrixPage from "../components/layout/roles/userRoles";
+
 export default function UsersRoles() {
-  return <div>Users - Roles & Permissions</div>;
+  return <RoleMatrixPage/>
 }
+

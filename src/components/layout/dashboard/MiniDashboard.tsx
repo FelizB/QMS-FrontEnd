@@ -1,7 +1,8 @@
 import ActivityFeed from "./Activityfeed";
 import ChartSection from "./ChartSection";
 import StatsGrid from "./StatsGrid";
-import TableSection from "./TableSection";
+import TableSection from "../analytics/TableSection";
+import PortfolioChart from "./PortfolioChart";
 
 function MiniDashboard() {
   return (
@@ -16,7 +17,9 @@ function MiniDashboard() {
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           
           <div className="xl:col-span-2">
-            <TableSection />
+           
+           <PortfolioChart />
+       
           </div>
 
           <div>

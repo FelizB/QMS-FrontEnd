@@ -5,11 +5,16 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
+  ActionIn,
+  ActionOut,
   AgingMetricsOut,
   AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut,
   AppPresentationSchemasAuthSchemaUserOut,
   AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut,
   AppPresentationSchemasTeststepSchemaTestStepOut,
+  ApprovalQueuedOut,
+  ApprovalsV1GetListPendingApprovalsParams,
+  ApprovalsV1PostRejectBody,
   BodyLoginApiV1AuthTokenPost,
   BodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost,
   BulkDeleteIn,
@@ -27,6 +32,8 @@ import type {
   EnumListOut,
   FilesV1GetListFilesParams,
   FolderBreakdownOut,
+  GrantIn,
+  GrantOut,
   HealthcardOut,
   LogoutOut,
   LongestCasesOut,
@@ -35,6 +42,7 @@ import type {
   PagedTasks,
   PortfolioBreakdownOut,
   PortfolioCasesWithoutStepsOut,
+  PortfolioCategoryProjectsByStatusOut,
   PortfolioCreate,
   PortfolioDeleteResponse,
   PortfolioOut,
@@ -48,6 +56,7 @@ import type {
   PortfolioanalyticsV1GetPortfolioSummaryParams,
   PortfolioanalyticsV1GetPortfolioTopProjectsParams,
   PortfolioanalyticsV1GetPortfolioTrendParams,
+  PortfolioanalyticsV1GetProjectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYearParams,
   PortfoliosV1DeleteDeletePortfolioParams,
   PortfoliosV1GetListPortfoliosParams,
   PriorityHealthOut,
@@ -93,6 +102,9 @@ import type {
   RecentProjectCreationsOut,
   RefreshIn,
   ReleaseCoverageOut,
+  RoleIn,
+  RoleMatrixV1GetListGrantsParams,
+  RoleOut,
   StepTrendOut,
   TaskCreate,
   TaskOut,
@@ -350,6 +362,18 @@ export const getQMSBackend = () => {
   };
 
   /**
+   * @summary Create Project
+   */
+  const projects_v1_post_createProject = (projectCreate: ProjectCreate) => {
+    return customInstance<ProjectOut | ApprovalQueuedOut>({
+      url: `/api/v1/projects`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: projectCreate,
+    });
+  };
+
+  /**
    * @summary List Projects
    */
   const projects_v1_get_listProjects = (
@@ -359,53 +383,6 @@ export const getQMSBackend = () => {
       url: `/api/v1/projects`,
       method: "GET",
       params,
-    });
-  };
-
-  /**
-   * @summary Create Project
-   */
-  const projects_v1_post_createProject = (projectCreate: ProjectCreate) => {
-    return customInstance<ProjectOut>({
-      url: `/api/v1/projects`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: projectCreate,
-    });
-  };
-
-  /**
-   * @summary Get Project
-   */
-  const projects_v1_get_getProject = (projectId: number) => {
-    return customInstance<ProjectOut>({
-      url: `/api/v1/projects/${projectId}`,
-      method: "GET",
-    });
-  };
-
-  /**
-   * @summary Delete Project
-   */
-  const projects_v1_delete_deleteProject = (projectId: number) => {
-    return customInstance<ProjectDeleteOut>({
-      url: `/api/v1/projects/${projectId}`,
-      method: "DELETE",
-    });
-  };
-
-  /**
-   * @summary Update Project
-   */
-  const projects_v1_put_updateProject = (
-    projectId: number,
-    projectUpdate: ProjectUpdate,
-  ) => {
-    return customInstance<ProjectOut>({
-      url: `/api/v1/projects/${projectId}`,
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      data: projectUpdate,
     });
   };
 
@@ -435,6 +412,41 @@ export const getQMSBackend = () => {
       url: `/api/v1/projects/${projectId}/refresh-caches/${releaseId}`,
       method: "POST",
       params,
+    });
+  };
+
+  /**
+   * @summary Get Project
+   */
+  const projects_v1_get_getProject = (projectId: number) => {
+    return customInstance<ProjectOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Delete Project
+   */
+  const projects_v1_delete_deleteProject = (projectId: number) => {
+    return customInstance<ProjectDeleteOut | ApprovalQueuedOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary Update Project
+   */
+  const projects_v1_put_updateProject = (
+    projectId: number,
+    projectUpdate: ProjectUpdate,
+  ) => {
+    return customInstance<ProjectOut | ApprovalQueuedOut>({
+      url: `/api/v1/projects/${projectId}`,
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: projectUpdate,
     });
   };
 
@@ -957,6 +969,20 @@ Defaults to current year if `year` is not provided.
   };
 
   /**
+   * @summary Projects count by Portfolio Category (Product House) and status for a given year
+   */
+  const portfolioanalytics_v1_get_projectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYear =
+    (
+      params?: PortfolioanalyticsV1GetProjectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYearParams,
+    ) => {
+      return customInstance<PortfolioCategoryProjectsByStatusOut>({
+        url: `/api/v1/analytics/portfolios/portfolio-categories/projects-by-status`,
+        method: "GET",
+        params,
+      });
+    };
+
+  /**
    * @summary Program Summary
    */
   const programanalytics_v1_get_programSummary = (
@@ -1359,6 +1385,143 @@ Defaults to current year if `year` is not provided.
   };
 
   /**
+   * @summary List pending approvals
+   */
+  const approvals_v1_get_listPendingApprovals = (
+    params?: ApprovalsV1GetListPendingApprovalsParams,
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/approvals`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Approve
+   */
+  const approvals_v1_post_approve = (approvalId: number) => {
+    return customInstance<unknown>({
+      url: `/api/v1/approvals/${approvalId}/approve`,
+      method: "POST",
+    });
+  };
+
+  /**
+   * @summary Reject
+   */
+  const approvals_v1_post_reject = (
+    approvalId: number,
+    approvalsV1PostRejectBody: ApprovalsV1PostRejectBody,
+  ) => {
+    return customInstance<unknown>({
+      url: `/api/v1/approvals/${approvalId}/reject`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: approvalsV1PostRejectBody,
+    });
+  };
+
+  /**
+   * @summary List Roles
+   */
+  const role_matrix_v1_get_listRoles = () => {
+    return customInstance<RoleOut[]>({
+      url: `/api/v1/roles/roles`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Create Role
+   */
+  const role_matrix_v1_post_createRole = (roleIn: RoleIn) => {
+    return customInstance<RoleOut>({
+      url: `/api/v1/roles/roles`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: roleIn,
+    });
+  };
+
+  /**
+   * @summary Delete Role
+   */
+  const role_matrix_v1_delete_deleteRole = (roleId: number) => {
+    return customInstance<void>({
+      url: `/api/v1/roles/roles/${roleId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary List Actions
+   */
+  const role_matrix_v1_get_listActions = () => {
+    return customInstance<ActionOut[]>({
+      url: `/api/v1/roles/actions`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Create Action
+   */
+  const role_matrix_v1_post_createAction = (actionIn: ActionIn) => {
+    return customInstance<ActionOut>({
+      url: `/api/v1/roles/actions`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: actionIn,
+    });
+  };
+
+  /**
+   * @summary Delete Action
+   */
+  const role_matrix_v1_delete_deleteAction = (actionId: number) => {
+    return customInstance<void>({
+      url: `/api/v1/roles/actions/${actionId}`,
+      method: "DELETE",
+    });
+  };
+
+  /**
+   * @summary List Grants
+   */
+  const role_matrix_v1_get_listGrants = (
+    params?: RoleMatrixV1GetListGrantsParams,
+  ) => {
+    return customInstance<GrantOut[]>({
+      url: `/api/v1/roles/grants`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Upsert Grant
+   */
+  const role_matrix_v1_put_upsertGrant = (grantIn: GrantIn) => {
+    return customInstance<GrantOut>({
+      url: `/api/v1/roles/grants`,
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: grantIn,
+    });
+  };
+
+  /**
+   * @summary Run Seed
+   */
+  const admin_seed_v1_post_runSeed = () => {
+    return customInstance<unknown>({
+      url: `/api/v1/admin/seed/role-matrix`,
+      method: "POST",
+    });
+  };
+
+  /**
    * @summary Register
    */
   const auth_v1_post_register = (userCreate: UserCreate) => {
@@ -1467,13 +1630,13 @@ Defaults to current year if `year` is not provided.
     programs_v1_get_getProgram,
     programs_v1_patch_updateProgram,
     programs_v1_delete_deleteProgram,
-    projects_v1_get_listProjects,
     projects_v1_post_createProject,
+    projects_v1_get_listProjects,
+    projects_v1_post_refreshCachesAll,
+    projects_v1_post_refreshCachesRelease,
     projects_v1_get_getProject,
     projects_v1_delete_deleteProject,
     projects_v1_put_updateProject,
-    projects_v1_post_refreshCachesAll,
-    projects_v1_post_refreshCachesRelease,
     testcases_v1_post_createTestCase,
     testcases_v1_put_updateTestCase,
     testcases_v1_get_listTestCasesByProject,
@@ -1510,6 +1673,7 @@ Defaults to current year if `year` is not provided.
     portfolioanalytics_v1_get_portfolioCasesWithoutSteps,
     portfolioanalytics_v1_get_portfolioTrend,
     portfolioanalytics_v1_get_portfolioTopProjects,
+    portfolioanalytics_v1_get_projectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYear,
     programanalytics_v1_get_programSummary,
     programanalytics_v1_get_programBreakdowns,
     programanalytics_v1_get_programCasesWithoutSteps,
@@ -1540,6 +1704,18 @@ Defaults to current year if `year` is not provided.
     dashboardanalytics_v1_get_topProjectsByUpdatesWithExecutionProgress,
     dashboardanalytics_v1_get_recentProjectCreations,
     enums_v1_get_listEnum,
+    approvals_v1_get_listPendingApprovals,
+    approvals_v1_post_approve,
+    approvals_v1_post_reject,
+    role_matrix_v1_get_listRoles,
+    role_matrix_v1_post_createRole,
+    role_matrix_v1_delete_deleteRole,
+    role_matrix_v1_get_listActions,
+    role_matrix_v1_post_createAction,
+    role_matrix_v1_delete_deleteAction,
+    role_matrix_v1_get_listGrants,
+    role_matrix_v1_put_upsertGrant,
+    admin_seed_v1_post_runSeed,
     auth_v1_post_register,
     auth_v1_post_login,
     auth_v1_post_refreshToken,
@@ -1654,15 +1830,29 @@ export type ProgramsV1DeleteDeleteProgramResult = NonNullable<
     >
   >
 >;
+export type ProjectsV1PostCreateProjectResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_post_createProject"]
+    >
+  >
+>;
 export type ProjectsV1GetListProjectsResult = NonNullable<
   Awaited<
     ReturnType<ReturnType<typeof getQMSBackend>["projects_v1_get_listProjects"]>
   >
 >;
-export type ProjectsV1PostCreateProjectResult = NonNullable<
+export type ProjectsV1PostRefreshCachesAllResult = NonNullable<
   Awaited<
     ReturnType<
-      ReturnType<typeof getQMSBackend>["projects_v1_post_createProject"]
+      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesAll"]
+    >
+  >
+>;
+export type ProjectsV1PostRefreshCachesReleaseResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesRelease"]
     >
   >
 >;
@@ -1682,20 +1872,6 @@ export type ProjectsV1PutUpdateProjectResult = NonNullable<
   Awaited<
     ReturnType<
       ReturnType<typeof getQMSBackend>["projects_v1_put_updateProject"]
-    >
-  >
->;
-export type ProjectsV1PostRefreshCachesAllResult = NonNullable<
-  Awaited<
-    ReturnType<
-      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesAll"]
-    >
-  >
->;
-export type ProjectsV1PostRefreshCachesReleaseResult = NonNullable<
-  Awaited<
-    ReturnType<
-      ReturnType<typeof getQMSBackend>["projects_v1_post_refreshCachesRelease"]
     >
   >
 >;
@@ -1981,6 +2157,16 @@ export type PortfolioanalyticsV1GetPortfolioTopProjectsResult = NonNullable<
     >
   >
 >;
+export type PortfolioanalyticsV1GetProjectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYearResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        ReturnType<
+          typeof getQMSBackend
+        >["portfolioanalytics_v1_get_projectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYear"]
+      >
+    >
+  >;
 export type ProgramanalyticsV1GetProgramSummaryResult = NonNullable<
   Awaited<
     ReturnType<
@@ -2208,6 +2394,82 @@ export type DashboardanalyticsV1GetRecentProjectCreationsResult = NonNullable<
 >;
 export type EnumsV1GetListEnumResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["enums_v1_get_listEnum"]>>
+>;
+export type ApprovalsV1GetListPendingApprovalsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["approvals_v1_get_listPendingApprovals"]
+    >
+  >
+>;
+export type ApprovalsV1PostApproveResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["approvals_v1_post_approve"]>
+  >
+>;
+export type ApprovalsV1PostRejectResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["approvals_v1_post_reject"]>
+  >
+>;
+export type RoleMatrixV1GetListRolesResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["role_matrix_v1_get_listRoles"]>
+  >
+>;
+export type RoleMatrixV1PostCreateRoleResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_post_createRole"]
+    >
+  >
+>;
+export type RoleMatrixV1DeleteDeleteRoleResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_delete_deleteRole"]
+    >
+  >
+>;
+export type RoleMatrixV1GetListActionsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_get_listActions"]
+    >
+  >
+>;
+export type RoleMatrixV1PostCreateActionResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_post_createAction"]
+    >
+  >
+>;
+export type RoleMatrixV1DeleteDeleteActionResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_delete_deleteAction"]
+    >
+  >
+>;
+export type RoleMatrixV1GetListGrantsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_get_listGrants"]
+    >
+  >
+>;
+export type RoleMatrixV1PutUpsertGrantResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["role_matrix_v1_put_upsertGrant"]
+    >
+  >
+>;
+export type AdminSeedV1PostRunSeedResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["admin_seed_v1_post_runSeed"]>
+  >
 >;
 export type AuthV1PostRegisterResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_register"]>>

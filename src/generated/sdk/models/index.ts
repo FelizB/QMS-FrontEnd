@@ -5,6 +5,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./actionIn";
+export * from "./actionOut";
 export * from "./agingMetricsOut";
 export * from "./appPresentationSchemasAnalyticsSchemaTestCaseSummaryOut";
 export * from "./appPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId";
@@ -13,6 +15,10 @@ export * from "./appPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut
 export * from "./appPresentationSchemasTestcaseSchemaTestStepOut";
 export * from "./appPresentationSchemasTeststepSchemaTestStepOut";
 export * from "./appPresentationSchemasUserSchemaUserOut";
+export * from "./approvalQueuedOut";
+export * from "./approvalStatus";
+export * from "./approvalsV1GetListPendingApprovalsParams";
+export * from "./approvalsV1PostRejectBody";
 export * from "./bodyLoginApiV1AuthTokenPost";
 export * from "./bodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost";
 export * from "./bulkDeleteIn";
@@ -30,11 +36,14 @@ export * from "./dashboardSummaryOut";
 export * from "./deleteResponse";
 export * from "./entitySummaryOut";
 export * from "./entitySummaryOutTrend";
+export * from "./entityType";
 export * from "./enumItemOut";
 export * from "./enumListOut";
 export * from "./filesV1GetListFilesParams";
 export * from "./folderBreakdownOut";
 export * from "./folderCount";
+export * from "./grantIn";
+export * from "./grantOut";
 export * from "./healthcardOut";
 export * from "./hTTPValidationError";
 export * from "./keyCount";
@@ -53,9 +62,13 @@ export * from "./portfolioanalyticsV1GetPortfolioCasesWithoutStepsParams";
 export * from "./portfolioanalyticsV1GetPortfolioSummaryParams";
 export * from "./portfolioanalyticsV1GetPortfolioTopProjectsParams";
 export * from "./portfolioanalyticsV1GetPortfolioTrendParams";
+export * from "./portfolioanalyticsV1GetProjectsCountByPortfolioCategoryProductHouseAndStatusForAGivenYearParams";
 export * from "./portfolioBreakdownOut";
 export * from "./portfolioCasesWithoutStepsOut";
 export * from "./portfolioCasesWithoutStepsOutItemsItem";
+export * from "./portfolioCategoryCounts";
+export * from "./portfolioCategoryCountsCountsByStatus";
+export * from "./portfolioCategoryProjectsByStatusOut";
 export * from "./portfolioCreate";
 export * from "./portfolioCreateCustomProperties";
 export * from "./portfolioDeleteResponse";
@@ -129,6 +142,9 @@ export * from "./refreshIn";
 export * from "./releaseBucketOut";
 export * from "./releaseCoverageOut";
 export * from "./reorderItem";
+export * from "./roleIn";
+export * from "./roleMatrixV1GetListGrantsParams";
+export * from "./roleOut";
 export * from "./statusCountItem";
 export * from "./stepOverviewOut";
 export * from "./stepStatusCount";

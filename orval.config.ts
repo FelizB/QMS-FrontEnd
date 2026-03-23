@@ -19,13 +19,12 @@ const config = {
           queryOptions: { retry: 1, staleTime: 0 },
           mutationOptions: { retry: false },
         },
-
+        
         mutator: {
           path: './src/sdk/customInstance.ts',
           name: 'customInstance',
         },
 
-        // ✅ NOT nested
         operationName: (operation: any, route: string, method: string) => {
           const toCamel = (value?: string) => {
             if (!value) return 'op';

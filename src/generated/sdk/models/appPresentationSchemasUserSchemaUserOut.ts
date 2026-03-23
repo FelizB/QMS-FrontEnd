@@ -9,7 +9,7 @@ export interface AppPresentationSchemasUserSchemaUserOut {
   id: number;
   username: string;
   email: string;
-  role: string;
+  role_id: number;
   first_name: string;
   middle_name?: string | null;
   last_name: string;

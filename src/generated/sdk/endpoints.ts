@@ -8,6 +8,7 @@ import type {
   ActionIn,
   ActionOut,
   AgingMetricsOut,
+  AppPresentationControllersRolematrixRouteRoleOut,
   AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut,
   AppPresentationSchemasAuthSchemaUserOut,
   AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut,
@@ -104,7 +105,6 @@ import type {
   ReleaseCoverageOut,
   RoleIn,
   RoleMatrixV1GetListGrantsParams,
-  RoleOut,
   StepTrendOut,
   TaskCreate,
   TaskOut,
@@ -178,6 +178,16 @@ export const getQMSBackend = () => {
   const users_v1_get_getUserById = (id: number) => {
     return customInstance<UserSummary>({
       url: `/api/v1/users/by-id/${id}`,
+      method: "GET",
+    });
+  };
+
+  /**
+   * @summary Get User By Id Detailed
+   */
+  const users_v1_get_getUserByIdDetailed = (id: number) => {
+    return customInstance<AppPresentationSchemasAuthSchemaUserOut>({
+      url: `/api/v1/users/by-id-detailed/${id}`,
       method: "GET",
     });
   };
@@ -1426,7 +1436,7 @@ Defaults to current year if `year` is not provided.
    * @summary List Roles
    */
   const role_matrix_v1_get_listRoles = () => {
-    return customInstance<RoleOut[]>({
+    return customInstance<AppPresentationControllersRolematrixRouteRoleOut[]>({
       url: `/api/v1/roles/roles`,
       method: "GET",
     });
@@ -1436,7 +1446,7 @@ Defaults to current year if `year` is not provided.
    * @summary Create Role
    */
   const role_matrix_v1_post_createRole = (roleIn: RoleIn) => {
-    return customInstance<RoleOut>({
+    return customInstance<AppPresentationControllersRolematrixRouteRoleOut>({
       url: `/api/v1/roles/roles`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1534,6 +1544,40 @@ Defaults to current year if `year` is not provided.
   };
 
   /**
+   * @summary Refresh Token
+   */
+  const auth_v1_post_refreshToken = (refreshIn: RefreshIn) => {
+    return customInstance<TokenOut>({
+      url: `/api/v1/auth/refresh`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: refreshIn,
+    });
+  };
+
+  /**
+   * @summary Logout
+   */
+  const auth_v1_post_logout = (refreshInNull: RefreshIn | null) => {
+    return customInstance<LogoutOut>({
+      url: `/api/v1/auth/logout`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: refreshInNull,
+    });
+  };
+
+  /**
+   * @summary Me
+   */
+  const auth_v1_get_me = () => {
+    return customInstance<AppPresentationSchemasAuthSchemaUserOut>({
+      url: `/api/v1/auth/me`,
+      method: "GET",
+    });
+  };
+
+  /**
    * @summary Login
    */
   const auth_v1_post_login = (
@@ -1578,44 +1622,11 @@ Defaults to current year if `year` is not provided.
     });
   };
 
-  /**
-   * @summary Refresh Token
-   */
-  const auth_v1_post_refreshToken = (refreshIn: RefreshIn) => {
-    return customInstance<TokenOut>({
-      url: `/api/v1/auth/refresh`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: refreshIn,
-    });
-  };
-
-  /**
-   * @summary Me
-   */
-  const auth_v1_get_me = () => {
-    return customInstance<AppPresentationSchemasAuthSchemaUserOut>({
-      url: `/api/v1/auth/me`,
-      method: "GET",
-    });
-  };
-
-  /**
-   * @summary Logout
-   */
-  const auth_v1_post_logout = (refreshInNull: RefreshIn | null) => {
-    return customInstance<LogoutOut>({
-      url: `/api/v1/auth/logout`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: refreshInNull,
-    });
-  };
-
   return {
     users_v1_get_listUsers,
     users_v1_get_getUserByUsername,
     users_v1_get_getUserById,
+    users_v1_get_getUserByIdDetailed,
     users_v1_get_getUserByEmail,
     users_v1_patch_updateUser,
     users_v1_delete_deleteUser,
@@ -1717,10 +1728,10 @@ Defaults to current year if `year` is not provided.
     role_matrix_v1_put_upsertGrant,
     admin_seed_v1_post_runSeed,
     auth_v1_post_register,
-    auth_v1_post_login,
     auth_v1_post_refreshToken,
-    auth_v1_get_me,
     auth_v1_post_logout,
+    auth_v1_get_me,
+    auth_v1_post_login,
   };
 };
 export type UsersV1GetListUsersResult = NonNullable<
@@ -1738,6 +1749,13 @@ export type UsersV1GetGetUserByUsernameResult = NonNullable<
 export type UsersV1GetGetUserByIdResult = NonNullable<
   Awaited<
     ReturnType<ReturnType<typeof getQMSBackend>["users_v1_get_getUserById"]>
+  >
+>;
+export type UsersV1GetGetUserByIdDetailedResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["users_v1_get_getUserByIdDetailed"]
+    >
   >
 >;
 export type UsersV1GetGetUserByEmailResult = NonNullable<
@@ -2474,17 +2492,17 @@ export type AdminSeedV1PostRunSeedResult = NonNullable<
 export type AuthV1PostRegisterResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_register"]>>
 >;
-export type AuthV1PostLoginResult = NonNullable<
-  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_login"]>>
->;
 export type AuthV1PostRefreshTokenResult = NonNullable<
   Awaited<
     ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_refreshToken"]>
   >
 >;
+export type AuthV1PostLogoutResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_logout"]>>
+>;
 export type AuthV1GetMeResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_get_me"]>>
 >;
-export type AuthV1PostLogoutResult = NonNullable<
-  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_logout"]>>
+export type AuthV1PostLoginResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getQMSBackend>["auth_v1_post_login"]>>
 >;

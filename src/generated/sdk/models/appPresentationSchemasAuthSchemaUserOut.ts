@@ -4,6 +4,9 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
+import type { AppPresentationSchemasAuthSchemaRoleOut } from "./appPresentationSchemasAuthSchemaRoleOut";
+import type { AppPresentationSchemasAuthSchemaUserOutFlags } from "./appPresentationSchemasAuthSchemaUserOutFlags";
+import type { AppPresentationSchemasAuthSchemaUserOutSession } from "./appPresentationSchemasAuthSchemaUserOutSession";
 import type { WorksiteInfo } from "./worksiteInfo";
 
 export interface AppPresentationSchemasAuthSchemaUserOut {
@@ -11,12 +14,13 @@ export interface AppPresentationSchemasAuthSchemaUserOut {
   email: string;
   username: string;
   active: boolean;
-  superuser: boolean;
-  admin: boolean;
   approved: boolean;
   locked: boolean;
   department?: string | null;
-  role?: string | null;
+  role: AppPresentationSchemasAuthSchemaRoleOut;
+  permissions?: string[];
+  flags?: AppPresentationSchemasAuthSchemaUserOutFlags;
+  session?: AppPresentationSchemasAuthSchemaUserOutSession;
   unit?: string | null;
   first_name?: string | null;
   middle_name?: string | null;

@@ -16,13 +16,18 @@ import {
   Typography,
   TableContainer,
   Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { darkText, darkInput } from '../../common/T-colors';
-import { useUserMutations } from './useUserMutations';
 import type { UserCreate, UserUpdate } from '../../../generated/sdk/models';
 import { useNavigate } from 'react-router-dom';
+import { useUserMutations } from './hooks/useMutations';
+
 
 // ---------------- Your local table row type ----------------
 export interface User {
@@ -31,7 +36,8 @@ export interface User {
   middleInitial?: string;
   lastName: string;
   username: string;
-  isAdmin: boolean;
+  isAdmin: number;
+  role_id: number;
   email: string;
   department?: string;
   unit?: string;            // “unit”
@@ -71,19 +77,31 @@ export const UsersTable: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
 
+  const [localUsers, setLocalUsers] = React.useState<User[]>(users);
+
+  React.useEffect(() => {
+    setLocalUsers(users);
+  }, [users]);
+
   const [filters, setFilters] = React.useState<UserFilters>({});
   const [selected, setSelected] = React.useState<number[]>([]);
   const [status, setStatus] = React.useState<'active' | 'all'>('active');
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [deleteTargetUsers, setDeleteTargetUsers] = React.useState<User[]>([]);
 
   const { deleteManyAsync } = useUserMutations();
+  function confirmDelete(usersToDelete: User[]) {
+  setDeleteTargetUsers(usersToDelete);
+  setDeleteDialogOpen(true);
+}
 
-  const filteredUsers = users.filter((u) => {
+  const filteredUsers = localUsers.filter((u) => {
     if (status === 'active' && !u.active) return false;
     if (filters.firstName && !u.firstName.toLowerCase().includes(filters.firstName.toLowerCase())) return false;
     if (filters.lastName && !u.lastName.toLowerCase().includes(filters.lastName.toLowerCase())) return false;
     if (filters.username && !u.username.toLowerCase().includes(filters.username.toLowerCase())) return false;
     if (filters.email && !u.email.toLowerCase().includes(filters.email.toLowerCase())) return false;
-    if (filters.admin && (filters.admin === 'yes') !== u.isAdmin) return false;
+    if (filters.admin && (filters.admin === 'yes') !== (u.role_id === 1 || u.role_id === 2)) return false;
     return true;
   });
 
@@ -101,11 +119,10 @@ export const UsersTable: React.FC<Props> = ({
       active: u.active,
       approved: null,
       locked: null,
-      admin: u.isAdmin,
+      role_id:u.role_id ?? null,
       first_name: u.firstName,
       middle_name: u.middleInitial ?? null,
       last_name: u.lastName,
-      rss_token: null,
       phone: null,
       site: null,
       address: null,
@@ -120,6 +137,7 @@ export const UsersTable: React.FC<Props> = ({
   if (error) return <div className="text-red-500">Failed to load users. Please refresh.</div>;
 
   return (
+    <>
     <Box
       className="text-slate-500 dark:text-slate-400 bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6 relative"
       sx={{
@@ -166,8 +184,8 @@ export const UsersTable: React.FC<Props> = ({
             disabled={selected.length === 0}
             onClick={async () => {
               if (selected.length === 0) return;
-              await deleteManyAsync(selected);
-              setSelected([]);
+                      const usersToDelete = users.filter(u => selected.includes(u.id));
+                      confirmDelete(usersToDelete);
             }}
           >
             Delete selected ({selected.length})
@@ -351,5 +369,56 @@ export const UsersTable: React.FC<Props> = ({
         </Table>
       </TableContainer>
     </Box>
+            <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+        >
+          <DialogTitle>Confirm Delete</DialogTitle>
+
+          <DialogContent>
+            <Typography>
+              Are you sure you want to delete the following user(s)?
+            </Typography>
+
+            <ul className="mt-3 ml-4 list-disc">
+              {deleteTargetUsers.map((u) => (
+                <li key={u.id}>
+                  <strong>{u.firstName}</strong> ({u.username})
+                </li>
+              ))}
+            </ul>
+
+            <Typography className="mt-4 text-red-600">
+              This action cannot be undone.
+            </Typography>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              variant="outlined"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              color="error"
+              variant="contained"
+              onClick={async () => {
+                const ids = deleteTargetUsers.map(u => u.id);
+
+                await deleteManyAsync(ids);
+
+                // Remove locally so table updates instantly
+                setLocalUsers(prev => prev.filter(u => !ids.includes(u.id)));
+                setSelected([]);
+                setDeleteDialogOpen(false);
+              }}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+</>
   );
 };

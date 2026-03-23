@@ -4,15 +4,14 @@
  * QMS Backend
  * OpenAPI spec version: 0.1.0
  */
-import type { RecentFeedItemAction } from "./recentFeedItemAction";
-import type { RecentFeedItemEntityType } from "./recentFeedItemEntityType";
+import type { ActivityAction } from "./activityAction";
 
 export interface RecentFeedItem {
   title: string;
   actor_first_name?: string | null;
   /** UTC timestamp */
   performed_at: string;
-  entity_type: RecentFeedItemEntityType;
-  action: RecentFeedItemAction;
+  entity_type: string;
+  action: ActivityAction;
   entity_id: number;
 }

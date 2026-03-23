@@ -14,11 +14,9 @@ export interface UserSummary {
   created_at: string;
   updated_at: string;
   department: string;
-  role: string;
+  role_id: number;
   unit: string;
   active: boolean;
-  admin: boolean;
-  superuser: boolean;
   approved: boolean;
   locked: boolean;
   is_deleted: boolean;

@@ -7,10 +7,15 @@
 
 export * from "./actionIn";
 export * from "./actionOut";
+export * from "./activityAction";
 export * from "./agingMetricsOut";
+export * from "./appPresentationControllersRolematrixRouteRoleOut";
 export * from "./appPresentationSchemasAnalyticsSchemaTestCaseSummaryOut";
 export * from "./appPresentationSchemasAnalyticsSchemaTestCaseSummaryOutByStatusId";
+export * from "./appPresentationSchemasAuthSchemaRoleOut";
 export * from "./appPresentationSchemasAuthSchemaUserOut";
+export * from "./appPresentationSchemasAuthSchemaUserOutFlags";
+export * from "./appPresentationSchemasAuthSchemaUserOutSession";
 export * from "./appPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut";
 export * from "./appPresentationSchemasTestcaseSchemaTestStepOut";
 export * from "./appPresentationSchemasTeststepSchemaTestStepOut";

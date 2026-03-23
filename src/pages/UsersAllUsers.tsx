@@ -1,7 +1,6 @@
 import { UsersTable } from "../components/layout/users/userTable";
 import { useQuery } from "@tanstack/react-query";
 import { getQMSBackend } from "../generated/sdk/endpoints";
-import React from "react";
 import { type UserSummary } from "../generated/sdk/models";
 import { type User } from "../components/layout/users/userTable";
 
@@ -14,9 +13,9 @@ import { type User } from "../components/layout/users/userTable";
     lastName: s.last_name,
     username: s.username,
     email: s.email,
-    isAdmin: s.admin,
+    role_id: s.role_id,
+    isAdmin: s.role_id === 1 ? 1 : 2,
     active: s.active,
-
     // Fields not present in summary → provide defaults/derivations as you see fit
     middleInitial: undefined,
     department: s.department,

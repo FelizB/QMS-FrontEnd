@@ -14,12 +14,12 @@ export interface UserUpdate {
   active?: boolean | null;
   approved?: boolean | null;
   locked?: boolean | null;
-  admin?: boolean | null;
+  role_id?: number | null;
   first_name?: string | null;
   middle_name?: string | null;
   last_name?: string | null;
-  rss_token?: string | null;
   phone?: string | null;
+  gender?: string | null;
   site?: string | null;
   address?: string | null;
   country?: string | null;

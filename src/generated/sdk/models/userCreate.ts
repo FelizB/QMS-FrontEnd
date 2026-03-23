@@ -15,16 +15,13 @@ export interface UserCreate {
   /** @maxLength 100 */
   email: string;
   department: string;
-  role: string;
+  role_id: number;
   unit: string;
   first_name: string;
   middle_name?: string | null;
   last_name: string;
   gender?: string | null;
   birthday?: string | null;
-  rss_token?: string | null;
-  admin?: boolean;
-  superuser?: boolean;
   phone?: string | null;
   site?: string | null;
   address?: string | null;

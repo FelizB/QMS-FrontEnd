@@ -1,3 +1,6 @@
+import AuditLogsPage from "../components/layout/audit logs/AuditLogsPage";
+
+
 export default function UsersActivity() {
-  return <div>Users - Activity</div>;
+  return <AuditLogsPage/>;
 }

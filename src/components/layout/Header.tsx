@@ -20,7 +20,7 @@ function Header({onToggleSidebar}: HeaderProps) {
       : user            ? "Normal"
       : "—";
   return (
-    <div className="bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
+    <div className="bg-[rgb(var(--bg))]  border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4">
       <div className="flex items-center justify-between">
         {/* left section */}
         <div className="flex items-center space-x-4">
@@ -38,7 +38,7 @@ function Header({onToggleSidebar}: HeaderProps) {
             <input
               type="text"
               placeholder="Search Anything"
-              className="w-full pl-10 pr-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full pl-10 pr-2.5 bg-[rgb(var(--secondary))]  border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
             <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
               <Filter className="w-4 h-4"/>
@@ -76,7 +76,7 @@ function Header({onToggleSidebar}: HeaderProps) {
               aria-haspopup="menu"
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="flex items-center space-x-3 rounded-lg pl-3 pr-2 py-1 border-l border-slate-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="flex items-center space-x-3 rounded-lg pl-3 pr-2 py-1 border-l border-slate-200 hover:bg-[rgb(var(--secondary))] focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:hover:bg-slate-800"
             >
                 <img
                   src="https://i.pravatar.cc/300"

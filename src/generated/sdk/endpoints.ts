@@ -7,15 +7,18 @@
 import type {
   ActionIn,
   ActionOut,
+  ActivityLogOut,
   AgingMetricsOut,
-  AppPresentationControllersRolematrixRouteRoleOut,
   AppPresentationSchemasAnalyticsSchemaTestCaseSummaryOut,
   AppPresentationSchemasAuthSchemaUserOut,
+  AppPresentationSchemasRoleMatrixSchemaRoleOut,
   AppPresentationSchemasTestcaseAnalyticsSchemaTestCaseSummaryOut,
   AppPresentationSchemasTeststepSchemaTestStepOut,
   ApprovalQueuedOut,
   ApprovalsV1GetListPendingApprovalsParams,
   ApprovalsV1PostRejectBody,
+  AuditlogsV1GetGetAuditLogParams,
+  AuditlogsV1GetListAuditLogsParams,
   BodyLoginApiV1AuthTokenPost,
   BodyUploadFileApiV1ApiV1ProjectsProjectIdFilesPost,
   BulkDeleteIn,
@@ -31,6 +34,7 @@ import type {
   DashboardanalyticsV1GetTopProjectsByUpdatesWithExecutionProgressParams,
   DeleteResponse,
   EnumListOut,
+  EnumsV1GetGetEnumRoleParams,
   FilesV1GetListFilesParams,
   FolderBreakdownOut,
   GrantIn,
@@ -39,6 +43,7 @@ import type {
   LogoutOut,
   LongestCasesOut,
   MonthlyCreationsOut,
+  PagedActivityLogOut,
   PagedResult,
   PagedTasks,
   PortfolioBreakdownOut,
@@ -1395,6 +1400,17 @@ Defaults to current year if `year` is not provided.
   };
 
   /**
+   * @summary Get Enum Role
+   */
+  const enums_v1_get_getEnumRole = (params: EnumsV1GetGetEnumRoleParams) => {
+    return customInstance<EnumListOut>({
+      url: `/api/v1/api/v1/enums/role`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
    * @summary List pending approvals
    */
   const approvals_v1_get_listPendingApprovals = (
@@ -1436,7 +1452,7 @@ Defaults to current year if `year` is not provided.
    * @summary List Roles
    */
   const role_matrix_v1_get_listRoles = () => {
-    return customInstance<AppPresentationControllersRolematrixRouteRoleOut[]>({
+    return customInstance<AppPresentationSchemasRoleMatrixSchemaRoleOut[]>({
       url: `/api/v1/roles/roles`,
       method: "GET",
     });
@@ -1446,7 +1462,7 @@ Defaults to current year if `year` is not provided.
    * @summary Create Role
    */
   const role_matrix_v1_post_createRole = (roleIn: RoleIn) => {
-    return customInstance<AppPresentationControllersRolematrixRouteRoleOut>({
+    return customInstance<AppPresentationSchemasRoleMatrixSchemaRoleOut>({
       url: `/api/v1/roles/roles`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1528,6 +1544,33 @@ Defaults to current year if `year` is not provided.
     return customInstance<unknown>({
       url: `/api/v1/admin/seed/role-matrix`,
       method: "POST",
+    });
+  };
+
+  /**
+   * @summary List Audit Logs
+   */
+  const auditlogs_v1_get_listAuditLogs = (
+    params?: AuditlogsV1GetListAuditLogsParams,
+  ) => {
+    return customInstance<PagedActivityLogOut>({
+      url: `/api/v1/api/v1/audit-logs`,
+      method: "GET",
+      params,
+    });
+  };
+
+  /**
+   * @summary Get Audit Log
+   */
+  const auditlogs_v1_get_getAuditLog = (
+    logId: number,
+    params?: AuditlogsV1GetGetAuditLogParams,
+  ) => {
+    return customInstance<ActivityLogOut>({
+      url: `/api/v1/api/v1/audit-logs/${logId}`,
+      method: "GET",
+      params,
     });
   };
 
@@ -1715,6 +1758,7 @@ Defaults to current year if `year` is not provided.
     dashboardanalytics_v1_get_topProjectsByUpdatesWithExecutionProgress,
     dashboardanalytics_v1_get_recentProjectCreations,
     enums_v1_get_listEnum,
+    enums_v1_get_getEnumRole,
     approvals_v1_get_listPendingApprovals,
     approvals_v1_post_approve,
     approvals_v1_post_reject,
@@ -1727,6 +1771,8 @@ Defaults to current year if `year` is not provided.
     role_matrix_v1_get_listGrants,
     role_matrix_v1_put_upsertGrant,
     admin_seed_v1_post_runSeed,
+    auditlogs_v1_get_listAuditLogs,
+    auditlogs_v1_get_getAuditLog,
     auth_v1_post_register,
     auth_v1_post_refreshToken,
     auth_v1_post_logout,
@@ -2413,6 +2459,11 @@ export type DashboardanalyticsV1GetRecentProjectCreationsResult = NonNullable<
 export type EnumsV1GetListEnumResult = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getQMSBackend>["enums_v1_get_listEnum"]>>
 >;
+export type EnumsV1GetGetEnumRoleResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["enums_v1_get_getEnumRole"]>
+  >
+>;
 export type ApprovalsV1GetListPendingApprovalsResult = NonNullable<
   Awaited<
     ReturnType<
@@ -2487,6 +2538,18 @@ export type RoleMatrixV1PutUpsertGrantResult = NonNullable<
 export type AdminSeedV1PostRunSeedResult = NonNullable<
   Awaited<
     ReturnType<ReturnType<typeof getQMSBackend>["admin_seed_v1_post_runSeed"]>
+  >
+>;
+export type AuditlogsV1GetListAuditLogsResult = NonNullable<
+  Awaited<
+    ReturnType<
+      ReturnType<typeof getQMSBackend>["auditlogs_v1_get_listAuditLogs"]
+    >
+  >
+>;
+export type AuditlogsV1GetGetAuditLogResult = NonNullable<
+  Awaited<
+    ReturnType<ReturnType<typeof getQMSBackend>["auditlogs_v1_get_getAuditLog"]>
   >
 >;
 export type AuthV1PostRegisterResult = NonNullable<

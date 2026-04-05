@@ -78,7 +78,7 @@ const ProfilePopover: React.FC<ProfilePopoverProps> = ({ open, onClose, anchorEl
       ref={panelRef}
       role="menu"
       aria-labelledby="profile-menu-button"
-      className="absolute right-0 top-full mt-5 z-[9999] w-72 origin-top-right rounded-xl border border-slate-200 bg-white p-3 shadow-xl ring-1 ring-black/5 dark:border-slate-700/10 dark:bg-slate-800"
+      className="absolute right-0 top-full mt-5 z-[9999] w-72 origin-top-right rounded-xl border bg-[rgb(var(--secondary))]  p-3 shadow-xl ring-1 ring-black/5 dark:border-slate-700/10 "
     >
       {/* Header */}
       <div className="flex items-center space-x-3 p-4">

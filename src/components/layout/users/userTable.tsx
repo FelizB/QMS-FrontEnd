@@ -27,6 +27,7 @@ import { darkText, darkInput } from '../../common/T-colors';
 import type { UserCreate, UserUpdate } from '../../../generated/sdk/models';
 import { useNavigate } from 'react-router-dom';
 import { useUserMutations } from './hooks/useMutations';
+import { useReferenceData } from './hooks/useReferenceData';
 
 
 // ---------------- Your local table row type ----------------
@@ -51,7 +52,7 @@ export interface UserFilters {
   firstName?: string;
   lastName?: string;
   username?: string;
-  admin?: 'yes' | 'no';
+  role?: Number;
   email?: string;
   department?: string;
   organization?: string;
@@ -68,6 +69,7 @@ interface Props {
 // ---- Route helpers (adjust to your routing if different) ----
 const ROUTE_CREATE_USER = '/users/register';
 const routeEditUser = (id: number) => `/users/${id}/edit`;
+
 
 export const UsersTable: React.FC<Props> = ({
   users,
@@ -88,6 +90,7 @@ export const UsersTable: React.FC<Props> = ({
   const [status, setStatus] = React.useState<'active' | 'all'>('active');
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [deleteTargetUsers, setDeleteTargetUsers] = React.useState<User[]>([]);
+  
 
   const { deleteManyAsync } = useUserMutations();
   function confirmDelete(usersToDelete: User[]) {
@@ -101,13 +104,32 @@ export const UsersTable: React.FC<Props> = ({
     if (filters.lastName && !u.lastName.toLowerCase().includes(filters.lastName.toLowerCase())) return false;
     if (filters.username && !u.username.toLowerCase().includes(filters.username.toLowerCase())) return false;
     if (filters.email && !u.email.toLowerCase().includes(filters.email.toLowerCase())) return false;
-    if (filters.admin && (filters.admin === 'yes') !== (u.role_id === 1 || u.role_id === 2)) return false;
+    if (filters.role!= null && u.role_id !== filters.role) return false;
     return true;
   });
 
   const toggleSelectAll = (checked: boolean) => {
     setSelected(checked ? filteredUsers.map((u) => u.id) : []);
   };
+  const { roles } = useReferenceData(); // roles: { id: number; name: string }[]
+  const roleNameById = React.useMemo(() => {
+    const m = new Map<number, string>();
+    for (const r of roles) m.set(r.id, r.name);
+    return m;
+  }, [roles]);
+  const getRoleName = React.useCallback(
+  (roleId?: number | null) => (roleId ? (roleNameById.get(roleId) ?? `Role #${roleId}`) : "--"),
+  [roleNameById]
+);
+
+  const resolveRoleName = React.useCallback(
+    (roleId?: number | null) => {
+      if (roleId == null) return "--";
+      return roleNameById.get(roleId) ?? `Role #${roleId}`;
+    },
+    [roleNameById]
+  );
+
 
   // Map table row → baseline for edit prefill (snake_case aligned to UserUpdate)
   function tableUserToUpdateBaseline(u: User): UserUpdate {
@@ -139,13 +161,14 @@ export const UsersTable: React.FC<Props> = ({
   return (
     <>
     <Box
-      className="text-slate-500 dark:text-slate-400 bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6 relative"
+   
       sx={{
-        color: 'var(--app-text-color)',
         p: 2,
         borderRadius: 2,
-        bgcolor: 'transparent',
-        backdropFilter: 'blur(6px)',
+    color: 'rgb(var(--subtle))',                 // slate-400 equivalent token
+    bgcolor: 'rgb(var(--bg))',            // translucent bg for blur
+    backdropFilter: 'blur(24px)',                // equivalent-ish to blur-xl
+
       }}
     >
       {/* Intro */}
@@ -193,10 +216,12 @@ export const UsersTable: React.FC<Props> = ({
 
           <Select
             size="small"
+            
             value={status}
             onChange={(e) => setStatus(e.target.value as any)}
             displayEmpty
             sx={{ minWidth: 160, ...darkInput }}
+            className='bg-[rgb(var(--secondary))] '
           >
             <MenuItem value="active">All Active</MenuItem>
             <MenuItem value="all">All Users</MenuItem>
@@ -206,7 +231,7 @@ export const UsersTable: React.FC<Props> = ({
 
       {/* Table */}
       <TableContainer
-        className="text-slate-500 dark:text-slate-400"
+        className="bg-[rgb(var(--subtle))] "
         component={Paper}
         variant="outlined"
         sx={{
@@ -235,7 +260,7 @@ export const UsersTable: React.FC<Props> = ({
               <TableCell sx={darkText}>MI</TableCell>
               <TableCell sx={darkText}>Last Name</TableCell>
               <TableCell sx={darkText}>User Name</TableCell>
-              <TableCell sx={darkText}>Admin</TableCell>
+              <TableCell sx={darkText}>Role</TableCell>
               <TableCell sx={darkText}>Email</TableCell>
               <TableCell sx={darkText}>Department</TableCell>
               <TableCell sx={darkText}>Organization</TableCell>
@@ -277,14 +302,23 @@ export const UsersTable: React.FC<Props> = ({
               <TableCell>
                 <Select
                   size="small"
-                  value={filters.admin ?? ''}
-                  onChange={(e) => setFilters((f) => ({ ...f, admin: e.target.value as any }))}
+                  value={filters.role ?? ""}
+                  onChange={(e) =>
+                    setFilters((f) => ({
+                      ...f,
+                      role_id: e.target.value === "" ? null : Number(e.target.value),
+                    }))
+                  }
                   displayEmpty
-                  sx={{ color: 'GrayText', minWidth: 140, ...darkInput }}
+                  sx={{ color: "GrayText", minWidth: 140, ...darkInput }}
                 >
-                  <MenuItem value="">-- Any --</MenuItem>
-                  <MenuItem value="yes">Yes</MenuItem>
-                  <MenuItem value="no">No</MenuItem>
+                  <MenuItem value="">-- Any Role --</MenuItem>
+
+                  {roles.map((r) => (
+                    <MenuItem key={r.id} value={r.id}>
+                      {r.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </TableCell>
               <TableCell>
@@ -329,7 +363,7 @@ export const UsersTable: React.FC<Props> = ({
                 <TableCell sx={darkText}>{user.middleInitial}</TableCell>
                 <TableCell sx={darkText}>{user.lastName}</TableCell>
                 <TableCell sx={darkText}>{user.username}</TableCell>
-                <TableCell sx={darkText}>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
+                <TableCell sx={darkText}>{resolveRoleName(user.role_id)}</TableCell>
                 <TableCell sx={darkText}>{user.email}</TableCell>
                 <TableCell sx={darkText}>{user.department}</TableCell>
                 <TableCell sx={darkText}>{user.unit}</TableCell>

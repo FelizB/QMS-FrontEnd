@@ -30,14 +30,15 @@ import ProjectAnalytics from "../components/layout/workspaces/ProjectAnalytics";
 import ProjectTeams from "../components/layout/workspaces/ProjectsTeams";
 import { ProjectTasks } from "../components/layout/workspaces/ProjectTasks";
 import ProjectCalendry from "../components/layout/workspaces/ProjectCalendry";
-import UserEditPage from "../components/layout/users/UserEdit";
+import EditUserPage from "../components/layout/users/userEdit";
 import UserRegistrationPage from "../components/layout/users/UserRegistration";
 import ApprovalDashboard from "../pages/ApprovalDashboard";
+import { RouteErrorProvider } from "../lib/errors/RouteErrorContext";
+import { RouteMessageProvider } from "../lib/success/RouteMessageContext";
 
 export default function AppRoutes() {
   return (
     <>
-    // routes.tsx
 
       <BootstrapAuthLogout />
       <BootGate>
@@ -49,7 +50,11 @@ export default function AppRoutes() {
           <Route
             element={
               <RequireAuth>
+                <RouteErrorProvider>
+                   <RouteMessageProvider>
                 <MainLayout />
+                </RouteMessageProvider>
+                </RouteErrorProvider>
               </RequireAuth>
             }
           >
@@ -60,7 +65,7 @@ export default function AppRoutes() {
             <Route path="analytics/insights" element={<AnalyticsInsights />} />
 
             <Route path="users/all-users" element={<UsersAllUsers />} />
-            <Route path="/users/:id/edit" element={<UserEditPage/>} />
+            <Route path="/users/:id/edit" element={<EditUserPage/>} />
             <Route path="/users/register" element={<UserRegistrationPage/>} />
             <Route path="users/roles" element={<UsersRoles />} />
             <Route path="users/activity" element={<UsersActivity />} />

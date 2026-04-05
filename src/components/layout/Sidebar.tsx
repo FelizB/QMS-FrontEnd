@@ -86,7 +86,14 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
   }
 
   return (
-    <div className={`${collapsed ? "w-20" : "w-72"} transition-all duration-300 ease-in-out bg-white/80 shadow-xl dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col relative z-10`}>
+    <div
+  className={`${collapsed ? "w-20" : "w-72"} 
+  transition-all duration-300 ease-in-out 
+  bg-[rgb(var(--bg))] 
+  shadow-xl backdrop-blur-xl 
+  border-r border-slate-200/50 dark:border-slate-700/50 
+  flex flex-col relative z-10`}
+>
       {/* Logo */}
       <div className="p-6 border-b border-slatee-200/50 dark:border-slate-700/50">
         <div className="flex items-center space-x-3">
@@ -121,7 +128,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
                 currentPath === item.path ||
                 (item.submenu && item.submenu.some(si => si.path === currentPath))
                   ? ' bg-blue-500 text-white shadow-lg shadow-blue-500/25' : 
-                    'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                    'text-slate-600 dark:text-slate-300 hover:bg-[rgb(var(--secondary))]'
               }`} onClick={()=>{
                 if(item.submenu){
                   toggleExpanded(item.id)
@@ -174,7 +181,7 @@ export default function Sidebar({collapsed}: {collapsed: boolean}) {
                         className={`w-full ${collapsed ? 'flex justify-center' : 'text-left'} p-2 text-sm transition-all rounded-lg 
                           ${isActive ?
                             'bg-blue-500 text-white shadow-lg shadow-blue-500/25' :
-                            'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                            'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-[rgb(var(--secondary))]'
                           }`}
                          onClick={() => {
                           handleNavigation(subitem.path);

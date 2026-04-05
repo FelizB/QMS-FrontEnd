@@ -4,15 +4,34 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
 import { FullScreenLoader } from '../common/SkeletonLoader';
+import { useRouteError } from '../../lib/errors/RouteErrorContext';
+import { useRouteMessage } from '../../lib/success/RouteMessageContext';
+import { Alert } from '@mui/material';
+
+
 
 
 export default function MainLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { error, setError } = useRouteError();
+  const { msg, clear } = useRouteMessage();
+
 
   const isFetching = useIsFetching();   // number
   const isMutating = useIsMutating();   // number
 
   const showGlobalLoader = isFetching > 0 || isMutating > 0;
+
+    // Auto-dismiss SUCCESS messages after 10 seconds
+  React.useEffect(() => {
+    if (msg?.severity === 'success') {
+      const timer = setTimeout(() => {
+        clear();
+      }, 10_000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [msg, clear]);
 
 
   return (
@@ -27,8 +46,25 @@ export default function MainLayout() {
           onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
 
-        <main className="flex-1 overflow-y-auto bg-transparent">
-          <div className="p-6 space--6">
+        <main className="flex-1 overflow-y-auto bg-[rgb(var(--secondary))] ">
+          <div className="p-6 space-6">
+            {error ? (
+              <Alert
+                severity={error.severity ?? 'error'}
+                onClose={() => setError(null)}
+              >
+                {error.message}
+              </Alert>
+            ) : msg ? (
+              <Alert
+                severity={msg.severity}
+                onClose={clear}
+              >
+                {msg.message}
+              </Alert>
+            ) : null}
+
+
             <Outlet />
           </div>
         </main>

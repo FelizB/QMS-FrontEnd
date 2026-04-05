@@ -1,17 +1,201 @@
 @import "tailwindcss";
-@tailwind utilities;
 
 @layer base {
-  html, body {
-    @apply min-h-full bg-white text-slate-900;
-    --app-text-color: theme(colors.slate.900); /* for light */
+  :root {
+    /* -----------------------------
+       1) Base + Semantic Tokens
+       ----------------------------- */
+
+    /* Page */
+    --bg: 255 255 255;         /* white */
+    --fg: 15 23 42;            /* slate-900 */
+
+    /* Surfaces */
+    --card: 255 255 255;
+    --card-fg: 15 23 42;
+
+    --popover: 255 255 255;
+    --popover-fg: 15 23 42;
+
+    /* Muted / subtle text */
+    --muted: 248 250 252;      /* slate-50 */
+    --muted-fg: 100 116 139;   /* slate-500 */
+
+    /* Borders / inputs */
+    --border: 226 232 240;     /* slate-200 */
+    --input: 226 232 240;
+    --ring: 59 130 246;        /* blue-500 */
+
+    /* Brand / actions */
+    --primary: 37 99 235;      /* blue-600 */
+    --primary-fg: 255 255 255; /* white */
+
+    --secondary: 241 245 249;  /* slate-100 */
+    --secondary-fg: 15 23 42;
+
+    --accent: 245 158 11;      /* amber-500 */
+    --accent-fg: 15 23 42;
+
+    --destructive: 220 38 38;  /* red-600 */
+    --destructive-fg: 255 255 255;
+
+    /* Status colors */
+    --success: 22 163 74;      /* green-600 */
+    --success-fg: 255 255 255;
+
+    --warning: 245 158 11;     /* amber-500 */
+    --warning-fg: 15 23 42;
+
+    --info: 14 165 233;        /* sky-500 */
+    --info-fg: 255 255 255;
+
+    /* Links */
+    --link: 37 99 235;
+    --link-hover: 29 78 216;
+
+    /* Text hierarchy */
+    --title: 15 23 42;         /* slate-900 */
+    --body: 30 41 59;          /* slate-800 */
+    --subtle: 71 85 105;       /* slate-600 */
+
+    /* Table */
+    --table-header: 248 250 252; /* slate-50 */
+    --table-row-hover: 241 245 249; /* slate-100 */
+    --table-row-selected: 219 234 254; /* blue-100 */
+
+    /* Shadow */
+    --shadow: 15 23 42;
+
+    /* Radius */
+    --radius: 14px;
+
+    /* Disabled */
+    --disabled: 226 232 240;
+    --disabled-fg: 148 163 184;
+
+
+  /* Light mode divider (slate-200-ish) */
+  --divider: 226 232 240;
+  --divider-strong: 203 213 225;
+
+
+    /* Color scheme */
+    color-scheme: light dark;
   }
-  html.dark, html.dark body {
-    @apply bg-slate-950 text-slate-100;
-    --app-text-color: theme(colors.slate.100); /* for dark */
+
+  html.dark {
+    color-scheme: dark !important;
+
+    /* Page */
+    --bg: 15 23 42;              /* slate-900/80 */
+    --fg: 241 245 249;         /* slate-100 */
+
+    /* Surfaces */
+    --card: 15 23 42;          /* slate-900 */
+    --card-fg: 241 245 249;
+
+    --popover: 15 23 42;
+    --popover-fg: 241 245 249;
+
+    /* Muted */
+    --muted: 30 41 59;         /* slate-800 */
+    --muted-fg: 148 163 184;   /* slate-400 */
+
+    /* Borders / inputs */
+    --border: 51 65 85;        /* slate-700 */
+    --input: 51 65 85;
+    --ring: 96 165 250;        /* blue-400 */
+
+    /* Brand / actions */
+    --primary: 96 165 250;     /* blue-400 */
+    --primary-fg: 2 6 23;      /* slate-950 */
+
+    --secondary: 30 41 59;     /* slate-800 */
+    --secondary-fg: 241 245 249;
+
+    --accent: 251 191 36;      /* amber-400 */
+    --accent-fg: 2 6 23;
+
+    --destructive: 248 113 113; /* red-400 */
+    --destructive-fg: 2 6 23;
+
+    /* Status */
+    --success: 34 197 94;      /* green-500 */
+    --success-fg: 2 6 23;
+
+    --warning: 251 191 36;     /* amber-400 */
+    --warning-fg: 2 6 23;
+
+    --info: 56 189 248;        /* sky-400 */
+    --info-fg: 2 6 23;
+
+    /* Links */
+    --link: 96 165 250;
+    --link-hover: 147 197 253;
+
+    /* Text hierarchy */
+    --title: 241 245 249;
+    --body: 226 232 240;       /* slate-200 */
+    --subtle: 148 163 184;     /* slate-400 */
+
+    /* Table */
+    --table-header: 30 41 59;   /* slate-800 */
+    --table-row-hover: 51 65 85; /* slate-700 */
+    --table-row-selected: 30 58 138;
+    
+    --shadow: 0 0 0;
+
+    /* Disabled */
+    --disabled: 51 65 85;
+    --disabled-fg: 100 116 139;
+
+    
+  /* Dark mode divider (slate-700-ish) */
+  --divider: 51 65 85;
+  --divider-strong: 71 85 105;
+
+  }
+
+  /* -----------------------------
+     2) Apply tokens globally
+     ----------------------------- */
+
+  html, body {
+    @apply min-h-full;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: rgb(var(--title));
+  }
+
+  p, li, span {
+    color: rgb(var(--body));
+  }
+
+  a {
+    color: rgb(var(--link));
+  }
+
+  a:hover {
+    color: rgb(var(--link-hover));
+  }
+
+  ::selection {
+    background: rgb(var(--primary) / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Smooth theme transitions */
+  * {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
 }
 
-:root { color-scheme: light dark; } /* advertise both */
 html.dark { color-scheme: dark !important; }
 html:not(.dark) { color-scheme: light !important; }

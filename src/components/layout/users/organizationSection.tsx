@@ -148,7 +148,7 @@ export const OrganizationSection: React.FC<Props> = ({ title, value, onChange, e
               Extras (key/value)
             </Typography>
             <IconButton size="small" onClick={addExtra}>
-              <AddCircleOutlineIcon fontSize="small" />
+              <AddCircleOutlineIcon fontSize="small" sx={darkText} />
             </IconButton>
           </Stack>
 
@@ -177,7 +177,7 @@ export const OrganizationSection: React.FC<Props> = ({ title, value, onChange, e
                 </div>
                 <div className="col-span-1 flex items-center">
                   <IconButton size="small" onClick={() => removeExtra(idx)}>
-                    <RemoveCircleOutlineIcon fontSize="small" />
+                    <RemoveCircleOutlineIcon fontSize="small" sx={darkText}/>
                   </IconButton>
                 </div>
               </React.Fragment>

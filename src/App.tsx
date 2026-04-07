@@ -3,6 +3,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { useSyncSdkAuth } from './api/useSyncSdkAuth';
+import * as React from "react";
+import { SessionProvider } from './components/common/session/SessionProvider';
+import { getQMSBackend } from "./generated/sdk/endpoints";
+import { wireTokenExpiryInterceptor } from './components/common/session/qmsBackendInterceptor';
+
 
 const qc = new QueryClient({
   defaultOptions: {
@@ -21,17 +26,31 @@ const qc = new QueryClient({
   },
 });
 
+
+
 function App() {
   useSyncSdkAuth();
+
+  React.useEffect(() => {
+    const api = getQMSBackend();
+    wireTokenExpiryInterceptor(api);
+  }, []);
+
   return (
+
+
     <QueryClientProvider client={qc}>
       <BrowserRouter>
-        {/* Root theme wrapper */}
-        <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-          <AppRoutes />
-        </div>
+        <SessionProvider 
+          >
+          {/* Root theme wrapper */}
+          <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+            <AppRoutes />
+          </div>
+        </SessionProvider>
       </BrowserRouter>
     </QueryClientProvider>
+
   );
 }
 

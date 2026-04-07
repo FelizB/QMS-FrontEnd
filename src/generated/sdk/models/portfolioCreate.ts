@@ -18,6 +18,7 @@ export interface PortfolioCreate {
   artifact_type_id?: number | null;
   is_active?: boolean;
   is_default?: boolean;
+  template_id?: string | null;
   created_at?: string;
   last_updated_date?: string;
   custom_properties?: PortfolioCreateCustomProperties;

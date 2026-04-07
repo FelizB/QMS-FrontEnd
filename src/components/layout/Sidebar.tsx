@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown, PieChart, BarChart, User, ShoppingCart, Users as UsersIcon, Activity, ActivityIcon} from 'lucide-react'
+import { BarChart3, LayoutDashboard, Zap,Users,ShoppingBag, Package, MessageSquare, Calendar, Settings, FileText, ChevronDown, PieChart, BarChart, User, ShoppingCart, Users as UsersIcon, Activity, ActivityIcon, Command} from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 // add explicit path for routing
@@ -29,10 +29,10 @@ const menuItems = [
   {
     id: 'workspaces',
     icon: ShoppingBag,
-    label: 'WorkSpaces',
+    label: 'WorkSpace',
     path: 'workspace',
     submenu: [
-      { id:"portfolios", label:"Portfolios", path:'workspace/portfolios', icon: ShoppingCart },
+      { id:"manage", label:"Manage", path:'workspace/manage', icon: Command },
       { id:"programs", label:"Programs", path:'workspace/programs', icon: Package },
       { id:"projects", label:"Projects", path:'workspace/projects', icon: User }
     ]

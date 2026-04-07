@@ -118,3 +118,63 @@ export const darkMenuProps = {
     },
   },
 };
+
+// common/T-colors.ts (or wherever you keep sx tokens)
+export const tableSx = {
+  // Container background
+  backgroundColor: "rgb(var(--bg))",
+
+  // The actual table element
+  "& .MuiTable-root": {
+    backgroundColor: "rgb(var(--bg))",
+  },
+
+  // Header row / header cells
+  "& .MuiTableHead-root": {
+    backgroundColor: "rgb(var(--bg))",
+  },
+  "& .MuiTableCell-head": {
+    backgroundColor: "rgb(var(--bg))",
+    color: "rgb(var(--muted))",
+    fontWeight: 600,
+    borderBottom: "1px solid rgba(var(--divider), 0.6)",
+  },
+
+  // Body cells
+  "& .MuiTableCell-body": {
+    backgroundColor: "rgb(var(--bg))",
+    color: "rgb(var(--text))",
+    borderBottom: "1px solid rgba(var(--divider), 0.35)",
+  },
+
+  // Rows (hover + optional zebra)
+  "& .MuiTableRow-root:hover .MuiTableCell-body": {
+    backgroundColor: "rgba(148,163,184,.10)",
+  },
+
+  // If you use stickyHeader, this ensures header stays themed
+  "& .MuiTableCell-stickyHeader": {
+    backgroundColor: "rgb(var(--bg))",
+  },
+} as const;
+
+// common/T-colors.ts
+export const paperSurfaceSx = {
+  backgroundColor: "rgb(var(--bg))",
+  color: "rgb(var(--text))",
+  borderColor: "rgba(var(--divider), 0.6)",
+} as const;
+
+export const pageBgSx = {
+  backgroundColor: "rgb(var(--bg))",
+  color: "rgb(var(--subtle))",
+} as const;
+
+
+export const resolveSx = (sx: SxProps<Theme>, theme: Theme) =>
+  (typeof sx === "function" ? (sx as any)(theme) : sx) as any;
+
+export const mergeSx =
+  (...parts: SxProps<Theme>[]) =>
+  (theme: Theme) =>
+    Object.assign({}, ...parts.map((p) => resolveSx(p, theme)));

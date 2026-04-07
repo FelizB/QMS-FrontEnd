@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BarChart3, Users2, ListChecks, CalendarDays } from 'lucide-react';
-import { ToggleButton } from '../Elements/ToggleButton';
+import { ToggleButton } from '../../Elements/ToggleButton';
 
 const tabs = [
   { id: 'projectAnalytics', icon: BarChart3, label: 'Analytics', to: '/workspace/projects/projectAnalytics' },

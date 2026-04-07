@@ -8,10 +8,10 @@
 export interface PortfolioOut {
   id: number;
   name: string;
+  is_default: boolean;
   is_active: boolean;
-  is_deleted: boolean;
   guid: string;
+  template_id: string;
   concurrency_guid: string;
-  last_updated_date: string;
   created_at: string;
 }

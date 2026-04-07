@@ -13,7 +13,7 @@ import {
   type Task,
   type TaskFilters,
   friendlyAxiosError,
-} from '../../../api/tasks';
+} from '../../../../api/tasks';
 import { format } from 'date-fns';
 import {
   Plus, Zap, CheckCircle2, Loader2, Users, ListChecks,

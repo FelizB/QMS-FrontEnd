@@ -1,4 +1,4 @@
-import ProjectsLayout from "../components/layout/workspaces/ProjectsLayout";
+import ProjectsLayout from "../../components/layout/workspaces/projects/ProjectsLayout";
 
 function WorkspaceProjects() {
   return <div><ProjectsLayout/></div>;

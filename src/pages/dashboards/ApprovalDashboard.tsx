@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer, TextField } from '@mui/material';
-import { useApprovals } from '../features/approvals/useApprovals';
-import { darkText,darkInput } from '../components/common/T-colors';
+import { useApprovals } from '../../features/approvals/useApprovals';
+import { darkInput,darkText } from '../../components/common/T-colors';
 
 export default function ApprovalDashboard() {
   const [status, setStatus] = React.useState<string>('pending');

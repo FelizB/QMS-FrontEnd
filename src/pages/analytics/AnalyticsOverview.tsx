@@ -1,7 +1,7 @@
 import React from "react";
-import Analyticals from "../components/layout/analytics/Analyticals";
-import TableSection from "../components/layout/analytics/TableSection";
-import ActivityFeed from "../components/layout/dashboard/Activityfeed";
+import Analyticals from "../../components/layout/analytics/Analyticals";
+import TableSection from "../../components/layout/analytics/TableSection";
+import ActivityFeed from "../../components/layout/dashboard/Activityfeed";
 
 
 

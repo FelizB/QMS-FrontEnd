@@ -1,8 +1,8 @@
-import { UsersTable } from "../components/layout/users/userTable";
+import { UsersTable } from "../../components/layout/users/userTable";
 import { useQuery } from "@tanstack/react-query";
-import { getQMSBackend } from "../generated/sdk/endpoints";
-import { type UserSummary } from "../generated/sdk/models";
-import { type User } from "../components/layout/users/userTable";
+import { getQMSBackend } from "../../generated/sdk/endpoints";
+import { type UserSummary } from "../../generated/sdk/models";
+import { type User } from "../../components/layout/users/userTable";
 
 
   const api = getQMSBackend();

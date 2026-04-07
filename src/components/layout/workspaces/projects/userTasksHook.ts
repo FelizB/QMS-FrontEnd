@@ -17,7 +17,7 @@ import {
   type TaskFilters,
   type Assignee,
   type Paged,
-} from '../../../api/tasks';
+} from '../../../../api/tasks';
 
 /** -------------------- Query Keys -------------------- **/
 export const tasksKey = (projectId: number, filters: TaskFilters) =>

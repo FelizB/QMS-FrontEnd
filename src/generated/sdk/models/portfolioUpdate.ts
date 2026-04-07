@@ -12,6 +12,7 @@ export interface PortfolioUpdate {
   website?: string | null;
   workspace_type_id?: number | null;
   artifact_type_id?: number | null;
+  template_id?: string | null;
   is_active?: boolean | null;
   is_default?: boolean | null;
   last_updated_date?: string | null;

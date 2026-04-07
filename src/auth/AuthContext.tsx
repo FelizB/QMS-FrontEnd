@@ -9,6 +9,7 @@ import {
   getRemember,
 } from "./tokenStore";
 import { CurrentUser } from "./CurrentUser";
+import { onAuthChanged,getAccessToken,getRefreshToken } from "../components/common/session/authStorage";
 
 type Decoded = { sub?: string; username?: string; admin?: boolean; superuser?: boolean; exp?: number };
 export type User = { username: string; admin: boolean; superuser: boolean };
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [refreshToken, setRefreshToken] = useState<string | null>(init.refresh);
   const [remember, setRememberState] = useState<boolean>(init.remember);
   const [user, setUser] = useState<User | null>(null);
+  
 
   // Decode user on access token changes
  /* useEffect(() => {
@@ -72,6 +74,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           cancelled = true;
         };
       }, [accessToken]);
+
+      useEffect(() => {
+        const unsub = onAuthChanged(() => {
+          const newAccess = getAccessToken();
+          const newRefresh = getRefreshToken();
+
+          setAccessToken(newAccess);
+          setRefreshToken(newRefresh);
+        });
+        
+        return () => {
+          unsub();
+        };
+      }, []);
 
 
 

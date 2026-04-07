@@ -14,6 +14,8 @@ import {
 
 import { onAuthChanged, getAccessToken, getRefreshToken, clearTokens } from "./authStorage";
 import { refreshAccessToken } from "./refreshManager";
+import { darkText } from "../T-colors";
+
 
 type Props = {
   children: React.ReactNode;
@@ -200,21 +202,23 @@ export function SessionProvider({
       {children}
 
       <Dialog open={open && isAuthenticated && !isOnLogin} maxWidth="xs" fullWidth>
-        <DialogTitle>Session expiring soon</DialogTitle>
+        <DialogTitle className="text-[rgb(var(--text))]">
+          Session expiring soon
+        </DialogTitle>
 
         <DialogContent>
-          <Typography variant="body2">
+          <Typography variant="body2" sx={{ color: "rgb(var(--subtle))" }}>
             Your session will expire soon. Stay signed in to continue.
           </Typography>
 
           <Box sx={{ mt: 2 }}>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: "rgb(var(--muted))" }}>
               Logging out in <b>{remaining}</b> seconds…
             </Typography>
           </Box>
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button variant="outlined" onClick={logout}>
             Logout
           </Button>

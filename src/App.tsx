@@ -4,9 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { useSyncSdkAuth } from './api/useSyncSdkAuth';
 import * as React from "react";
-import { SessionProvider } from './components/common/session/SessionProvider';
-import { getQMSBackend } from "./generated/sdk/endpoints";
-import { wireTokenExpiryInterceptor } from './components/common/session/qmsBackendInterceptor';
+import { SessionProvider } from './auth/session/SessionProvider';
 
 
 const qc = new QueryClient({
@@ -31,10 +29,6 @@ const qc = new QueryClient({
 function App() {
   useSyncSdkAuth();
 
-  React.useEffect(() => {
-    const api = getQMSBackend();
-    wireTokenExpiryInterceptor(api);
-  }, []);
 
   return (
 

@@ -71,6 +71,7 @@ import type {
   ProgramCreate,
   ProgramDeleteResponse,
   ProgramOut,
+  ProgramPagedResult,
   ProgramSummaryOut,
   ProgramTopProjectsOut,
   ProgramTrendOut,
@@ -330,7 +331,7 @@ export const getQMSBackend = () => {
   const programs_v1_get_listAllPrograms = (
     params?: ProgramsV1GetListAllProgramsParams,
   ) => {
-    return customInstance<ProgramOut[]>({
+    return customInstance<ProgramPagedResult>({
       url: `/api/v1/programs`,
       method: "GET",
       params,

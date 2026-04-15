@@ -111,6 +111,7 @@ export * from "./programDeleteResponse";
 export * from "./programDeleteSummaryOut";
 export * from "./programOut";
 export * from "./programOutCustomProperties";
+export * from "./programPagedResult";
 export * from "./programSummaryOut";
 export * from "./programsV1DeleteDeleteProgramParams";
 export * from "./programsV1GetListAllProgramsParams";

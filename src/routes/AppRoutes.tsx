@@ -40,6 +40,7 @@ import ProgramsView from "../components/layout/workspaces/manage/view/ProgramVie
 import ProjectsView from "../components/layout/workspaces/manage/view/ProjectView";
 import TemplateView from "../components/layout/workspaces/manage/view/TemplateView";
 import PortfolioEditor from "../components/layout/workspaces/manage/editors/PortfolioEditor";
+import ProgramForm from "../components/layout/workspaces/manage/forms/ProgramForm";
 
 function WorkspaceShell() {
   return <Outlet />;
@@ -89,6 +90,8 @@ export default function AppRoutes() {
                 <Route path="templatesView" element={<TemplateView />} />
                 <Route path="portfoliosView/new" element={<PortfolioEditor />} />
                 <Route path="portfoliosView/:id/edit" element={<PortfolioEditor />} />
+                <Route path="programsView/new" element={<ProgramForm mode="create" />} />
+                <Route path="programsView/:id/edit" element={<ProgramForm mode="edit" />} />
                 <Route path="*" element={<Navigate to="portfoliosView" replace />} />
               </Route>
             </Route>
